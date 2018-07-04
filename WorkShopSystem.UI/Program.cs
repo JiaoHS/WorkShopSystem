@@ -20,7 +20,7 @@ namespace WorkShopSystem.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmTest2());
+            Application.Run(new ClearDataForm());
         }
     }
 }

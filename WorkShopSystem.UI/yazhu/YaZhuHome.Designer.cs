@@ -51,6 +51,12 @@
             this.btnExcel = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.yazhujihao = new System.Windows.Forms.CheckBox();
+            this.pinjianquexian = new System.Windows.Forms.CheckBox();
+            this.cuopifengquexian = new System.Windows.Forms.CheckBox();
+            this.yazhuquexian = new System.Windows.Forms.CheckBox();
+            this.shengchanzongshu = new System.Windows.Forms.CheckBox();
             this.cbLiuCheng = new System.Windows.Forms.ComboBox();
             this.lbTime = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -74,12 +80,6 @@
             this.btnLoadData = new System.Windows.Forms.Button();
             this.cbPiaoType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.yazhujihao = new System.Windows.Forms.CheckBox();
-            this.shengchanzongshu = new System.Windows.Forms.CheckBox();
-            this.yazhuquexian = new System.Windows.Forms.CheckBox();
-            this.cuopifengquexian = new System.Windows.Forms.CheckBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.pinjianquexian = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -318,6 +318,67 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             // 
+            // listView1
+            // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.Location = new System.Drawing.Point(-77, 50);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(1215, 363);
+            this.listView1.TabIndex = 0;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // yazhujihao
+            // 
+            this.yazhujihao.AutoSize = true;
+            this.yazhujihao.Location = new System.Drawing.Point(47, 10);
+            this.yazhujihao.Name = "yazhujihao";
+            this.yazhujihao.Size = new System.Drawing.Size(72, 16);
+            this.yazhujihao.TabIndex = 1;
+            this.yazhujihao.Text = "压铸机号";
+            this.yazhujihao.UseVisualStyleBackColor = true;
+            // 
+            // pinjianquexian
+            // 
+            this.pinjianquexian.AutoSize = true;
+            this.pinjianquexian.Location = new System.Drawing.Point(994, 10);
+            this.pinjianquexian.Name = "pinjianquexian";
+            this.pinjianquexian.Size = new System.Drawing.Size(72, 16);
+            this.pinjianquexian.TabIndex = 1;
+            this.pinjianquexian.Text = "品检缺陷";
+            this.pinjianquexian.UseVisualStyleBackColor = true;
+            // 
+            // cuopifengquexian
+            // 
+            this.cuopifengquexian.AutoSize = true;
+            this.cuopifengquexian.Location = new System.Drawing.Point(912, 10);
+            this.cuopifengquexian.Name = "cuopifengquexian";
+            this.cuopifengquexian.Size = new System.Drawing.Size(84, 16);
+            this.cuopifengquexian.TabIndex = 1;
+            this.cuopifengquexian.Text = "挫披锋缺陷";
+            this.cuopifengquexian.UseVisualStyleBackColor = true;
+            // 
+            // yazhuquexian
+            // 
+            this.yazhuquexian.AutoSize = true;
+            this.yazhuquexian.Location = new System.Drawing.Point(843, 11);
+            this.yazhuquexian.Name = "yazhuquexian";
+            this.yazhuquexian.Size = new System.Drawing.Size(72, 16);
+            this.yazhuquexian.TabIndex = 1;
+            this.yazhuquexian.Text = "压铸缺陷";
+            this.yazhuquexian.UseVisualStyleBackColor = true;
+            // 
+            // shengchanzongshu
+            // 
+            this.shengchanzongshu.AutoSize = true;
+            this.shengchanzongshu.Location = new System.Drawing.Point(775, 11);
+            this.shengchanzongshu.Name = "shengchanzongshu";
+            this.shengchanzongshu.Size = new System.Drawing.Size(72, 16);
+            this.shengchanzongshu.TabIndex = 1;
+            this.shengchanzongshu.Text = "生产总数";
+            this.shengchanzongshu.UseVisualStyleBackColor = true;
+            // 
             // cbLiuCheng
             // 
             this.cbLiuCheng.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -500,6 +561,7 @@
             // 
             // btnLoadData
             // 
+            this.btnLoadData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadData.Location = new System.Drawing.Point(1101, 25);
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(75, 23);
@@ -531,67 +593,6 @@
             this.label7.Size = new System.Drawing.Size(77, 12);
             this.label7.TabIndex = 18;
             this.label7.Text = "流程票类型：";
-            // 
-            // yazhujihao
-            // 
-            this.yazhujihao.AutoSize = true;
-            this.yazhujihao.Location = new System.Drawing.Point(47, 10);
-            this.yazhujihao.Name = "yazhujihao";
-            this.yazhujihao.Size = new System.Drawing.Size(72, 16);
-            this.yazhujihao.TabIndex = 1;
-            this.yazhujihao.Text = "压铸机号";
-            this.yazhujihao.UseVisualStyleBackColor = true;
-            // 
-            // shengchanzongshu
-            // 
-            this.shengchanzongshu.AutoSize = true;
-            this.shengchanzongshu.Location = new System.Drawing.Point(775, 11);
-            this.shengchanzongshu.Name = "shengchanzongshu";
-            this.shengchanzongshu.Size = new System.Drawing.Size(72, 16);
-            this.shengchanzongshu.TabIndex = 1;
-            this.shengchanzongshu.Text = "生产总数";
-            this.shengchanzongshu.UseVisualStyleBackColor = true;
-            // 
-            // yazhuquexian
-            // 
-            this.yazhuquexian.AutoSize = true;
-            this.yazhuquexian.Location = new System.Drawing.Point(843, 11);
-            this.yazhuquexian.Name = "yazhuquexian";
-            this.yazhuquexian.Size = new System.Drawing.Size(72, 16);
-            this.yazhuquexian.TabIndex = 1;
-            this.yazhuquexian.Text = "压铸缺陷";
-            this.yazhuquexian.UseVisualStyleBackColor = true;
-            // 
-            // cuopifengquexian
-            // 
-            this.cuopifengquexian.AutoSize = true;
-            this.cuopifengquexian.Location = new System.Drawing.Point(912, 10);
-            this.cuopifengquexian.Name = "cuopifengquexian";
-            this.cuopifengquexian.Size = new System.Drawing.Size(84, 16);
-            this.cuopifengquexian.TabIndex = 1;
-            this.cuopifengquexian.Text = "挫披锋缺陷";
-            this.cuopifengquexian.UseVisualStyleBackColor = true;
-            // 
-            // listView1
-            // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Location = new System.Drawing.Point(-77, 50);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1215, 363);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // pinjianquexian
-            // 
-            this.pinjianquexian.AutoSize = true;
-            this.pinjianquexian.Location = new System.Drawing.Point(994, 10);
-            this.pinjianquexian.Name = "pinjianquexian";
-            this.pinjianquexian.Size = new System.Drawing.Size(72, 16);
-            this.pinjianquexian.TabIndex = 1;
-            this.pinjianquexian.Text = "品检缺陷";
-            this.pinjianquexian.UseVisualStyleBackColor = true;
             // 
             // YaZhuHome
             // 

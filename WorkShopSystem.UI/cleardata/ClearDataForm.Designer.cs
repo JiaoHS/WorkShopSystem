@@ -38,7 +38,7 @@
             // 
             this.btnClearData.Location = new System.Drawing.Point(420, 24);
             this.btnClearData.Name = "btnClearData";
-            this.btnClearData.Size = new System.Drawing.Size(75, 23);
+            this.btnClearData.Size = new System.Drawing.Size(203, 23);
             this.btnClearData.TabIndex = 5;
             this.btnClearData.Text = "数据入库";
             this.btnClearData.UseVisualStyleBackColor = true;
@@ -81,6 +81,7 @@
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.txtFile);
             this.Name = "ClearDataForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "数据处理入库";
             this.ResumeLayout(false);
             this.PerformLayout();

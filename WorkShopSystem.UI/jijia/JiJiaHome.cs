@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using WorkShopSystem.BLL;
 using WorkShopSystem.Model;
 using WorkShopSystem.UI.loading;
+using WorkShopSystem.Utility;
 
 namespace WorkShopSystem.UI.yazhu
 {
@@ -21,6 +22,8 @@ namespace WorkShopSystem.UI.yazhu
             InitializeComponent();
             //InitDemo();
         }
+        DataTable dtable = new DataTable();
+        string header = string.Empty;
         public delegate void AuthenticationDelegate(bool value);
         private int redrawCounter = -1;
         OpaqueCommand cmd = new OpaqueCommand();
@@ -45,7 +48,7 @@ namespace WorkShopSystem.UI.yazhu
             string timeStart = dtpStart.Value.ToString("yyyy-MM-dd");
             string timeEnd = dtpEnd.Value.ToString("yyyy-MM-dd");
             string strTemp = string.Empty;
-            int temp = 0;
+            double temp = 0;
 
             if (checkedListBox3.InvokeRequired == false)
             {
@@ -60,7 +63,7 @@ namespace WorkShopSystem.UI.yazhu
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (int.TryParse(strTemp, out temp))
+                                if (double.TryParse(strTemp, out temp))
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
@@ -99,7 +102,7 @@ namespace WorkShopSystem.UI.yazhu
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if ((strTemp.ToLower().IndexOf("p") < 0 && strTemp.ToLower().IndexOf("f") < 0) && !int.TryParse(strTemp, out temp))
+                                if ((strTemp.ToLower().IndexOf("p") < 0 && strTemp.ToLower().IndexOf("f") < 0) && !double.TryParse(strTemp, out temp))
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
@@ -110,7 +113,14 @@ namespace WorkShopSystem.UI.yazhu
                         break;
                 }
 
-
+                //默认全选
+                if (checkedListBox3.Items.Count > 0)
+                {
+                    for (int i = 0; i < checkedListBox3.Items.Count; i++)
+                    {
+                        checkedListBox3.SetItemChecked(i, true);
+                    }
+                }
             }
             else
             {
@@ -133,7 +143,14 @@ namespace WorkShopSystem.UI.yazhu
                         checkedListBox2.Items.Add(dt.Rows[i]["maopeihao"].ToString());
                     }
                 }
-
+                //默认全选
+                if (checkedListBox2.Items.Count > 0)
+                {
+                    for (int i = 0; i < checkedListBox2.Items.Count; i++)
+                    {
+                        checkedListBox2.SetItemChecked(i, true);
+                    }
+                }
                 //if (taskList[selectedTaskIndex].sensorList != "")
                 //{
                 //    string[] sources = taskList[selectedTaskIndex].sensorList.Split(',');
@@ -177,7 +194,14 @@ namespace WorkShopSystem.UI.yazhu
                         checkedListBox1.Items.Add(dt.Rows[i]["muhao"].ToString());
                     }
                 }
-
+                //默认全选
+                if (checkedListBox1.Items.Count > 0)
+                {
+                    for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                    {
+                        checkedListBox1.SetItemChecked(i, true);
+                    }
+                }
                 //if (taskList[selectedTaskIndex].sensorList != "")
                 //{
                 //    string[] sources = taskList[selectedTaskIndex].sensorList.Split(',');
@@ -209,7 +233,8 @@ namespace WorkShopSystem.UI.yazhu
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-          
+            dtable = new DataTable();
+            header = "";
             btnExcel.Enabled = true;
             cmd.ShowOpaqueLayer(panel1, 125, true);
             listViewJiJia.Items.Clear();
@@ -224,6 +249,8 @@ namespace WorkShopSystem.UI.yazhu
                     if (ck.Checked)//判断是否选中
                     {
                         dicTitle.Add(ck.Name, ck.Text);
+                        dtable.Columns.Add(ck.Name, typeof(System.String));
+                        header += ck.Text + "#";
                         //sb += ck.Text + ",";
                     }
                 }
@@ -315,13 +342,16 @@ namespace WorkShopSystem.UI.yazhu
                     //titleList所有选择的复选框的Name
                     int index = 0;
                     item = new ListViewItem();
+                    DataRow drow = dtable.NewRow();
                     foreach (var itemDic in dicTitle)
                     {
                         index = dt.Rows[i].Table.Columns.IndexOf(itemDic.Key);
                         item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+                        drow[itemDic.Key] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
                     }
                     item.SubItems.RemoveAt(0);
                     listViewJiJia.Items.Add(item);
+                    dtable.Rows.Add(drow);
                 }
                 cmd.HideOpaqueLayer();
             }
@@ -470,19 +500,7 @@ namespace WorkShopSystem.UI.yazhu
             btnExcel.Enabled = false;
             try
             {
-                if (JiJiaThread != null)
-                {
-                    JiJiaThread.Join();
-                }
-                System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
-                sfd.DefaultExt = "xls";
-                sfd.Filter = "Excel文件(*.xls)|*.xls";
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    JiJiaThread = new Thread(new ParameterizedThreadStart(LoadExcel));
-                    JiJiaThread.Start(0);
-                    fileName = sfd.FileName;
-                }
+                ExportToExecl();
             }
             catch (Exception ex)
             {
@@ -492,7 +510,56 @@ namespace WorkShopSystem.UI.yazhu
             {
                 EndReport();
             }
-         
+            //btnExcel.Enabled = false;
+            //try
+            //{
+            //    if (JiJiaThread != null)
+            //    {
+            //        JiJiaThread.Join();
+            //    }
+            //    System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
+            //    sfd.DefaultExt = "xls";
+            //    sfd.Filter = "Excel文件(*.xls)|*.xls";
+            //    if (sfd.ShowDialog() == DialogResult.OK)
+            //    {
+            //        JiJiaThread = new Thread(new ParameterizedThreadStart(LoadExcel));
+            //        JiJiaThread.Start(0);
+            //        fileName = sfd.FileName;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("导出异常：" + ex.Message, "导出异常", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //finally
+            //{
+            //    EndReport();
+            //}
+
+        }
+        private void ExportToExecl()
+        {
+            System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
+            sfd.DefaultExt = "xls";
+            sfd.Filter = "Excel文件 (*.xls)|*.xls";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                string path = sfd.FileName;
+
+                //string heade = header.TrimEnd('#');
+                DataSet ds = new DataSet();
+                ds.Tables.Add(dtable.Copy());
+                NPOIHelper helper = new WorkShopSystem.Utility.NPOIHelper("", "机加车间", header.TrimEnd('#'), "机加车间数据查询", ds, "", path, 2);
+                string flag = helper.Export();
+                if (flag == "ok")
+                {
+                    MessageBox.Show("导出数据成功！");
+                }
+                else
+                {
+                    MessageBox.Show(flag);
+                }
+            }
         }
         public void LoadExcel(object _delay)
         {
@@ -539,10 +606,6 @@ namespace WorkShopSystem.UI.yazhu
                 }
                 catch { }
             }
-        }
-        private void ExportToExecl()
-        {
-         
         }
         /// <summary>
         /// 具体导出的方法

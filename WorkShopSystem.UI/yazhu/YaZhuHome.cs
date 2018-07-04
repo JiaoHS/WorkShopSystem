@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using WorkShopSystem.BLL;
 using WorkShopSystem.Model;
 using WorkShopSystem.UI.loading;
+using WorkShopSystem.Utility;
 
 namespace WorkShopSystem.UI.yazhu
 {
@@ -21,6 +22,8 @@ namespace WorkShopSystem.UI.yazhu
             InitializeComponent();
             //InitDemo();
         }
+        DataTable dtable = new DataTable();
+        string header = string.Empty;
         public delegate void AuthenticationDelegate(bool value);
         private int redrawCounter = -1;
         OpaqueCommand cmd = new OpaqueCommand();
@@ -45,13 +48,13 @@ namespace WorkShopSystem.UI.yazhu
             string timeStart = dtpStart.Value.ToString("yyyy-MM-dd");
             string timeEnd = dtpEnd.Value.ToString("yyyy-MM-dd");
             string strTemp = string.Empty;
-            int temp = 0;
+            double temp = 0;
 
             if (checkedListBox3.InvokeRequired == false)
             {
                 checkedListBox3.Items.Clear();
                 DataTable dt = new DataTable();
-                dt = BLL.GetLiuChengPiaoList(timeStart, timeEnd,"a");
+                dt = BLL.GetLiuChengPiaoList(timeStart, timeEnd, "a");
                 switch (type)
                 {
                     case 0:
@@ -60,7 +63,7 @@ namespace WorkShopSystem.UI.yazhu
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (int.TryParse(strTemp, out temp))
+                                if (double.TryParse(strTemp.Trim(), out temp))
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
@@ -93,24 +96,41 @@ namespace WorkShopSystem.UI.yazhu
                             }
                         }
                         break;
-                    case 3:
+                    //case 3:
+                    //    if (dt != null && dt.Rows.Count > 0)
+                    //    {
+                    //        for (int i = 0; i < dt.Rows.Count; i++)
+                    //        {
+                    //            strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
+                    //            if ((strTemp.ToLower().IndexOf("p") < 0 && strTemp.ToLower().IndexOf("f") < 0) && !int.TryParse(strTemp, out temp))
+                    //            {
+                    //                checkedListBox3.Items.Add(strTemp);
+                    //            }
+                    //        }
+                    //    }
+                    //    break;
+                    default:
                         if (dt != null && dt.Rows.Count > 0)
                         {
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if ((strTemp.ToLower().IndexOf("p") < 0 && strTemp.ToLower().IndexOf("f") < 0) && !int.TryParse(strTemp, out temp))
+                                if ((strTemp.ToLower().IndexOf("p") < 0 && strTemp.ToLower().IndexOf("f") < 0) && !double.TryParse(strTemp.Trim(), out temp))
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
                             }
                         }
                         break;
-                    default:
-                        break;
                 }
-
-
+                //默认全选
+                if (checkedListBox3.Items.Count > 0)
+                {
+                    for (int i = 0; i < checkedListBox3.Items.Count; i++)
+                    {
+                        checkedListBox3.SetItemChecked(i, true);
+                    }
+                }
             }
             else
             {
@@ -133,28 +153,14 @@ namespace WorkShopSystem.UI.yazhu
                         checkedListBox2.Items.Add(dt.Rows[i]["maopeihao"].ToString());
                     }
                 }
-
-                //if (taskList[selectedTaskIndex].sensorList != "")
-                //{
-                //    string[] sources = taskList[selectedTaskIndex].sensorList.Split(',');
-                //    for (int i = 0; i < sources.Length; i++)
-                //    {
-                //        checkedListBox1.Items.Add("Prober " + sources[i]);
-                //    }
-                //}
-
-                //string proberIndexStr = Properties.Settings.Default.proberIndexStr;
-                //if (proberIndexStr != "")
-                //{
-                //    string[] strs = proberIndexStr.Split('#');
-                //    for (int i = 0; i < strs.Length; i++)
-                //    {
-                //        int index = int.Parse(strs[i]);
-                //        if (index > checkedListBox1.Items.Count - 1)
-                //            break;
-                //        checkedListBox1.SetItemChecked(index, true);
-                //    }
-                //}
+                //默认全选
+                if (checkedListBox2.Items.Count > 0)
+                {
+                    for (int i = 0; i < checkedListBox2.Items.Count; i++)
+                    {
+                        checkedListBox2.SetItemChecked(i, true);
+                    }
+                }
             }
             else
             {
@@ -177,28 +183,14 @@ namespace WorkShopSystem.UI.yazhu
                         checkedListBox1.Items.Add(dt.Rows[i]["muhao"].ToString());
                     }
                 }
-
-                //if (taskList[selectedTaskIndex].sensorList != "")
-                //{
-                //    string[] sources = taskList[selectedTaskIndex].sensorList.Split(',');
-                //    for (int i = 0; i < sources.Length; i++)
-                //    {
-                //        checkedListBox1.Items.Add("Prober " + sources[i]);
-                //    }
-                //}
-
-                //string proberIndexStr = Properties.Settings.Default.proberIndexStr;
-                //if (proberIndexStr != "")
-                //{
-                //    string[] strs = proberIndexStr.Split('#');
-                //    for (int i = 0; i < strs.Length; i++)
-                //    {
-                //        int index = int.Parse(strs[i]);
-                //        if (index > checkedListBox1.Items.Count - 1)
-                //            break;
-                //        checkedListBox1.SetItemChecked(index, true);
-                //    }
-                //}
+                //默认全选
+                if (checkedListBox1.Items.Count > 0)
+                {
+                    for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                    {
+                        checkedListBox1.SetItemChecked(i, true);
+                    }
+                }
             }
             else
             {
@@ -209,6 +201,8 @@ namespace WorkShopSystem.UI.yazhu
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            dtable = new DataTable();
+            header = "";
             btnExcel.Enabled = true;
             cmd.ShowOpaqueLayer(panel1, 125, true);
             listView.Items.Clear();
@@ -223,6 +217,8 @@ namespace WorkShopSystem.UI.yazhu
                     if (ck.Checked)//判断是否选中
                     {
                         dicTitle.Add(ck.Name, ck.Text);
+                        dtable.Columns.Add(ck.Name, typeof(System.String));
+                        header += ck.Text+"#";
                         //sb += ck.Text + ",";
                     }
                 }
@@ -304,13 +300,16 @@ namespace WorkShopSystem.UI.yazhu
                     //titleList所有选择的复选框的Name
                     int index = 0;
                     item = new ListViewItem();
+                    DataRow drow = dtable.NewRow();
                     foreach (var itemDic in dicTitle)
                     {
                         index = dt.Rows[i].Table.Columns.IndexOf(itemDic.Key);
                         item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+                        drow[itemDic.Key] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
                     }
                     item.SubItems.RemoveAt(0);
                     listView.Items.Add(item);
+                    dtable.Rows.Add(drow);
                 }
                 cmd.HideOpaqueLayer();
             }
@@ -459,20 +458,7 @@ namespace WorkShopSystem.UI.yazhu
             btnExcel.Enabled = false;
             try
             {
-                //ExportToExecl();
-                if (YaZhuThread != null)
-                {
-                    YaZhuThread.Join();
-                }
-                System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
-                sfd.DefaultExt = "xls";
-                sfd.Filter = "Excel文件(*.xls)|*.xls";
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    YaZhuThread = new Thread(new ParameterizedThreadStart(LoadExcel));
-                    YaZhuThread.Start(0);
-                    fileName = sfd.FileName;
-                }
+                ExportToExecl();
             }
             catch (Exception ex)
             {
@@ -481,6 +467,55 @@ namespace WorkShopSystem.UI.yazhu
             finally
             {
                 EndReport();
+            }
+            //try
+            //{
+            //    //ExportToExecl();
+            //    if (YaZhuThread != null)
+            //    {
+            //        YaZhuThread.Join();
+            //    }
+            //    System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
+            //    sfd.DefaultExt = "xls";
+            //    sfd.Filter = "Excel文件(*.xls)|*.xls";
+            //    if (sfd.ShowDialog() == DialogResult.OK)
+            //    {
+            //        YaZhuThread = new Thread(new ParameterizedThreadStart(LoadExcel));
+            //        YaZhuThread.Start(0);
+            //        fileName = sfd.FileName;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("导出异常：" + ex.Message, "导出异常", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //finally
+            //{
+            //    EndReport();
+            //}
+        }
+        private void ExportToExecl()
+        {
+            System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
+            sfd.DefaultExt = "xls";
+            sfd.Filter = "Excel文件 (*.xls)|*.xls";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                string path = sfd.FileName;
+
+                //string heade = header.TrimEnd('#');
+                DataSet ds = new DataSet();
+                ds.Tables.Add(dtable.Copy());
+                NPOIHelper helper = new WorkShopSystem.Utility.NPOIHelper("", "压铸车间", header.TrimEnd('#'), "压铸车间数据查询", ds, "", path, 2);
+                string flag = helper.Export();
+                if (flag == "ok")
+                {
+                    MessageBox.Show("导出数据成功！");
+                }
+                else
+                {
+                    MessageBox.Show(flag);
+                }
             }
         }
         public void LoadExcel(object _delay)
@@ -530,16 +565,16 @@ namespace WorkShopSystem.UI.yazhu
                 catch { }
             }
         }
-        private void ExportToExecl()
-        {
-            System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
-            sfd.DefaultExt = "xls";
-            sfd.Filter = "Excel文件(*.xls)|*.xls";
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                DoExport(listView, sfd.FileName);
-            }
-        }
+        //private void ExportToExecl()
+        //{
+        //    System.Windows.Forms.SaveFileDialog sfd = new SaveFileDialog();
+        //    sfd.DefaultExt = "xls";
+        //    sfd.Filter = "Excel文件(*.xls)|*.xls";
+        //    if (sfd.ShowDialog() == DialogResult.OK)
+        //    {
+        //        DoExport(listView, sfd.FileName);
+        //    }
+        //}
         /// <summary>
         /// 具体导出的方法
         /// </summary>
@@ -654,25 +689,9 @@ namespace WorkShopSystem.UI.yazhu
 
         private void btnLoadData_Click(object sender, EventArgs e)
         {
-            if (btnLoadData.Text == "加载数据")
-            {
-                //btnLoadData.Text = "加载中...";
-                LoadCheckedListBox1Content();//加载模号
-                LoadCheckedListBox2Content();//加载毛坯号
-                LoadCheckedListBox3Content(cbPiaoType.SelectedIndex);//加载流程票号
-                //if (loginThread != null)
-                //{
-                //    loginThread.Join();
-                //}
-                //loginThread = new Thread(new ParameterizedThreadStart(LoadData));
-                //loginThread.Start(0);
-            }
-            else
-            {
-                btnLoadData.Text = "加载完成";
-                //if (loginThread != null)
-                //    loginThread.Abort();
-            }
+            LoadCheckedListBox1Content();//加载模号
+            LoadCheckedListBox2Content();//加载毛坯号
+            LoadCheckedListBox3Content(cbPiaoType.SelectedIndex);//加载流程票号
         }
         public void LoadData(object _delay)
         {
@@ -722,6 +741,14 @@ namespace WorkShopSystem.UI.yazhu
             //根据时间筛选出的数据
             int type = cbPiaoType.SelectedIndex;
             LoadCheckedListBox3Content(type);
+            //默认全选
+            if (checkedListBox3.Items.Count > 0)
+            {
+                for (int i = 0; i < checkedListBox3.Items.Count; i++)
+                {
+                    checkedListBox3.SetItemChecked(i, true);
+                }
+            }
         }
     }
     public delegate void NPDelegate();
