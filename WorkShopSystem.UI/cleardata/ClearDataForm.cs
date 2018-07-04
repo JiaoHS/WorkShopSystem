@@ -520,10 +520,10 @@ namespace WorkShopSystem.UI.cleardata
                         foreach (var item in dicTables)
                         {
                             type++;
-                            //if (type == 0 || type == 1 || type == 3)
-                            //{
-                            //    continue;
-                            //}
+                            if (type == 0 || type == 1 || type == 2)
+                            {
+                                continue;
+                            }
                             //枚举 0 1 2 3 4 
                             dt = dicTables[item.Key];
                             if (dt != null && dt.Rows.Count > 0)
@@ -936,20 +936,37 @@ namespace WorkShopSystem.UI.cleardata
                                             #region 测漏统计
                                             quanJianModel = new QuanJianDetail();
                                             model.workshoptype = 7;
-                                            if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_shideshengchanshu"))
+                                            if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_shengchanshu"))
                                             {
-                                                decimal.TryParse(dt.Rows[i]["nianjijiachejianshengchanjilubiao_shideshengchanshu"].ToString(), out tempNum);
+                                                decimal.TryParse(dt.Rows[i]["nianjijiachejianshengchanjilubiao_shengchanshu"].ToString(), out tempNum);
                                                 model.shengchanzongshu = tempNum;
                                             }
-                                            if (!Convert.IsDBNull(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"]))
+
+                                            if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_riji") && dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"].ToString().Trim() != "")
                                             {
-                                                tiemTemp = Convert.ToDateTime(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"]);
+                                                if (!Convert.IsDBNull(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"]))
+                                                {
+                                                    DateTime.TryParse(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"].ToString(),out tiemTemp);
+                                                }
                                             }
                                             model.time = tiemTemp;
-                                            if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_jitaixianhao"))
+                                            if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_jitaixianhao") && dt.Rows[i]["nianjijiachejianshengchanjilubiao_jitaixianhao"].ToString().Trim() != "")
                                             {
-                                                model.yazhujihao = dt.Rows[i]["nianjijiachejianshengchanjilubiao_jitaixianhao"].ToString();
+                                                if (!Convert.IsDBNull(dt.Rows[i]["nianjijiachejianshengchanjilubiao_jitaixianhao"]))
+                                                {
+                                                    yazhujitaihao = Convert.ToString(dt.Rows[i]["nianjijiachejianshengchanjilubiao_jitaixianhao"]);
+                                                }
                                             }
+                                            model.yazhujihao = yazhujitaihao;
+                                            if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_gonghao") && dt.Rows[i]["nianjijiachejianshengchanjilubiao_gonghao"].ToString().Trim() != "")
+                                            {
+                                                if (!Convert.IsDBNull(dt.Rows[i]["nianjijiachejianshengchanjilubiao_gonghao"]))
+                                                {
+                                                    gonghao = Convert.ToString(dt.Rows[i]["nianjijiachejianshengchanjilubiao_gonghao"]);
+                                                }
+                                            }
+                                            model.gonghao = gonghao;
+
                                             if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_maopihao"))
                                             {
                                                 model.maopeihao = dt.Rows[i]["nianjijiachejianshengchanjilubiao_maopihao"].ToString();
@@ -1028,14 +1045,6 @@ namespace WorkShopSystem.UI.cleardata
                                             {
                                                 model.baofeilv = 0;  //报废率
                                             }
-                                            if (dt.Columns.Contains("gonghao"))
-                                            {
-                                                if (!Convert.IsDBNull(dt.Rows[i]["gonghao"]) && dt.Rows[i]["gonghao"].ToString().Trim() != "")
-                                                {
-                                                    gonghao = Convert.ToString(dt.Rows[i]["gonghao"]);
-                                                }
-                                            }
-                                            model.gonghao = gonghao;
                                             model.isdel = 0;
                                             commonWorkShopRecordBLL.Add(model);
                                             #endregion
