@@ -520,10 +520,10 @@ namespace WorkShopSystem.UI.cleardata
                         foreach (var item in dicTables)
                         {
                             type++;
-                            if (type == 0 || type == 1 || type == 2)
-                            {
-                                continue;
-                            }
+                            //if (type == 0 || type == 1 || type == 2)
+                            //{
+                            //    continue;
+                            //}
                             //枚举 0 1 2 3 4 
                             dt = dicTables[item.Key];
                             if (dt != null && dt.Rows.Count > 0)
@@ -946,7 +946,7 @@ namespace WorkShopSystem.UI.cleardata
                                             {
                                                 if (!Convert.IsDBNull(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"]))
                                                 {
-                                                    DateTime.TryParse(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"].ToString(),out tiemTemp);
+                                                    DateTime.TryParse(dt.Rows[i]["nianjijiachejianshengchanjilubiao_riji"].ToString(), out tiemTemp);
                                                 }
                                             }
                                             model.time = tiemTemp;
@@ -1864,7 +1864,7 @@ namespace WorkShopSystem.UI.cleardata
                                     }
                                     if (!Convert.IsDBNull(dt.Rows[i]["riji"]) && dt.Rows[i]["riji"].ToString().Trim() != "")
                                     {
-                                        tiemTemp = Convert.ToDateTime(dt.Rows[i]["riji"]);
+                                        DateTime.TryParse(dt.Rows[i]["riji"].ToString(), out tiemTemp);
                                     }
                                     model.time = tiemTemp;   //日期
                                     if (dt.Columns.Contains("yazhujitaihao"))
