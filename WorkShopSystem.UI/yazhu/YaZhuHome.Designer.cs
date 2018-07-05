@@ -47,7 +47,7 @@
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.btnSelect = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listView = new System.Windows.Forms.ListView();
+            this.dataGridViewYaZhu = new System.Windows.Forms.DataGridView();
             this.btnExcel = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -81,6 +81,7 @@
             this.cbPiaoType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewYaZhu)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
@@ -247,7 +248,7 @@
             // btnSelect
             // 
             this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelect.Location = new System.Drawing.Point(1101, 60);
+            this.btnSelect.Location = new System.Drawing.Point(1063, 60);
             this.btnSelect.Name = "btnSelect";
             this.btnSelect.Size = new System.Drawing.Size(75, 23);
             this.btnSelect.TabIndex = 6;
@@ -260,27 +261,30 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.listView);
+            this.panel1.Controls.Add(this.dataGridViewYaZhu);
             this.panel1.Location = new System.Drawing.Point(0, 174);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1221, 366);
+            this.panel1.Size = new System.Drawing.Size(1183, 373);
             this.panel1.TabIndex = 7;
             // 
-            // listView
+            // dataGridViewYaZhu
             // 
-            this.listView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView.Location = new System.Drawing.Point(3, 3);
-            this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(1215, 363);
-            this.listView.TabIndex = 0;
-            this.listView.UseCompatibleStateImageBehavior = false;
+            this.dataGridViewYaZhu.AllowUserToAddRows = false;
+            this.dataGridViewYaZhu.AllowUserToDeleteRows = false;
+            this.dataGridViewYaZhu.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewYaZhu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewYaZhu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewYaZhu.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewYaZhu.Name = "dataGridViewYaZhu";
+            this.dataGridViewYaZhu.ReadOnly = true;
+            this.dataGridViewYaZhu.RowTemplate.Height = 23;
+            this.dataGridViewYaZhu.Size = new System.Drawing.Size(1183, 373);
+            this.dataGridViewYaZhu.TabIndex = 1;
             // 
             // btnExcel
             // 
             this.btnExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExcel.Location = new System.Drawing.Point(1101, 97);
+            this.btnExcel.Location = new System.Drawing.Point(1063, 97);
             this.btnExcel.Name = "btnExcel";
             this.btnExcel.Size = new System.Drawing.Size(75, 23);
             this.btnExcel.TabIndex = 8;
@@ -562,7 +566,7 @@
             // btnLoadData
             // 
             this.btnLoadData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadData.Location = new System.Drawing.Point(1101, 25);
+            this.btnLoadData.Location = new System.Drawing.Point(1063, 25);
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(75, 23);
             this.btnLoadData.TabIndex = 16;
@@ -577,7 +581,6 @@
             this.cbPiaoType.Items.AddRange(new object[] {
             "生产类型",
             "返修类型",
-            "品检类型",
             "其他类型"});
             this.cbPiaoType.Location = new System.Drawing.Point(705, 43);
             this.cbPiaoType.Name = "cbPiaoType";
@@ -598,7 +601,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1221, 540);
+            this.ClientSize = new System.Drawing.Size(1183, 547);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbPiaoType);
             this.Controls.Add(this.btnLoadData);
@@ -629,6 +632,7 @@
             this.Text = "YaZhuHome";
             this.Load += new System.EventHandler(this.YaZhuHome_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewYaZhu)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -659,7 +663,6 @@
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.Button btnExcel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -692,5 +695,6 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.CheckBox pinjianquexian;
         private System.Windows.Forms.CheckBox cuopifengquexian;
+        private System.Windows.Forms.DataGridView dataGridViewYaZhu;
     }
 }

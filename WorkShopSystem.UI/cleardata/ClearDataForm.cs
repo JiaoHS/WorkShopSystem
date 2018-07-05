@@ -970,9 +970,14 @@ namespace WorkShopSystem.UI.cleardata
                                             if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_maopihao"))
                                             {
                                                 model.maopeihao = dt.Rows[i]["nianjijiachejianshengchanjilubiao_maopihao"].ToString();
-                                                if (model.maopeihao.Length > 5)
+                                                if (model.maopeihao.Contains("-"))//包含"-"的时候去掉
                                                 {
-                                                    model.maopeihao = model.maopeihao.Substring(0, 1) + "-" + model.maopeihao.Substring(model.maopeihao.Length - 3);
+                                                    string[] strs = model.maopeihao.Split('-');
+                                                    model.maopeihao = strs[0] + strs[1];
+                                                }
+                                                else if (model.maopeihao.Length >= 4)//长度大于等于4
+                                                {
+                                                    model.maopeihao = model.maopeihao.Substring(0, 1) + model.maopeihao.Substring(model.maopeihao.Length - 3);
                                                 }
                                             }
                                             if (dt.Columns.Contains("nianjijiachejianshengchanjilubiao_mohao"))
@@ -1066,6 +1071,7 @@ namespace WorkShopSystem.UI.cleardata
                                             }
                                         }
                                         model.yazhujihao = yazhujitaihao; //机台线号
+                                        model.xianhao = yazhujitaihao;
                                         if (dt.Columns.Contains("xianhao"))
                                         {
                                             if (!Convert.IsDBNull(dt.Rows[i]["xianhao"]))
@@ -1074,9 +1080,14 @@ namespace WorkShopSystem.UI.cleardata
                                             }
                                         }
                                         model.maopeihao = Convert.ToString(dt.Rows[i]["chanpinxinghao"]); //产品型号
-                                        if (model.maopeihao.Length > 5)
+                                        if (model.maopeihao.Contains("-"))//包含"-"的时候去掉
                                         {
-                                            model.maopeihao = model.maopeihao.Substring(0, 1) + "-" + model.maopeihao.Substring(model.maopeihao.Length - 3);
+                                            string[] strs = model.maopeihao.Split('-');
+                                            model.maopeihao = strs[0] + strs[1];
+                                        }
+                                        else if (model.maopeihao.Length >= 4)//长度大于5并且f开头
+                                        {
+                                            model.maopeihao = model.maopeihao.Substring(0, 1) + model.maopeihao.Substring(model.maopeihao.Length - 3);
                                         }
                                         if (dt.Columns.Contains("mohao"))
                                         {
@@ -1139,7 +1150,7 @@ namespace WorkShopSystem.UI.cleardata
                                         if (dt.Columns.Contains("pensha"))
                                         {
                                             decimal.TryParse(dt.Rows[i]["pensha"].ToString(), out tempNum);
-                                            fanxiuModel.falanmianhuashang = tempNum;
+                                            fanxiuModel.pensha = tempNum;
                                         }
                                         if (dt.Columns.Contains("kefanxipin"))
                                         {
@@ -1874,10 +1885,22 @@ namespace WorkShopSystem.UI.cleardata
                                             yazhujitaihao = Convert.ToString(dt.Rows[i]["yazhujitaihao"]);
                                         }
                                     }
-                                    model.yazhujihao = yazhujitaihao; //机台线号                                   
-                                    if (model.maopeihao.Length > 5)
+                                    model.yazhujihao = yazhujitaihao; //机台线号   
+                                    if (dt.Columns.Contains("maopihao"))
                                     {
-                                        model.maopeihao = model.maopeihao.Substring(0, 1) + "-" + model.maopeihao.Substring(model.maopeihao.Length - 3);
+                                        if (!Convert.IsDBNull(dt.Rows[i]["maopihao"]))
+                                        {
+                                            model.maopeihao = Convert.ToString(dt.Rows[i]["maopihao"]);
+                                        }
+                                    }
+                                    if (model.maopeihao.Contains("-"))//包含"-"的时候去掉
+                                    {
+                                        string[] strs = model.maopeihao.Split('-');
+                                        model.maopeihao = strs[0] + strs[1];
+                                    }
+                                    else if (model.maopeihao.Length >= 4)//长度大于5并且f开头
+                                    {
+                                        model.maopeihao = model.maopeihao.Substring(0, 1) + model.maopeihao.Substring(model.maopeihao.Length - 3);
                                     }
                                     if (dt.Columns.Contains("mohao"))
                                     {

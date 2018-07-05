@@ -99,6 +99,13 @@ namespace WorkShopSystem.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
+        public DataTable GetListSum(string strWhere)
+        {
+            return dal.GetListSum(strWhere);
+        }
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
         public List<WorkShopSystem.Model.CommonWorkShopRecord> GetModelList(string strWhere)
         {
             DataTable ds = dal.GetList(strWhere);

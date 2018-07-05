@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dgList = new System.Windows.Forms.DataGridView();
             this.btnQuery = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLIuChengPIaoHao = new System.Windows.Forms.TextBox();
@@ -41,9 +40,30 @@
             this.tbMuHao = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnClean = new System.Windows.Forms.Button();
+            this.dataGridViewQueryHome = new System.Windows.Forms.DataGridView();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yazhujihao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maopeihao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.muhao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.liuchengpiaobianhao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.banci = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jihuashengchanshu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.shengchanzongshu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jishuqishu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.baofeizongshu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.baofeilv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fanxiuzongshu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fanxiulv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xianhao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gongxu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.workshoptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gonghao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yazhuquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cuopifengquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pinjianquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgList)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewQueryHome)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -52,29 +72,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoSize = true;
-            this.panel1.Controls.Add(this.dgList);
-            this.panel1.Location = new System.Drawing.Point(0, 108);
+            this.panel1.Controls.Add(this.dataGridViewQueryHome);
+            this.panel1.Location = new System.Drawing.Point(3, 94);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1027, 361);
+            this.panel1.Size = new System.Drawing.Size(1507, 424);
             this.panel1.TabIndex = 0;
-            // 
-            // dgList
-            // 
-            this.dgList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgList.Location = new System.Drawing.Point(0, 3);
-            this.dgList.Name = "dgList";
-            this.dgList.ReadOnly = true;
-            this.dgList.RowTemplate.Height = 23;
-            this.dgList.Size = new System.Drawing.Size(1024, 355);
-            this.dgList.TabIndex = 0;
             // 
             // btnQuery
             // 
             this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuery.Location = new System.Drawing.Point(936, 23);
+            this.btnQuery.Location = new System.Drawing.Point(1425, 23);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(75, 23);
             this.btnQuery.TabIndex = 2;
@@ -169,7 +176,7 @@
             // btnClean
             // 
             this.btnClean.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClean.Location = new System.Drawing.Point(843, 23);
+            this.btnClean.Location = new System.Drawing.Point(1332, 23);
             this.btnClean.Name = "btnClean";
             this.btnClean.Size = new System.Drawing.Size(75, 23);
             this.btnClean.TabIndex = 8;
@@ -177,23 +184,240 @@
             this.btnClean.UseVisualStyleBackColor = true;
             this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             // 
+            // dataGridViewQueryHome
+            // 
+            this.dataGridViewQueryHome.AllowUserToAddRows = false;
+            this.dataGridViewQueryHome.AllowUserToDeleteRows = false;
+            this.dataGridViewQueryHome.AllowUserToOrderColumns = true;
+            this.dataGridViewQueryHome.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewQueryHome.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.time,
+            this.yazhujihao,
+            this.maopeihao,
+            this.muhao,
+            this.liuchengpiaobianhao,
+            this.banci,
+            this.jihuashengchanshu,
+            this.shengchanzongshu,
+            this.jishuqishu,
+            this.baofeizongshu,
+            this.baofeilv,
+            this.fanxiuzongshu,
+            this.fanxiulv,
+            this.xianhao,
+            this.gongxu,
+            this.workshoptype,
+            this.gonghao,
+            this.yazhuquexian,
+            this.cuopifengquexian,
+            this.pinjianquexian});
+            this.dataGridViewQueryHome.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewQueryHome.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewQueryHome.Name = "dataGridViewQueryHome";
+            this.dataGridViewQueryHome.ReadOnly = true;
+            this.dataGridViewQueryHome.RowTemplate.Height = 23;
+            this.dataGridViewQueryHome.Size = new System.Drawing.Size(1507, 424);
+            this.dataGridViewQueryHome.TabIndex = 0;
+            // 
+            // time
+            // 
+            this.time.DataPropertyName = "time";
+            this.time.Frozen = true;
+            this.time.HeaderText = "时间";
+            this.time.Name = "time";
+            this.time.ReadOnly = true;
+            this.time.Width = 54;
+            // 
+            // yazhujihao
+            // 
+            this.yazhujihao.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.yazhujihao.DataPropertyName = "yazhujihao";
+            this.yazhujihao.Frozen = true;
+            this.yazhujihao.HeaderText = "压铸机台号";
+            this.yazhujihao.Name = "yazhujihao";
+            this.yazhujihao.ReadOnly = true;
+            this.yazhujihao.Width = 90;
+            // 
+            // maopeihao
+            // 
+            this.maopeihao.DataPropertyName = "maopeihao";
+            this.maopeihao.Frozen = true;
+            this.maopeihao.HeaderText = "毛坯号";
+            this.maopeihao.Name = "maopeihao";
+            this.maopeihao.ReadOnly = true;
+            this.maopeihao.Width = 66;
+            // 
+            // muhao
+            // 
+            this.muhao.DataPropertyName = "muhao";
+            this.muhao.Frozen = true;
+            this.muhao.HeaderText = "模号";
+            this.muhao.Name = "muhao";
+            this.muhao.ReadOnly = true;
+            this.muhao.Width = 54;
+            // 
+            // liuchengpiaobianhao
+            // 
+            this.liuchengpiaobianhao.DataPropertyName = "liuchengpiaobianhao";
+            this.liuchengpiaobianhao.Frozen = true;
+            this.liuchengpiaobianhao.HeaderText = "流程票编号";
+            this.liuchengpiaobianhao.Name = "liuchengpiaobianhao";
+            this.liuchengpiaobianhao.ReadOnly = true;
+            this.liuchengpiaobianhao.Width = 90;
+            // 
+            // banci
+            // 
+            this.banci.DataPropertyName = "banci";
+            this.banci.Frozen = true;
+            this.banci.HeaderText = "班次";
+            this.banci.Name = "banci";
+            this.banci.ReadOnly = true;
+            this.banci.Width = 54;
+            // 
+            // jihuashengchanshu
+            // 
+            this.jihuashengchanshu.DataPropertyName = "jihuashengchanshu";
+            this.jihuashengchanshu.Frozen = true;
+            this.jihuashengchanshu.HeaderText = "计划生产数";
+            this.jihuashengchanshu.Name = "jihuashengchanshu";
+            this.jihuashengchanshu.ReadOnly = true;
+            this.jihuashengchanshu.Width = 90;
+            // 
+            // shengchanzongshu
+            // 
+            this.shengchanzongshu.DataPropertyName = "shengchanzongshu";
+            this.shengchanzongshu.Frozen = true;
+            this.shengchanzongshu.HeaderText = "生产总数";
+            this.shengchanzongshu.Name = "shengchanzongshu";
+            this.shengchanzongshu.ReadOnly = true;
+            this.shengchanzongshu.Width = 78;
+            // 
+            // jishuqishu
+            // 
+            this.jishuqishu.DataPropertyName = "jishuqishu";
+            this.jishuqishu.Frozen = true;
+            this.jishuqishu.HeaderText = "计数器数";
+            this.jishuqishu.Name = "jishuqishu";
+            this.jishuqishu.ReadOnly = true;
+            this.jishuqishu.Width = 78;
+            // 
+            // baofeizongshu
+            // 
+            this.baofeizongshu.DataPropertyName = "baofeizongshu";
+            this.baofeizongshu.Frozen = true;
+            this.baofeizongshu.HeaderText = "报废总数";
+            this.baofeizongshu.Name = "baofeizongshu";
+            this.baofeizongshu.ReadOnly = true;
+            this.baofeizongshu.Width = 78;
+            // 
+            // baofeilv
+            // 
+            this.baofeilv.DataPropertyName = "baofeilv";
+            this.baofeilv.Frozen = true;
+            this.baofeilv.HeaderText = "报废率";
+            this.baofeilv.Name = "baofeilv";
+            this.baofeilv.ReadOnly = true;
+            this.baofeilv.Width = 66;
+            // 
+            // fanxiuzongshu
+            // 
+            this.fanxiuzongshu.DataPropertyName = "fanxiuzongshu";
+            this.fanxiuzongshu.Frozen = true;
+            this.fanxiuzongshu.HeaderText = "返修总数";
+            this.fanxiuzongshu.Name = "fanxiuzongshu";
+            this.fanxiuzongshu.ReadOnly = true;
+            this.fanxiuzongshu.Width = 78;
+            // 
+            // fanxiulv
+            // 
+            this.fanxiulv.DataPropertyName = "fanxiulv";
+            this.fanxiulv.Frozen = true;
+            this.fanxiulv.HeaderText = "返修率";
+            this.fanxiulv.Name = "fanxiulv";
+            this.fanxiulv.ReadOnly = true;
+            this.fanxiulv.Width = 66;
+            // 
+            // xianhao
+            // 
+            this.xianhao.DataPropertyName = "xianhao";
+            this.xianhao.Frozen = true;
+            this.xianhao.HeaderText = "线号";
+            this.xianhao.Name = "xianhao";
+            this.xianhao.ReadOnly = true;
+            this.xianhao.Width = 54;
+            // 
+            // gongxu
+            // 
+            this.gongxu.DataPropertyName = "gongxu";
+            this.gongxu.Frozen = true;
+            this.gongxu.HeaderText = "工序";
+            this.gongxu.Name = "gongxu";
+            this.gongxu.ReadOnly = true;
+            this.gongxu.Width = 54;
+            // 
+            // workshoptype
+            // 
+            this.workshoptype.DataPropertyName = "workshoptype";
+            this.workshoptype.Frozen = true;
+            this.workshoptype.HeaderText = "车间流程";
+            this.workshoptype.Name = "workshoptype";
+            this.workshoptype.ReadOnly = true;
+            this.workshoptype.Width = 78;
+            // 
+            // gonghao
+            // 
+            this.gonghao.DataPropertyName = "gonghao";
+            this.gonghao.Frozen = true;
+            this.gonghao.HeaderText = "工号";
+            this.gonghao.Name = "gonghao";
+            this.gonghao.ReadOnly = true;
+            this.gonghao.Width = 54;
+            // 
+            // yazhuquexian
+            // 
+            this.yazhuquexian.DataPropertyName = "yazhuquexian";
+            this.yazhuquexian.Frozen = true;
+            this.yazhuquexian.HeaderText = "压铸缺陷数";
+            this.yazhuquexian.Name = "yazhuquexian";
+            this.yazhuquexian.ReadOnly = true;
+            this.yazhuquexian.Width = 90;
+            // 
+            // cuopifengquexian
+            // 
+            this.cuopifengquexian.DataPropertyName = "cuopifengquexian";
+            this.cuopifengquexian.Frozen = true;
+            this.cuopifengquexian.HeaderText = "挫披锋缺陷数";
+            this.cuopifengquexian.Name = "cuopifengquexian";
+            this.cuopifengquexian.ReadOnly = true;
+            this.cuopifengquexian.Width = 102;
+            // 
+            // pinjianquexian
+            // 
+            this.pinjianquexian.DataPropertyName = "pinjianquexian";
+            this.pinjianquexian.Frozen = true;
+            this.pinjianquexian.HeaderText = "品检缺陷数";
+            this.pinjianquexian.Name = "pinjianquexian";
+            this.pinjianquexian.ReadOnly = true;
+            this.pinjianquexian.Width = 90;
+            // 
             // QueryHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1023, 467);
+            this.ClientSize = new System.Drawing.Size(1512, 530);
             this.Controls.Add(this.btnClean);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnQuery);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "QueryHome";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "单个条件查询";
             this.Load += new System.EventHandler(this.StatisticHome_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgList)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewQueryHome)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +437,26 @@
         private System.Windows.Forms.TextBox tbMuHao;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnClean;
-        private System.Windows.Forms.DataGridView dgList;
+        private System.Windows.Forms.DataGridView dataGridViewQueryHome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn time;
+        private System.Windows.Forms.DataGridViewTextBoxColumn yazhujihao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn maopeihao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn muhao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn liuchengpiaobianhao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn banci;
+        private System.Windows.Forms.DataGridViewTextBoxColumn jihuashengchanshu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn shengchanzongshu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn jishuqishu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn baofeizongshu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn baofeilv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fanxiuzongshu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fanxiulv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn xianhao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gongxu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn workshoptype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gonghao;
+        private System.Windows.Forms.DataGridViewTextBoxColumn yazhuquexian;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cuopifengquexian;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pinjianquexian;
     }
 }

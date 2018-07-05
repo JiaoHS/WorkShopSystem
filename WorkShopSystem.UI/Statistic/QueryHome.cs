@@ -54,10 +54,17 @@ namespace WorkShopSystem.UI.Statistic
             }
 
             DataTable dt = BLL.GetInfoByOne(strWhere.ToString());
-            ListViewItem item;
             if (dt != null && dt.Rows.Count > 0)
             {
-                dgList.DataSource = dt;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+
+                }
+            }
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                dataGridViewQueryHome.DataSource = dt;
+                dataGridViewQueryHome.Rows[0].Frozen = true;
             }
         }
 

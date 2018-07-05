@@ -31,11 +31,11 @@ namespace WorkShopSystem.UI.yazhu
         Microsoft.Office.Interop.Excel.Application xlApp;
         private void YaZhuHome_Load(object sender, EventArgs e)
         {
-            listView.GridLines = true;//表格是否显示网格线
-            listView.FullRowSelect = true;//是否选中整行
-            listView.View = View.Details;//设置显示方式
-            listView.Scrollable = true;//是否自动显示滚动条
-            listView.MultiSelect = false;//是否可以选择多行
+            //listView.GridLines = true;//表格是否显示网格线
+            //listView.FullRowSelect = true;//是否选中整行
+            //listView.View = View.Details;//设置显示方式
+            //listView.Scrollable = true;//是否自动显示滚动条
+            //listView.MultiSelect = false;//是否可以选择多行
             this.cbLiuCheng.SelectedIndex = 0;
             this.cbPiaoType.SelectedIndex = 0;
             this.cbBanCi.SelectedIndex = 0;
@@ -76,39 +76,13 @@ namespace WorkShopSystem.UI.yazhu
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (strTemp.ToLower().IndexOf("p") >= 0)
+                                if (strTemp.ToLower().IndexOf("p") >= 0|| strTemp.ToLower().IndexOf("f") >= 0)
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
                             }
                         }
                         break;
-                    case 2:
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (strTemp.ToLower().IndexOf("f") >= 0)
-                                {
-                                    checkedListBox3.Items.Add(strTemp);
-                                }
-                            }
-                        }
-                        break;
-                    //case 3:
-                    //    if (dt != null && dt.Rows.Count > 0)
-                    //    {
-                    //        for (int i = 0; i < dt.Rows.Count; i++)
-                    //        {
-                    //            strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                    //            if ((strTemp.ToLower().IndexOf("p") < 0 && strTemp.ToLower().IndexOf("f") < 0) && !int.TryParse(strTemp, out temp))
-                    //            {
-                    //                checkedListBox3.Items.Add(strTemp);
-                    //            }
-                    //        }
-                    //    }
-                    //    break;
                     default:
                         if (dt != null && dt.Rows.Count > 0)
                         {
@@ -205,8 +179,8 @@ namespace WorkShopSystem.UI.yazhu
             header = "";
             btnExcel.Enabled = true;
             cmd.ShowOpaqueLayer(panel1, 125, true);
-            listView.Items.Clear();
-            listView.Clear();
+            //listView.Items.Clear();
+            //listView.Clear();
             List<string> titleList = new List<string>();
             Dictionary<string, string> dicTitle = new Dictionary<string, string>();
             foreach (Control cl in groupBox1.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
@@ -228,13 +202,13 @@ namespace WorkShopSystem.UI.yazhu
                 MessageBox.Show("请勾选表头！");
                 return;
             }
-            if (dicTitle != null && dicTitle.Count > 0)
-            {
-                foreach (var item2 in dicTitle)
-                {
-                    listView.Columns.Add(item2.Value, 160, HorizontalAlignment.Center);
-                }
-            }
+            //if (dicTitle != null && dicTitle.Count > 0)
+            //{
+            //    foreach (var item2 in dicTitle)
+            //    {
+            //        listView.Columns.Add(item2.Value, 160, HorizontalAlignment.Center);
+            //    }
+            //}
             //根据条件查询          
             //模号
             string muHaoList = GetCheckedListBoxState1();
@@ -291,7 +265,7 @@ namespace WorkShopSystem.UI.yazhu
             //System.Threading.Thread test = new System.Threading.Thread(new System.Threading.ThreadStart(Loading(strWhere)));
             //test.Start();
             DataTable dt = BLL.GetList(strWhere.ToString());
-            ListViewItem item;
+            //ListViewItem item;
             if (dt != null && dt.Rows.Count > 0)
             {
                 string colTemp = string.Empty;
@@ -299,18 +273,22 @@ namespace WorkShopSystem.UI.yazhu
                 {
                     //titleList所有选择的复选框的Name
                     int index = 0;
-                    item = new ListViewItem();
+                    //item = new ListViewItem();
                     DataRow drow = dtable.NewRow();
                     foreach (var itemDic in dicTitle)
                     {
                         index = dt.Rows[i].Table.Columns.IndexOf(itemDic.Key);
-                        item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+                        //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
                         drow[itemDic.Key] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
                     }
-                    item.SubItems.RemoveAt(0);
-                    listView.Items.Add(item);
+                    //item.SubItems.RemoveAt(0);
+                    //listView.Items.Add(item);
                     dtable.Rows.Add(drow);
                 }
+                dataGridViewYaZhu.DataSource = dtable;
+                dataGridViewYaZhu.Rows[0].Frozen = true;
+                this.dataGridViewYaZhu.Rows[0].Selected = false;
+                this.dataGridViewYaZhu.Rows[0].DefaultCellStyle.BackColor = Color.Red;
                 cmd.HideOpaqueLayer();
             }
         }
@@ -518,14 +496,14 @@ namespace WorkShopSystem.UI.yazhu
                 }
             }
         }
-        public void LoadExcel(object _delay)
-        {
-            int delay = (int)_delay;
-            Thread.Sleep(delay);
-            PassAuthentication(true);
-            //ExportToExecl();
-            DoExport(listView, fileName);
-        }
+        //public void LoadExcel(object _delay)
+        //{
+        //    int delay = (int)_delay;
+        //    Thread.Sleep(delay);
+        //    PassAuthentication(true);
+        //    //ExportToExecl();
+        //    DoExport(listView, fileName);
+        //}
 
         private void EndReport()
         {

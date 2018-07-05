@@ -31,11 +31,11 @@ namespace WorkShopSystem.UI.yazhu
         Microsoft.Office.Interop.Excel.Application xlApp;
         private void YaZhuHome_Load(object sender, EventArgs e)
         {
-            listViewJiJia.GridLines = true;//表格是否显示网格线
-            listViewJiJia.FullRowSelect = true;//是否选中整行
-            listViewJiJia.View = View.Details;//设置显示方式
-            listViewJiJia.Scrollable = true;//是否自动显示滚动条
-            listViewJiJia.MultiSelect = false;//是否可以选择多行
+            //listViewJiJia.GridLines = true;//表格是否显示网格线
+            //listViewJiJia.FullRowSelect = true;//是否选中整行
+            //listViewJiJia.View = View.Details;//设置显示方式
+            //listViewJiJia.Scrollable = true;//是否自动显示滚动条
+            //listViewJiJia.MultiSelect = false;//是否可以选择多行
             this.cbLiuCheng.SelectedIndex = 0;
             this.cbPiaoType.SelectedIndex = 0;
             this.cbBanCi.SelectedIndex = 0;
@@ -76,7 +76,7 @@ namespace WorkShopSystem.UI.yazhu
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (strTemp.ToLower().IndexOf("p") >= 0)
+                                if (strTemp.ToLower().IndexOf("p") >= 0 || strTemp.ToLower().IndexOf("f") >= 0)
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
@@ -84,19 +84,6 @@ namespace WorkShopSystem.UI.yazhu
                         }
                         break;
                     case 2:
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (strTemp.ToLower().IndexOf("f") >= 0)
-                                {
-                                    checkedListBox3.Items.Add(strTemp);
-                                }
-                            }
-                        }
-                        break;
-                    case 3:
                         if (dt != null && dt.Rows.Count > 0)
                         {
                             for (int i = 0; i < dt.Rows.Count; i++)
@@ -237,8 +224,9 @@ namespace WorkShopSystem.UI.yazhu
             header = "";
             btnExcel.Enabled = true;
             cmd.ShowOpaqueLayer(panel1, 125, true);
-            listViewJiJia.Items.Clear();
-            listViewJiJia.Clear();
+
+            //listViewJiJia.Items.Clear();
+            //listViewJiJia.Clear();
             List<string> titleList = new List<string>();
             Dictionary<string, string> dicTitle = new Dictionary<string, string>();
             foreach (Control cl in groupBox1.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
@@ -249,7 +237,7 @@ namespace WorkShopSystem.UI.yazhu
                     if (ck.Checked)//判断是否选中
                     {
                         dicTitle.Add(ck.Name, ck.Text);
-                        dtable.Columns.Add(ck.Name, typeof(System.String));
+                        dtable.Columns.Add(ck.Text, typeof(System.String));
                         header += ck.Text + "#";
                         //sb += ck.Text + ",";
                     }
@@ -260,13 +248,13 @@ namespace WorkShopSystem.UI.yazhu
                 MessageBox.Show("请勾选表头！");
                 return;
             }
-            if (dicTitle != null && dicTitle.Count > 0)
-            {
-                foreach (var item2 in dicTitle)
-                {
-                    listViewJiJia.Columns.Add(item2.Value, 160, HorizontalAlignment.Center);
-                }
-            }
+            //if (dicTitle != null && dicTitle.Count > 0)
+            //{
+            //    foreach (var item2 in dicTitle)
+            //    {
+            //        listViewJiJia.Columns.Add(item2.Value, 160, HorizontalAlignment.Center);
+            //    }
+            //}
             //根据条件查询          
             //模号
             string muHaoList = GetCheckedListBoxState1();
@@ -333,7 +321,39 @@ namespace WorkShopSystem.UI.yazhu
             //System.Threading.Thread test = new System.Threading.Thread(new System.Threading.ThreadStart(Loading(strWhere)));
             //test.Start();
             DataTable dt = BLL.GetList(strWhere.ToString());
-            ListViewItem item;
+            DataTable dtSum = BLL.GetListSum(strWhere.ToString());
+            if (dtSum != null && dtSum.Rows.Count > 0)
+            {
+                string colTemp = string.Empty;
+                double tempDou = 0;
+                for (int i = 0; i < dtSum.Rows.Count; i++)
+                {
+                    //titleList所有选择的复选框的Name
+                    int index = 0;
+                    //item = new ListViewItem();
+                    DataRow drow = dtable.NewRow();
+                    //加总数到第一行
+
+                    foreach (var itemDic in dicTitle)
+                    {
+                        if (itemDic.Key == "liuchengpiaobianhao")
+                        {
+                            tempDou = 0;
+                        }
+                        else
+                        {
+                            index = dtSum.Rows[i].Table.Columns.IndexOf(itemDic.Key);
+                            //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+                            double.TryParse(dtSum.Rows[i][dtSum.Rows[i].Table.Columns[index]].ToString(), out tempDou);
+                        }                       
+                        drow[itemDic.Value] = tempDou;
+                    }
+                    //item.SubItems.RemoveAt(0);
+                    //listViewJiJia.Items.Add(item);
+                    dtable.Rows.Add(drow);
+                }
+            }
+            //ListViewItem item;
             if (dt != null && dt.Rows.Count > 0)
             {
                 string colTemp = string.Empty;
@@ -341,18 +361,24 @@ namespace WorkShopSystem.UI.yazhu
                 {
                     //titleList所有选择的复选框的Name
                     int index = 0;
-                    item = new ListViewItem();
+                    //item = new ListViewItem();
                     DataRow drow = dtable.NewRow();
+                    //加总数到第一行
+
                     foreach (var itemDic in dicTitle)
                     {
                         index = dt.Rows[i].Table.Columns.IndexOf(itemDic.Key);
-                        item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
-                        drow[itemDic.Key] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
+                        //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+                        drow[itemDic.Value] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
                     }
-                    item.SubItems.RemoveAt(0);
-                    listViewJiJia.Items.Add(item);
+                    //item.SubItems.RemoveAt(0);
+                    //listViewJiJia.Items.Add(item);
                     dtable.Rows.Add(drow);
                 }
+                dataGridViewJiJia.DataSource = dtable;
+                dataGridViewJiJia.Rows[0].Frozen = true;
+                this.dataGridViewJiJia.Rows[0].Selected = false;
+                this.dataGridViewJiJia.Rows[0].DefaultCellStyle.BackColor = Color.Red;
                 cmd.HideOpaqueLayer();
             }
         }
@@ -561,14 +587,14 @@ namespace WorkShopSystem.UI.yazhu
                 }
             }
         }
-        public void LoadExcel(object _delay)
-        {
-            int delay = (int)_delay;
-            Thread.Sleep(delay);
-            PassAuthentication(true);
-            //ExportToExecl();
-            DoExport(listViewJiJia, fileName);
-        }
+        //public void LoadExcel(object _delay)
+        //{
+        //    int delay = (int)_delay;
+        //    Thread.Sleep(delay);
+        //    PassAuthentication(true);
+        //    //ExportToExecl();
+        //    DoExport(listViewJiJia, fileName);
+        //}
         private void EndReport()
         {
             object missing = System.Reflection.Missing.Value;
@@ -662,7 +688,7 @@ namespace WorkShopSystem.UI.yazhu
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                }               
+                }
                 MessageBox.Show("OK");
                 cmd.HideOpaqueLayer();
             }
@@ -764,7 +790,7 @@ namespace WorkShopSystem.UI.yazhu
                 Console.WriteLine(ex.Message);
                 throw;
             }
-           
+
         }
         private void PassAuthentication(bool value)
         {

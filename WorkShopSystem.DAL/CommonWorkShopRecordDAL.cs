@@ -350,7 +350,20 @@ namespace WorkShopSystem.DAL
             }
             return SqliteHelper.ExecuteDataTable(strSql.ToString());
         }
-
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public DataTable GetListSum(string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select time,yazhujihao,maopeihao,muhao,liuchengpiaobianhao,banci,sum(jihuashengchanshu) jihuashengchanshu,sum(shengchanzongshu) shengchanzongshu,sum(jishuqishu) jishuqishu,sum(baofeizongshu) baofeizongshu,baofeilv,sum(fanxiuzongshu) fanxiuzongshu,fanxiulv,xianhao,gongxu,workshoptype,gonghao,isdel,sum(yazhuquexian) yazhuquexian,sum(cuopifengquexian) cuopifengquexian,sum(pinjianquexian) pinjianquexian,sum(jijiaquexian) jijiaquexian");
+            strSql.Append(" FROM CommonWorkShopRecord ");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            return SqliteHelper.ExecuteDataTable(strSql.ToString());
+        }
         /// <summary>
         /// 获取记录总数
         /// </summary>
@@ -567,7 +580,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT * from CommonWorkShopRecord ");
+            strSql.Append("SELECT time,yazhujihao,maopeihao,muhao,liuchengpiaobianhao,banci,jihuashengchanshu,shengchanzongshu,jishuqishu,baofeizongshu,baofeilv,fanxiuzongshu,fanxiulv,xianhao,gongxu,workshoptype,gonghao,yazhuquexian,cuopifengquexian,pinjianquexian from CommonWorkShopRecord ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);

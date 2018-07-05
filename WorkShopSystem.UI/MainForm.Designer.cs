@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
+            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbClearData = new System.Windows.Forms.ToolStripButton();
             this.tsbYaZhu = new System.Windows.Forms.ToolStripButton();
             this.tsb_jijia = new System.Windows.Forms.ToolStripButton();
             this.tsbStatic = new System.Windows.Forms.ToolStripButton();
             this.tsbChaXun = new System.Windows.Forms.ToolStripButton();
-            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
             this.tsbRiBaoBiao = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -54,6 +54,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1104, 520);
             this.panel1.TabIndex = 6;
+            // 
+            // elementHost2
+            // 
+            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.elementHost2.Location = new System.Drawing.Point(520, 3);
+            this.elementHost2.Name = "elementHost2";
+            this.elementHost2.Size = new System.Drawing.Size(581, 514);
+            this.elementHost2.TabIndex = 1;
+            this.elementHost2.Text = "elementHost2";
+            this.elementHost2.Child = null;
+            // 
+            // elementHost1
+            // 
+            this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.elementHost1.Location = new System.Drawing.Point(0, 3);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(514, 514);
+            this.elementHost1.TabIndex = 0;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = null;
             // 
             // toolStrip1
             // 
@@ -122,28 +144,6 @@
             this.tsbChaXun.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbChaXun.Click += new System.EventHandler(this.tsbChaXun_Click);
             // 
-            // elementHost1
-            // 
-            this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.elementHost1.Location = new System.Drawing.Point(0, 3);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(514, 514);
-            this.elementHost1.TabIndex = 0;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = null;
-            // 
-            // elementHost2
-            // 
-            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.elementHost2.Location = new System.Drawing.Point(520, 3);
-            this.elementHost2.Name = "elementHost2";
-            this.elementHost2.Size = new System.Drawing.Size(581, 514);
-            this.elementHost2.TabIndex = 1;
-            this.elementHost2.Text = "elementHost2";
-            this.elementHost2.Child = null;
-            // 
             // tsbRiBaoBiao
             // 
             this.tsbRiBaoBiao.Image = ((System.Drawing.Image)(resources.GetObject("tsbRiBaoBiao.Image")));
@@ -161,7 +161,7 @@
             this.ClientSize = new System.Drawing.Size(1117, 616);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(5);
