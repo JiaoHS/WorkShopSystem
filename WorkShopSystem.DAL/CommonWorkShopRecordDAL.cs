@@ -502,10 +502,10 @@ namespace WorkShopSystem.DAL
             switch (workType)
             {
                 case "a":
-                    strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanshu,sum(jishuqishu) as jishuqishu,sum(fanxiuzongshu) as fanxiuzongshu,sum(yazhuquexian) as yazhuquexian,sum(cuopifengquexian) as cuopifengquexian,sum(pinjianquexian) as pinjianquexian from CommonWorkShopRecord where workshoptype =0 and strftime('%Y-%m',  time)='{0}'", timeStart));
+                    strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanshu,sum(jishuqishu) as jishuqishu,sum(fanxiuzongshu) as fanxiuzongshu,sum(yazhuquexian) as yazhuquexian,sum(cuopifengquexian) as cuopifengquexian,sum(pinjianquexian) as pinjianquexian from CommonWorkShopRecord where workshoptype =0 and strftime('%Y-%m',time)>'2017-01' and strftime('%Y-%m',  time)='{0}'", timeStart));
                     break;
                 case "b":
-                    strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanshu,sum(jishuqishu) as jishuqishu,sum(fanxiuzongshu) as fanxiuzongshu,sum(yazhuquexian) as yazhuquexian,sum(pinjianquexian) as pinjianquexian,sum(jijiaquexian) as jijiaquexian from CommonWorkShopRecord where workshoptype =7 and strftime('%Y-%m',  time)='{0}'", timeStart));
+                    strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanshu,sum(jishuqishu) as jishuqishu,sum(fanxiuzongshu) as fanxiuzongshu,sum(yazhuquexian) as yazhuquexian,sum(pinjianquexian) as pinjianquexian,sum(jijiaquexian) as jijiaquexian from CommonWorkShopRecord where workshoptype =7 and strftime('%Y-%m',time)>'2017-01' and strftime('%Y-%m',  time)='{0}'", timeStart));
                     break;
                 default:
                     break;
@@ -529,7 +529,7 @@ namespace WorkShopSystem.DAL
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT strftime('%Y-%m',  time) as time from CommonWorkShopRecord GROUP BY strftime('%Y-%m',time)");
+            strSql.Append("SELECT strftime('%Y-%m',  time) as time from CommonWorkShopRecord where strftime('%Y-%m',time)>'2017-01' GROUP BY strftime('%Y-%m',time)");
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -580,7 +580,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT time,yazhujihao,maopeihao,muhao,liuchengpiaobianhao,banci,jihuashengchanshu,shengchanzongshu,jishuqishu,baofeizongshu,baofeilv,fanxiuzongshu,fanxiulv,xianhao,gongxu,workshoptype,gonghao,yazhuquexian,cuopifengquexian,pinjianquexian from CommonWorkShopRecord ");
+            strSql.Append("SELECT time,yazhujihao,maopeihao,muhao,liuchengpiaobianhao,banci,jihuashengchanshu,shengchanzongshu,jishuqishu,baofeizongshu,baofeilv,fanxiuzongshu,fanxiulv,xianhao,gongxu,(case workshoptype when 0 then '压铸' when 1 then '打砂1' when 2 then '打砂2' when 3 then '披锋' when 4 then 'H面全检' when 5 then 'CNC' when 6 then '清洗' when 7 then '测漏' when 8 then '拉线全检' else '空的' end) workshoptype ,gonghao,yazhuquexian,cuopifengquexian,pinjianquexian,jijiaquexian from CommonWorkShopRecord ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -593,7 +593,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(string.Format("SELECT strftime('%Y-%m-%d',  time) as time from CommonWorkShopRecord where workshoptype=0 and strftime('%Y-%m',time)='{0}' GROUP BY strftime('%Y-%m-%d',time) order by time", time));
+            strSql.Append(string.Format("SELECT strftime('%Y-%m-%d',  time) as time from CommonWorkShopRecord where strftime('%Y-%m',time)='{0}' GROUP BY strftime('%Y-%m-%d',time) order by time", time));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -602,7 +602,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT strftime('%Y-%m',  time) as time from CommonWorkShopRecord where workshoptype=0 GROUP BY strftime('%Y-%m',time) order by time");
+            strSql.Append("SELECT strftime('%Y-%m',  time) as time from CommonWorkShopRecord where strftime('%Y-%m',time)>'2017-01' GROUP BY strftime('%Y-%m',time) order by time");
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -666,7 +666,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 3 and strftime('%Y-%m-%d',time)='{0}' and banci ='{1}' and gonghao={2}", time, banci, xianhao));
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 3 and strftime('%Y-%m-%d',time)='{0}' and banci ='{1}' and gonghao='{2}'", time, banci, xianhao));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -684,7 +684,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 4 and strftime('%Y-%m-%d',time)='{0}' and banci ='{1}' and xianhao={2}", time, banci, xianhao.ToString() + "#"));
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 4 and strftime('%Y-%m-%d',time)='{0}' and banci ='{1}' and xianhao='{2}'", time, banci, xianhao.ToString() + "#"));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;

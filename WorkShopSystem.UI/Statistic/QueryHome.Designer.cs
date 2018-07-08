@@ -61,6 +61,7 @@
             this.yazhuquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuopifengquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pinjianquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jijiaquexian = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewQueryHome)).BeginInit();
@@ -210,7 +211,8 @@
             this.gonghao,
             this.yazhuquexian,
             this.cuopifengquexian,
-            this.pinjianquexian});
+            this.pinjianquexian,
+            this.jijiaquexian});
             this.dataGridViewQueryHome.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewQueryHome.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewQueryHome.Name = "dataGridViewQueryHome";
@@ -400,6 +402,14 @@
             this.pinjianquexian.ReadOnly = true;
             this.pinjianquexian.Width = 90;
             // 
+            // jijiaquexian
+            // 
+            this.jijiaquexian.DataPropertyName = "jijiaquexian";
+            this.jijiaquexian.Frozen = true;
+            this.jijiaquexian.HeaderText = "机加缺陷";
+            this.jijiaquexian.Name = "jijiaquexian";
+            this.jijiaquexian.ReadOnly = true;
+            // 
             // QueryHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -458,5 +468,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn yazhuquexian;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuopifengquexian;
         private System.Windows.Forms.DataGridViewTextBoxColumn pinjianquexian;
+        private System.Windows.Forms.DataGridViewTextBoxColumn jijiaquexian;
     }
 }

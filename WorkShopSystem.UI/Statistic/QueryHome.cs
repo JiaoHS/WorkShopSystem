@@ -20,7 +20,7 @@ namespace WorkShopSystem.UI.Statistic
         CommonWorkShopRecordBLL BLL = new CommonWorkShopRecordBLL();
         private void StatisticHome_Load(object sender, EventArgs e)
         {
-
+            this.MaximizeBox = false;
         }
 
         private void btnQuery_Click(object sender, EventArgs e)
@@ -54,13 +54,8 @@ namespace WorkShopSystem.UI.Statistic
             }
 
             DataTable dt = BLL.GetInfoByOne(strWhere.ToString());
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
 
-                }
-            }
+
             if (dt != null && dt.Rows.Count > 0)
             {
                 dataGridViewQueryHome.DataSource = dt;

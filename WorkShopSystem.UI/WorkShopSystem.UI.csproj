@@ -229,6 +229,15 @@
       <DependentUpon>YaZhuHome.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="bin\Debug\biaotou.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="bin\Debug\biaotou2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="bin\Debug\bin\Debug\biaotou.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="bin\Debug\factory.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

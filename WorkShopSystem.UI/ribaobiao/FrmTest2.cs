@@ -25,11 +25,17 @@ namespace MultiColHeaderDgvTest
             btnLoadD.Enabled = true;
             GetMonthList();
             Control.CheckForIllegalCrossThreadCalls = false;
+
+            this.cbWorkShopList.Items.Add("压铸车间");
+            this.cbWorkShopList.Items.Add("机加车间");
+            this.cbWorkShopList.SelectedIndex = 0;
         }
+        string headTitle = "工艺流程#生产设备栏 型号,编号#零件编号#定额/班#需求标准产能#生产信息栏#";
         public delegate void AuthenticationDelegate(bool value);
         OpaqueCommand cmd = new OpaqueCommand();
         int totalColNum = 0;
         string time = "";
+        int workshoptype = 0;
         CommonWorkShopRecordBLL commonWorkShopRecordBLL = new CommonWorkShopRecordBLL();
         public void GetMonthList()
         {
@@ -208,6 +214,7 @@ namespace MultiColHeaderDgvTest
         {
             btnLoadD.Enabled = false;
             time = this.cbMonthLIst.SelectedItem.ToString();
+            workshoptype = this.cbWorkShopList.SelectedIndex;
             if (btnLoadD.Text == "加载数据列表")
             {
                 btnLoadD.Text = "加载中...";
@@ -217,7 +224,7 @@ namespace MultiColHeaderDgvTest
                 }
                 loginThread = new Thread(new ParameterizedThreadStart(ClearData));
                 loginThread.Start(0);
-               
+
             }
             else
             {
@@ -227,7 +234,7 @@ namespace MultiColHeaderDgvTest
                     loginThread.Abort();
             }
 
-           
+
         }
         private void PassAuthentication(bool value)
         {
@@ -269,37 +276,11 @@ namespace MultiColHeaderDgvTest
             dtable.Columns.Add("shenchanxinxilan", typeof(System.String));
 
             //日期的列数
-            for (int i = 1; i <= totalColNum; i++)
+            for (int i = 0; i <= totalColNum-1; i++)
             {
                 dtable.Columns.Add("column" + i.ToString(), typeof(System.String));
             }
-            //DataRow drow = dtable.NewRow();
-            //drow["gongyiliucheng"] = "";
-            //drow["xinghao"] = "";
-            //drow["bianhao"] = "0";
-            //drow["lingjianbianhao"] = "";
-            //drow["dingeban"] = "";
-            //drow["xuqiubiaozhunchanneng"] = "0";
-            //drow["shenchanxinxilan"] = "0";
-            //string temp = string.Empty;
-            //for (int i = 0; i < totalColNum; i++)
-            //{
-            //    temp = "column" + i.ToString();
-            //    drow[temp] = "0";
-            //}
-
-
-            //dtable.Rows.Add(drow);
-
-
-
-            string fileName = @"F:\xjtuSystem\WorkShopSystem\biaotou.xlsx";
-            //txtFile.Text;
-            //if (fileName == null || fileName == "")
-            //{
-            //    MessageBox.Show("请先打开文件！");
-            //    return;
-            //}
+            string fileName = "biaotou.xlsx";
             Dictionary<string, DataTable> dicTables = new Dictionary<string, DataTable>();
             dicTables = ExcelToDataTable(fileName, null, false);//获取到excel的所有sheet   
             string gongyiliuchengmingchen = string.Empty;
@@ -309,17 +290,37 @@ namespace MultiColHeaderDgvTest
             string lingjianbianhao = string.Empty;
             if (dicTables != null && dicTables.Count > 0)
             {
-                int hangShuIndex = 0;
                 foreach (var item in dicTables)
                 {
                     DataTable dt = dicTables[item.Key];
                     //求出所有的生产编号 和零件编号
                     string shenchanbianhaolist = string.Empty;
                     string lingjianbianhaoList = string.Empty;
+                    //计算 查询 每天的生产数量
+                    Dictionary<string, List<string>> dicList = dicModel[""];
+                    List<string> listDay = new List<string>();
+                    if (dicList != null && dicList.Count > 0)
+                    {
+                        foreach (var item2 in dicList)
+                        {
+                            for (int k = 0; k < item2.Value.Count; k++)
+                            {
+                                if(item2.Value[k].ToString()== "产能/周")
+                                {
+                                    headTitle += item2.Key + " " + item2.Value[k] + "#";
+                                }
+                                else
+                                {
+                                    headTitle += item2.Key + " " + item2.Value[k] + " " + "白班,晚班#";
+                                }
+                               
+                                listDay.Add(item2.Value[k]);
+                            }
+                        }
+                    }
                     #region 所有的行数
                     for (int i = 0; i < dt.Rows.Count; i++)//所有的行数
                     {
-                        hangShuIndex++;
                         DataRow drow2 = dtable.NewRow();
                         if (i >= 19 && i <= 22)
                         {
@@ -421,19 +422,7 @@ namespace MultiColHeaderDgvTest
                         }
                         drow2["bianhao"] = bianhao;
                         #endregion
-                        //计算 查询 每天的生产数量
-                        Dictionary<string, List<string>> dicList = dicModel[""];
-                        List<string> listDay = new List<string>();
-                        if (dicList != null && dicList.Count > 0)
-                        {
-                            foreach (var item2 in dicList)
-                            {
-                                for (int k = 0; k < item2.Value.Count; k++)
-                                {
-                                    listDay.Add(item2.Value[k]);
-                                }
-                            }
-                        }
+                     
                         //循环时间查询
                         decimal meitianshuliang = 0;
                         string temp = string.Empty;
@@ -441,7 +430,7 @@ namespace MultiColHeaderDgvTest
                         decimal totalCount = 0;//7天产能总和
 
 
-                        int index = 1;
+                        int index = 0;
                         if (i <= 18)//压铸
                         {
                             #region MyRegion
@@ -476,9 +465,10 @@ namespace MultiColHeaderDgvTest
                             dtable.Rows.Add(drow2);
                             #endregion
                         }
-                        else if (i >= 19 && i <= 22)//压铸4行统计数据
                         #region MyRegion
+                        else if (i >= 19 && i <= 22)//压铸4行统计数据
                         {
+                            #region MyRegion
                             DataTable tableDay = new DataTable();
                             decimal dayCount = 0;
                             decimal zhouCount = 0;
@@ -630,6 +620,7 @@ namespace MultiColHeaderDgvTest
                                 }
                             }
                             dtable.Rows.Add(drow2);
+                            #endregion
                         }
                         #endregion
                         else if (i >= 23 && i <= 24)//2台打砂
@@ -1377,8 +1368,9 @@ namespace MultiColHeaderDgvTest
                     }
                 }
             }
-            multiColHeaderDgv2.DataSource = dtable;
-
+            //multiColHeaderDgvRiBaoBiao.DataSource = dtable;
+            MessageBox.Show("数据统计完成,请点击生成excel!");
+        
         }
 
         private decimal GetQuanJianDayCount(int xianhao, string time, string banci)
@@ -1534,7 +1526,8 @@ namespace MultiColHeaderDgvTest
             {
                 string path = sfd.FileName;
 
-                string header = "项目#年月#压铸产能#压铸计数器#压铸车间报废数 压铸,打砂1,打砂2,挫披锋,外观全检#压铸车间内部报废率#CNC产能#机加缺陷报废数 CNC,清洗,测漏,全检#机加车间最终报废率#压铸车间报废总数 压铸车间,CNC,全检线#压铸车间最终报废率";
+                string header = headTitle.TrimEnd('#');
+                //"项目#年月#压铸产能#压铸计数器#压铸车间报废数 压铸,打砂1,打砂2,挫披锋,外观全检#压铸车间内部报废率#CNC产能#机加缺陷报废数 CNC,清洗,测漏,全检#机加车间最终报废率#压铸车间报废总数 压铸车间,CNC,全检线#压铸车间最终报废率";
                 DataSet ds = new DataSet();
                 ds.Tables.Add(dtable.Copy());
                 NPOIHelper helper = new WorkShopSystem.Utility.NPOIHelper("", "sheet", header, "车间数据统计", ds, "", path, 2);
@@ -1542,6 +1535,7 @@ namespace MultiColHeaderDgvTest
                 if (flag == "ok")
                 {
                     MessageBox.Show("导出数据成功！");
+                    cmd.HideOpaqueLayer();
                 }
                 else
                 {

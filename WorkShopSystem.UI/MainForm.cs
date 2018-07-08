@@ -457,7 +457,8 @@ namespace WorkShopSystem.UI
 
         private void tsbRiBaoBiao_Click(object sender, EventArgs e)
         {
-
+            FrmTest2 frmTest = new MultiColHeaderDgvTest.FrmTest2();
+            frmTest.ShowDialog();
         }
     }
 }
