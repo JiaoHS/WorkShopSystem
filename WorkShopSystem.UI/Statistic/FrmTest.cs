@@ -49,7 +49,29 @@ namespace MultiColHeaderDgvTest
             dtable.Columns.Add("cnc2", typeof(System.String));
             dtable.Columns.Add("quanjianxian", typeof(System.String));
             dtable.Columns.Add("yazhuchejianzuizhongbaofeilv", typeof(System.String));
-
+            //测试一行
+            //DataRow drow4 = dtable.NewRow();
+            //drow4["xiangmu"] = "a";
+            //drow4["nianyue"] = "a";
+            //drow4["yazhuchanneng"] = "a";
+            //drow4["yazhujishuqishu"] = "a";
+            //drow4["yazhu"] = "a";
+            //drow4["dasha1"] = "a";
+            //drow4["dasha2"] = "a";
+            //drow4["cuopifeng"] = "a";
+            //drow4["hmianquanjian"] = "a";
+            //drow4["yazhuchejianneibubaofeilv"] = "a";
+            //drow4["cncchanneng"] = "a";
+            //drow4["cnc"] = "a";
+            //drow4["qingxi"] = "a";
+            //drow4["celou"] = "a";
+            //drow4["quanjian"] = "a";
+            //drow4["jijiachejianzuizhongbaofeilv"] = "a";
+            //drow4["yazhuchejian"] = "a";
+            //drow4["cnc2"] = "a";
+            //drow4["quanjianxian"] = "a";
+            //drow4["yazhuchejianzuizhongbaofeilv"] = "a";
+            //dtable.Rows.Add(drow4);
 
             //获取所有的行数
             //压铸车间

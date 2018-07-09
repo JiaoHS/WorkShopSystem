@@ -12,6 +12,8 @@ namespace WorkShopSystem.Utility
 {
     public class CommonHelper
     {
+        public static int WorkShopType;
+        public static string TimeStatic;
         //将字符串转化为MD5
         public static string ComputeStringMD5(string str)
         {

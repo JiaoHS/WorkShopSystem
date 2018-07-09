@@ -20,6 +20,7 @@ using WorkShopSystem.UI.cleardata;
 using MultiColHeaderDgvTest;
 using WorkShopSystem.UI.yazhu;
 using WorkShopSystem.UI.Statistic;
+using WorkShopSystem.UI.ribaobiao;
 
 namespace WorkShopSystem.UI
 {
@@ -457,8 +458,8 @@ namespace WorkShopSystem.UI
 
         private void tsbRiBaoBiao_Click(object sender, EventArgs e)
         {
-            FrmTest2 frmTest = new MultiColHeaderDgvTest.FrmTest2();
-            frmTest.ShowDialog();
+            FrmHome frmHome = new FrmHome();
+            frmHome.ShowDialog();
         }
     }
 }

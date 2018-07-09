@@ -648,7 +648,7 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 3 and strftime('%Y-%m-%d',time)='{1}' and banci ='{2}' and maopeihao='{3}'", xianhao.ToString() + "#", time, banci, lingjianbianhao));
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 3 and xianhao='{0}' and strftime('%Y-%m-%d',time)='{1}' and banci ='{2}' and maopeihao='{3}'", xianhao.ToString() + "#", time, banci, lingjianbianhao));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;

@@ -133,6 +133,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ribaobiao\FrmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ribaobiao\FrmHome.Designer.cs">
+      <DependentUpon>FrmHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ribaobiao\FrmTest3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ribaobiao\FrmTest3.designer.cs">
+      <DependentUpon>FrmTest3.cs</DependentUpon>
+    </Compile>
     <Compile Include="ribaobiao\FrmTest2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +219,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ribaobiao\FrmHome.resx">
+      <DependentUpon>FrmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ribaobiao\FrmTest3.resx">
+      <DependentUpon>FrmTest3.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ribaobiao\FrmTest2.resx">
       <DependentUpon>FrmTest2.cs</DependentUpon>
     </EmbeddedResource>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using WorkShopSystem.UI.cleardata;
 using WorkShopSystem.UI.loading;
+using WorkShopSystem.UI.ribaobiao;
 using WorkShopSystem.UI.Statistic;
 using WorkShopSystem.UI.yazhu;
 
@@ -20,7 +21,7 @@ namespace WorkShopSystem.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmTest2());
+            Application.Run(new FrmHome());
         }
     }
 }
