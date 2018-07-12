@@ -598,11 +598,12 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
         }
-        public DataTable GetMonthList()
+        public DataTable GetMonthList(int type)
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT strftime('%Y-%m',  time) as time from CommonWorkShopRecord where strftime('%Y-%m',time)>'2017-01' GROUP BY strftime('%Y-%m',time) order by time");
+            string typeList = type == 0 ? "0,1,2,3,4" : "5,6,7,8";
+            strSql.Append(string.Format("SELECT strftime('%Y-%m',  time) as time from CommonWorkShopRecord where workshoptype in ({0}) and strftime('%Y-%m',time)>'2017-01' GROUP BY strftime('%Y-%m',time) order by time", typeList));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -617,6 +618,16 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
             return dt;
         }
 
+        public DataTable GetNumJiJia(string xianhao, string lingjianbianhao, string time, string banci)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype=5 and strftime('%Y-%m-%d',time)='{0}' and xianhao in ({1}) and maopeihao in ({2}) and banci='{3}'", time, xianhao, lingjianbianhao, banci));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
+
         public DataTable GetNumByDay(string time, string shenchanbianhaolist, string lingjianbianhaolist)
         {
             DataTable dt = new DataTable();
@@ -626,11 +637,31 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
         }
+
+        public DataTable GetJiJIaNumByDay(string time, string shenchanbianhaolist, string lingjianbianhaolist)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu,sum(yazhuquexian) as yazhuquexian,sum(jijiaquexian) as jijiaquexian,sum(pinjianquexian) as pinjianquexian,sum(fanxiuzongshu) as fanxiuzongshu from CommonWorkShopRecord where workshoptype=5 and strftime('%Y-%m-%d',time)='{0}' and xianhao in ({1}) and maopeihao in ({2}) ", time, shenchanbianhaolist, lingjianbianhaolist));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
+
         public DataTable GetDaShaNum(string dashaindex, string time)
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
             strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu,sum(yazhuquexian) as yazhuquexian,sum(cuopifengquexian) as cuopifengquexian,sum(pinjianquexian) as pinjianquexian from CommonWorkShopRecord where workshoptype in ({0}) and strftime('%Y-%m-%d',time)='{1}'", dashaindex, time));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
+        public DataTable GetQingXiNum(string maopihao, string time)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu,sum(yazhuquexian) as yazhuquexian,sum(jijiaquexian) as jijiaquexian,sum(pinjianquexian) as pinjianquexian,sum(fanxiuzongshu) as fanxiuzongshu from CommonWorkShopRecord where workshoptype=6 and maopeihao in({0}) and strftime('%Y-%m-%d',time)='{1}'", maopihao, time));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -644,11 +675,29 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
         }
+        public DataTable GetQingXiDayCount(string lingjianbianhao, string time)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 6 and maopeihao='{0}' and strftime('%Y-%m-%d',time)='{1}'", lingjianbianhao, time));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
         public DataTable GetCuoPiFengDayCount(int xianhao, string lingjianbianhao, string time, string banci)
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
             strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 3 and xianhao='{0}' and strftime('%Y-%m-%d',time)='{1}' and banci ='{2}' and maopeihao='{3}'", xianhao.ToString() + "#", time, banci, lingjianbianhao));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
+        public DataTable GetCeLouDayCount(string gongyiliucheng, string lingjianbianhao, string time, string banci)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 7 and yazhujihao='{0}' and strftime('%Y-%m-%d',time)='{1}' and banci ='{2}' and maopeihao='{3}'", gongyiliucheng, time, banci, lingjianbianhao));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
@@ -662,6 +711,15 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
         }
+        public DataTable GetCeLouNum(string xianhao, string time, string lingjianbianhao)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu,sum(yazhuquexian) as yazhuquexian,sum(jijiaquexian) as jijiaquexian,sum(pinjianquexian) as pinjianquexian,sum(fanxiuzongshu) as fanxiuzongshu from CommonWorkShopRecord where workshoptype = 7 and strftime('%Y-%m-%d',time)='{0}' and yazhujihao in ({1}) and maopeihao in ({2})", time, xianhao, lingjianbianhao));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
         public DataTable GetShouDongCuoPiFengDayCount(string xianhao, string time, string banci)
         {
             DataTable dt = new DataTable();
@@ -671,11 +729,29 @@ sum(feijiagongaokeng) as feijiagongaokeng,sum(liewen) as liewen,sum(nianmo) as n
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;
         }
+        public DataTable GetQuanJianDayCount(string xianhao, string time, string maopeihao)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu from CommonWorkShopRecord where workshoptype = 8 and strftime('%Y-%m-%d',time)='{0}' and maopeihao ='{1}' and maopeihao='{2}'", time, maopeihao, xianhao));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
         public DataTable GetShouDongCuoPiFengDayCount(string bianhao, string time)
         {
             DataTable dt = new DataTable();
             StringBuilder strSql = new StringBuilder();
             strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu,sum(yazhuquexian) as yazhuquexian,sum(cuopifengquexian) as cuopifengquexian,sum(pinjianquexian) as pinjianquexian from CommonWorkShopRecord where workshoptype = 3 and strftime('%Y-%m-%d',time)='{0}' and gonghao in ({1})", time, bianhao));
+
+            dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
+            return dt;
+        }
+        public DataTable GetJiJiaQuanJianDayCount(string yazhujihao, string time,string lingjianbianhao)
+        {
+            DataTable dt = new DataTable();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(string.Format("SELECT sum(shengchanzongshu) as shengchanzongshu,sum(yazhuquexian) as yazhuquexian,sum(jijiaquexian) as jijiaquexian,sum(pinjianquexian) as pinjianquexian,sum(fanxiuzongshu) as fanxiuzongshu from CommonWorkShopRecord where workshoptype = 8 and strftime('%Y-%m-%d',time)='{0}' and yazhujihao in ({1}) and maopeihao in({2})", time, yazhujihao, lingjianbianhao));
 
             dt = SqliteHelper.ExecuteDataTable(strSql.ToString());
             return dt;

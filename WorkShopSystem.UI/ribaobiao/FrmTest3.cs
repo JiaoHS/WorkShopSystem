@@ -33,7 +33,7 @@ namespace MultiColHeaderDgvTest
         string flagTemp = "first";
         public void GetMonthList()
         {
-            DataTable dt = commonWorkShopRecordBLL.GetMonthList();
+            DataTable dt = commonWorkShopRecordBLL.GetMonthList(0);
             DateTime dtime = new DateTime();
             List<string> listTime = new List<string>();
             if (dt != null && dt.Rows.Count > 0)

@@ -83,7 +83,7 @@ namespace MultiColHeaderDgvTest
             }
             int beginIndex = new System.Globalization.GregorianCalendar().GetWeekOfYear(dtBeginDate, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             int endIndex = new System.Globalization.GregorianCalendar().GetWeekOfYear(dtEndDate, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
-            for (int i = beginIndex; i <= endIndex; i++)
+            for (int i = beginIndex - 1; i <= endIndex; i++)
             {
                 dicList.Add(year.ToString() + "年第" + i.ToString() + "周", GetWeekSpan(i, dtBeginDate));
             }
@@ -1378,6 +1378,1198 @@ namespace MultiColHeaderDgvTest
             int delay = (int)_delay;
             Thread.Sleep(delay);
             PassAuthentication(true);
+
+            Dictionary<string, Dictionary<string, List<string>>> dicModel = new Dictionary<string, Dictionary<string, List<string>>>();
+            dicModel = GetDayByWeek(time);
+            //GetDayByWeek(time);
+            initParent(dicModel);
+            //button1.Enabled = false;
+            //先更新表数据
+            //set columns names
+            dtable.Columns.Add("gongyiliucheng", typeof(System.String));
+            dtable.Columns.Add("xinghao", typeof(System.String));
+            dtable.Columns.Add("bianhao", typeof(System.String));
+            dtable.Columns.Add("lingjianbianhao", typeof(System.String));
+            dtable.Columns.Add("dingeban", typeof(System.String));
+            dtable.Columns.Add("xuqiubiaozhunchanneng", typeof(System.String));
+            dtable.Columns.Add("shenchanxinxilan", typeof(System.String));
+
+            //DataRow drow3 = dtable.NewRow();
+            //drow3["gongyiliucheng"] = "a";
+            //drow3["xinghao"] = "a";
+            //drow3["bianhao"] = "a";
+            //drow3["lingjianbianhao"] = "a";
+            //drow3["dingeban"] = "a";
+            //drow3["xuqiubiaozhunchanneng"] = "a";
+            //drow3["shenchanxinxilan"] = "a";
+            //日期的列数
+            for (int i = 0; i <= totalColNum - 1; i++)
+            {
+                dtable.Columns.Add("column" + i.ToString(), typeof(System.String));
+                //string temp = "column" + i.ToString();
+                //drow3[temp] = "1";//对应的每一天的白班或者夜班
+            }
+            //dtable.Rows.Add(drow3);
+            string fileName = "jijiabaiotou.xlsx";
+            Dictionary<string, DataTable> dicTables = ExcelToDataTable(fileName, null, false);//获取到excel的所有sheet   
+            //dicTables = ExcelToDataTable(fileName, null, false);//获取到excel的所有sheet   
+            string gongyiliuchengmingchen = string.Empty;
+            string xinghao = string.Empty;
+            string bianhao = string.Empty;
+            string xuqiubiaozhunchanneng = string.Empty;
+            decimal xuqiubiaozhunDay = 0;
+            decimal xuqiubiaozhunWeek = 0;
+            string lingjianbianhao = string.Empty;
+            Dictionary<string, int> dicTemp = new Dictionary<string, int>();
+            if (dicTables != null && dicTables.Count > 0)
+            #region MyRegion
+            {
+                foreach (var item in dicTables)
+                {
+                    DataTable dt = dicTables[item.Key];
+                    //求出所有的生产编号 和零件编号
+                    string shenchanbianhaolist = string.Empty;
+                    string lingjianbianhaoList = string.Empty;
+                    string shenchanbianhaolist31 = string.Empty;
+                    string lingjianbianhaoList31 = string.Empty;
+                    string shenchanbianhaolist49 = string.Empty;
+                    string shenchanbianhaolist68 = string.Empty;
+                    string lingjianbianhaoList88 = string.Empty;
+                    string lingjianbianhaoList317 = string.Empty;
+                    string lingjianbianhaoList538 = string.Empty;
+                    string shenchanbianhaolist317 = string.Empty;
+                    string shenchanbianhaolist538 = string.Empty;
+                    string lingjianbianhao68 = string.Empty;
+                    //计算 查询 每天的生产数量
+                    Dictionary<string, List<string>> dicList = dicModel[""];
+                    List<string> listDay = new List<string>();
+                    if (dicList != null && dicList.Count > 0)
+                    {
+                        foreach (var item2 in dicList)
+                        {
+                            for (int k = 0; k < item2.Value.Count; k++)
+                            {
+                                if (item2.Value[k].ToString() == "产能/周")
+                                {
+                                    headTitle += item2.Key + item2.Value[k] + "#";
+                                }
+                                else
+                                {
+                                    headTitle += item2.Value[k] + " " + "白班,晚班#";
+                                }
+
+                                listDay.Add(item2.Value[k]);
+                            }
+                        }
+                    }
+                    #region 所有的行数
+                    for (int i = 0; i < dt.Rows.Count; i++)//所有的行数
+                    {
+                        DataRow drow2 = dtable.NewRow();
+
+                        if (i <= 45)
+                        {
+                            if (dt.Columns.Contains("gongyiliuchengmingchen"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["gongyiliuchengmingchen"]))
+                                {
+                                    gongyiliuchengmingchen = Convert.ToString(dt.Rows[i]["gongyiliuchengmingchen"]);
+                                }
+                            }
+                            drow2["gongyiliucheng"] = gongyiliuchengmingchen;
+                            if (dt.Columns.Contains("shengchanshebeilan_xinghao"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["shengchanshebeilan_xinghao"]))
+                                {
+                                    xinghao = Convert.ToString(dt.Rows[i]["shengchanshebeilan_xinghao"]);
+                                }
+                            }
+                            drow2["xinghao"] = xinghao;
+                            if (dt.Columns.Contains("dingebaiban"))
+                            {
+                                drow2["dingeban"] = dt.Rows[i]["dingebaiban"].ToString();
+                            }
+
+                            if (dt.Columns.Contains("lingjianbianhao"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["lingjianbianhao"]))
+                                {
+                                    lingjianbianhao = Convert.ToString(dt.Rows[i]["lingjianbianhao"]);
+                                }
+                            }
+                            drow2["lingjianbianhao"] = lingjianbianhao;
+                            if (dt.Columns.Contains("xuqiubiaozhunchanneng"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["xuqiubiaozhunchanneng"]))
+                                {
+                                    xuqiubiaozhunchanneng = Convert.ToString(dt.Rows[i]["xuqiubiaozhunchanneng"]);
+                                }
+                            }
+                            drow2["xuqiubiaozhunchanneng"] = xuqiubiaozhunchanneng;
+                            if (dt.Columns.Contains("shengchanxinxilan"))
+                            {
+                                drow2["shenchanxinxilan"] = dt.Rows[i]["shengchanxinxilan"].ToString();
+                            }
+                            if (dt.Columns.Contains("shengchanshebeilan_bianhao"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["shengchanshebeilan_bianhao"]))
+                                {
+                                    bianhao = Convert.ToString(dt.Rows[i]["shengchanshebeilan_bianhao"]);
+                                }
+                            }
+                            drow2["bianhao"] = bianhao;
+                        }
+                        else
+                        {
+                            if (dt.Columns.Contains("gongyiliuchengmingchen"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["gongyiliuchengmingchen"]) && dt.Rows[i]["gongyiliuchengmingchen"].ToString().Trim() != "")
+                                {
+                                    gongyiliuchengmingchen = Convert.ToString(dt.Rows[i]["gongyiliuchengmingchen"]);
+                                }
+                            }
+                            drow2["gongyiliucheng"] = gongyiliuchengmingchen;
+                            if (dt.Columns.Contains("shengchanshebeilan_xinghao"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["shengchanshebeilan_xinghao"]) && dt.Rows[i]["shengchanshebeilan_xinghao"].ToString().Trim() != "")
+                                {
+                                    xinghao = Convert.ToString(dt.Rows[i]["shengchanshebeilan_xinghao"]);
+                                }
+                            }
+                            drow2["xinghao"] = xinghao;
+                            if (dt.Columns.Contains("dingebaiban"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["dingebaiban"]) && dt.Rows[i]["dingebaiban"].ToString().Trim() != "")
+                                {
+                                    xinghao = Convert.ToString(dt.Rows[i]["dingebaiban"]);
+                                }
+                                drow2["dingeban"] = xinghao;
+                                    //dt.Rows[i]["dingebaiban"].ToString();
+                            }
+
+                            if (dt.Columns.Contains("lingjianbianhao"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["lingjianbianhao"]) && dt.Rows[i]["lingjianbianhao"].ToString().Trim() != "")
+                                {
+                                    lingjianbianhao = Convert.ToString(dt.Rows[i]["lingjianbianhao"]);
+                                }
+                            }
+                            drow2["lingjianbianhao"] = lingjianbianhao;
+                            if (dt.Columns.Contains("xuqiubiaozhunchanneng"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["xuqiubiaozhunchanneng"]) && dt.Rows[i]["xuqiubiaozhunchanneng"].ToString().Trim() != "")
+                                {
+                                    xuqiubiaozhunchanneng = Convert.ToString(dt.Rows[i]["xuqiubiaozhunchanneng"]);
+                                }
+                            }
+                            drow2["xuqiubiaozhunchanneng"] = xuqiubiaozhunchanneng;
+                            if (dt.Columns.Contains("shengchanxinxilan"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["shenchanxinxilan"]) && dt.Rows[i]["shenchanxinxilan"].ToString().Trim() != "")
+                                {
+                                    xuqiubiaozhunchanneng = Convert.ToString(dt.Rows[i]["shenchanxinxilan"]);
+                                }
+                                drow2["shenchanxinxilan"] = xuqiubiaozhunchanneng;
+                                    //dt.Rows[i]["shengchanxinxilan"].ToString();
+                            }
+                            if (dt.Columns.Contains("shengchanshebeilan_bianhao"))
+                            {
+                                if (!Convert.IsDBNull(dt.Rows[i]["shengchanshebeilan_bianhao"]) && dt.Rows[i]["shengchanshebeilan_bianhao"].ToString().Trim() != "")
+                                {
+                                    bianhao = Convert.ToString(dt.Rows[i]["shengchanshebeilan_bianhao"]);
+                                }
+                            }
+                            drow2["bianhao"] = bianhao;
+                        }
+                        if (i >= 46 && i <= 50)
+                        {
+                            drow2["xinghao"] = "";
+                            drow2["bianhao"] = "";
+                            drow2["dingeban"] = "";
+                            drow2["lingjianbianhao"] = "";
+                            drow2["xuqiubiaozhunchanneng"] = "";
+                            drow2["shenchanxinxilan"] = "";
+                        }
+                        else if (i >= 79 && i <= 83)
+                        {
+                            drow2["lingjianbianhao"] = "";
+                            drow2["xinghao"] = "";
+                            drow2["bianhao"] = "";
+                            drow2["dingeban"] = "";
+                            drow2["xuqiubiaozhunchanneng"] = "";
+                            drow2["shenchanxinxilan"] = "";
+                        }
+                        else if (i >= 318 && i <= 322)
+                        {
+                            drow2["lingjianbianhao"] = "";
+                            drow2["xinghao"] = "";
+                            drow2["bianhao"] = "";
+                            drow2["dingeban"] = "";
+                            drow2["xuqiubiaozhunchanneng"] = "";
+                            drow2["shenchanxinxilan"] = "";
+                        }
+                        else if (i >= 539 && i <= 543)
+                        {
+                            drow2["lingjianbianhao"] = "";
+                            drow2["xinghao"] = "";
+                            drow2["bianhao"] = "";
+                            drow2["dingeban"] = "";
+                            drow2["xuqiubiaozhunchanneng"] = "";
+                            drow2["shenchanxinxilan"] = "";
+                        }
+                        #endregion
+
+                        //循环时间查询
+                        decimal meitianshuliang = 0;
+                        string temp = string.Empty;
+                        decimal tempCount = 0;//每天的产能
+                        decimal totalCount = 0;//7天产能总和
+                        string lingjianTemp = string.Empty;
+                        string xinghaoTemp = xinghao;
+                        int index = 0;
+                        string gongyiliucheng = string.Empty;
+                        //测试
+                        //if (i < 323)
+                        //{
+                        //    continue;
+                        //}
+
+                        if (i <= 45)//压铸
+                        {
+                            #region MyRegion
+                            if (xuqiubiaozhunchanneng.Contains("\n"))
+                            {
+                                string[] strArr = xuqiubiaozhunchanneng.Split('\n');
+                                decimal d = 0;
+                                for (int k = 0; k < strArr.Length - 1; k++)
+                                {
+                                    decimal.TryParse(strArr[k].Split('/')[0], out d);
+                                    if (k == 0)
+                                    {
+                                        xuqiubiaozhunDay += d;
+                                    }
+                                    if (k == 1)
+                                    {
+                                        xuqiubiaozhunWeek += d;
+                                    }
+                                }
+                            }
+                            string gongyiliuchengmingchenTemp = (i < 9 ? "'" + gongyiliuchengmingchen.Split('-')[1].Substring(0, 1) + "#" + "'" : "'" + gongyiliuchengmingchen.Split('-')[1].Substring(0, 2) + "#" + "'");
+                            if (xinghao.Contains("-"))
+                            {
+                                xinghaoTemp = xinghao.Split('-')[1].Substring(0, 1);
+                                gongyiliuchengmingchenTemp = (i < 9 ? "'" + gongyiliuchengmingchen.Split('-')[1].Substring(0, 1) + "-" + xinghaoTemp + "#" + "'" : "'" + gongyiliuchengmingchen.Split('-')[1].Substring(0, 2) + "-" + xinghaoTemp + "#" + "'");
+                            }
+                            shenchanbianhaolist += gongyiliuchengmingchenTemp + ",";
+                            for (int l = 0; l < lingjianbianhao.Split('/').Length - 1; l++)
+                            {
+                                lingjianTemp += "'" + lingjianbianhao.Split('/')[l] + "'" + ",";
+                                if (dicTemp.ContainsKey("'" + lingjianbianhao.Split('/')[l] + "'"))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    dicTemp.Add("'" + lingjianbianhao.Split('/')[l] + "'", 0);
+                                }
+                            }
+
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)
+                                        {
+                                            tempCount = GetNumJiJia(gongyiliuchengmingchenTemp, lingjianTemp.TrimEnd(','), listDay[j], m == 2 ? "夜班" : "白班");
+                                            temp = "column" + index.ToString();
+                                            drow2[temp] = tempCount;//对应的每一天的白班或者夜班
+                                            index++;//对应所有的列循环
+                                            totalCount += tempCount;//对应一周的总和同一个生产编号 零件编号
+                                            meitianshuliang += tempCount;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和
+                                        temp = "column" + index.ToString();
+                                        drow2[temp] = totalCount;
+                                        totalCount = 0;
+                                        index++;
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        #region MyRegion
+                        else if (i >= 46 && i <= 50)//CNC
+                        {
+                            #region MyRegion
+                            DataTable tableDay = new DataTable();
+                            decimal dayCount = 0;
+                            decimal zhouCount = 0;
+                            decimal jishuqishuSum = 0;//对应计数器数
+                            foreach (var itemDic in dicTemp)
+                            {
+                                lingjianbianhaoList += itemDic.Key + ",";
+                            }
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    temp = "column" + index.ToString();
+                                    index++;//对应所有的列循环
+                                    decimal tempquexian = 0;//对应缺陷总数
+                                    decimal jishuqishu = 0;//对应计数器数
+
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int h = 0; h < 2; h++)
+                                        {
+                                            if (h == 0)
+                                            {
+                                                tableDay = commonWorkShopRecordBLL.GetJiJIaNumByDay(listDay[j], shenchanbianhaolist.TrimEnd(','), lingjianbianhaoList.TrimEnd(','));
+                                                if (tableDay != null && tableDay.Rows.Count > 0)
+                                                {
+                                                    if (i == 46)
+                                                    {
+                                                        if (tableDay.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;//对应的每一天总和
+                                                    }
+                                                    else if (i == 47)
+                                                    {
+                                                        if (tableDay.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = decimal.Round(decimal.Parse((dayCount / xuqiubiaozhunDay).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一天效率
+                                                    }
+                                                    else if (i == 48)
+                                                    {
+
+                                                        if (tableDay.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (tableDay.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (tableDay.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        drow2[temp] = tempquexian;//对应的每一天总和
+                                                    }
+                                                    else if (i == 49)
+                                                    {
+                                                        if (tableDay.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (tableDay.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (tableDay.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        if (tableDay.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["shengchanzongshu"].ToString(), out jishuqishu);
+                                                        }
+                                                        jishuqishuSum += jishuqishu;
+                                                        if (jishuqishu > 0)
+                                                        {
+                                                            drow2[temp] = decimal.Round(decimal.Parse((tempquexian / jishuqishu).ToString()) * 100, 2).ToString() + "%";//对应的每一天总和
+                                                        }
+                                                        else
+                                                        {
+                                                            drow2[temp] = 0;//对应的每一天总和
+                                                        }
+                                                    }
+                                                    else if (i == 50)
+                                                    {
+                                                        if (tableDay.Columns.Contains("fanxiuzongshu"))
+                                                        {
+                                                            decimal.TryParse(tableDay.Rows[0]["fanxiuzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        drow2[temp] = tempquexian;
+                                                    }
+                                                }
+
+                                            }
+                                            else if (h == 1)
+                                            {
+                                                temp = "column" + index.ToString();
+                                                index++;
+                                                if (i == 46)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 47)
+                                                {
+                                                    drow2[temp] = "";  //报废率;//对应的每一天效率
+                                                }
+                                                else if (i == 48)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 49)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 50)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //求和 产能列
+                                        if (i == 46)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 47)
+                                        {
+                                            drow2[temp] = decimal.Round(decimal.Parse((zhouCount / xuqiubiaozhunWeek).ToString()) * 100, 2).ToString() + "%";
+                                        }
+                                        else if (i == 48)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 49)
+                                        {
+                                            if (jishuqishuSum > 0)
+                                            {
+                                                drow2[temp] = decimal.Round(decimal.Parse((zhouCount / jishuqishuSum).ToString()) * 100, 2).ToString() + "%";
+                                            }
+                                            else
+                                            {
+                                                drow2[temp] = 0;  //报废率;//对应的每一周的效率;;
+                                            }
+                                        }
+                                        else if (i == 50)
+                                        {
+                                            drow2[temp] = zhouCount;//对应的每一天总和
+                                        }
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        #endregion
+                        else if (i >= 51 && i <= 78)//清洗
+                        {
+                            #region MyRegion
+                            if (lingjianbianhao.ToLower().Contains("f"))
+                            {
+                                lingjianTemp = "F" + lingjianbianhao.Substring(lingjianbianhao.Length - 3, 3);
+                            }
+                            else
+                            {
+                                lingjianTemp = lingjianbianhao;
+                            }
+                            lingjianbianhaoList88 += "'" + lingjianTemp + "'" + ",";
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)
+                                        {
+                                            if (m == 1)
+                                            {
+                                                tempCount = GetQingXiDayCount(lingjianTemp, listDay[j]);
+                                                temp = "column" + index.ToString();
+                                                drow2[temp] = tempCount;//对应的每一天的白班或者夜班
+                                                index++;//对应所有的列循环
+                                                totalCount += tempCount;//对应一周的总和同一个生产编号 零件编号
+                                                meitianshuliang += tempCount;
+                                            }
+                                            if (m == 2)
+                                            {
+                                                temp = "column" + index.ToString();
+                                                drow2[temp] = 0;//对应的每一天的白班或者夜班
+                                                index++;//对应所有的列循环
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和
+                                        temp = "column" + index.ToString();
+                                        drow2[temp] = totalCount;
+                                        totalCount = 0;
+                                        index++;
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        else if (i >= 79 && i <= 83)//清洗统计
+                        {
+                            #region MyRegion
+                            decimal jishuqishuSum = 0;//对应计数器数
+                            decimal dayCount = 0;
+                            decimal zhouCount = 0;
+                            DataTable dtDaSha = new DataTable();
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    temp = "column" + index.ToString();
+                                    index++;//对应所有的列循环
+                                    decimal tempquexian = 0;//对应缺陷总数
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)//白班和夜班
+                                        {
+                                            if (m == 1)
+                                            {
+                                                dtDaSha = commonWorkShopRecordBLL.GetQingXiNum(lingjianbianhaoList88.TrimEnd(','), listDay[j]);
+                                                if (dtDaSha != null && dtDaSha.Rows.Count > 0)
+                                                {
+                                                    if (i == 79)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;//对应的每一天总和
+                                                    }
+                                                    else if (i == 80)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = decimal.Round(decimal.Parse((dayCount / 21168).ToString()) * 100, 2).ToString() + "%";
+                                                    }
+                                                    else if (i == 81)
+                                                    {
+
+                                                        if (dtDaSha.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        drow2[temp] = tempquexian;//对应的每一天总和
+                                                    }
+                                                    else if (i == 82)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        jishuqishuSum += dayCount;
+                                                        if (dayCount > 0)
+                                                        {
+                                                            drow2[temp] = decimal.Round(decimal.Parse((tempquexian / dayCount).ToString()) * 100, 2).ToString() + "%";//对应的每一天总和
+                                                        }
+                                                        else
+                                                        {
+                                                            drow2[temp] = 0;//对应的每一天总和
+                                                        }
+                                                    }
+                                                    else if (i == 83)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("fanxiuzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["fanxiuzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;//对应的每一天总和
+                                                    }
+                                                }
+                                            }
+                                            else if (m == 2)
+                                            {
+                                                temp = "column" + index.ToString();
+                                                index++;
+                                                if (i == 79)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 80)
+                                                {
+                                                    drow2[temp] = "";  //报废率;//对应的每一天效率
+                                                }
+                                                else if (i == 81)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 82)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 83)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和 产能列
+                                        if (i == 79)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 80)
+                                        {
+                                            drow2[temp] = decimal.Round(decimal.Parse((zhouCount / 21168).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一周的效率;
+                                        }
+                                        else if (i == 81)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 82)
+                                        {
+                                            if (jishuqishuSum > 0)
+                                            {
+                                                drow2[temp] = decimal.Round(decimal.Parse((zhouCount / jishuqishuSum).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一周的效率;;
+                                            }
+                                            else
+                                            {
+                                                drow2[temp] = 0;
+                                            }
+                                        }
+                                        else if (i == 83)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        else if (i >= 84 && i <= 317)//测漏
+                        {
+                            #region MyRegion
+                            if (lingjianbianhao.ToLower().Contains("f"))
+                            {
+                                lingjianTemp = "F" + lingjianbianhao.Substring(lingjianbianhao.Length - 3, 3);
+                            }
+                            else
+                            {
+                                lingjianTemp = lingjianbianhao;
+                            }
+                            if (i <= 110)
+                            {
+                                lingjianbianhaoList317 += "'" + lingjianTemp + "'" + ",";
+                            }
+                            if (gongyiliuchengmingchen.ToLower().Contains("-"))
+                            {
+                                gongyiliucheng = gongyiliuchengmingchen.Split('-')[1].Substring(0, 2);
+                            }
+                            if (!shenchanbianhaolist317.Contains(gongyiliucheng))
+                            {
+                                shenchanbianhaolist317 += "'" + gongyiliucheng + "'" + ",";
+                            }
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)
+                                        {
+                                            tempCount = GetCeLouDayCount(gongyiliucheng, lingjianTemp, listDay[j], m == 2 ? "夜班" : "白班");
+                                            temp = "column" + index.ToString();
+                                            drow2[temp] = tempCount;//对应的每一天的白班或者夜班
+                                            index++;//对应所有的列循环
+                                            totalCount += tempCount;//对应一周的总和同一个生产编号 零件编号
+                                            meitianshuliang += tempCount;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和
+                                        temp = "column" + index.ToString();
+                                        drow2[temp] = totalCount;
+                                        totalCount = 0;
+                                        index++;
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        else if (i >= 318 && i <= 322)//测漏统计
+                        {
+                            #region MyRegion
+                            decimal jishuqishuSum = 0;//对应计数器数
+                            decimal dayCount = 0;
+                            decimal zhouCount = 0;
+                            DataTable dtDaSha = new DataTable();
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    temp = "column" + index.ToString();
+                                    index++;//对应所有的列循环
+                                    decimal tempquexian = 0;//对应缺陷总数
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)//白班和夜班
+                                        {
+                                            if (m == 1)
+                                            {
+                                                //明天todo 需要再传一个零件编号 的集合
+                                                dtDaSha = commonWorkShopRecordBLL.GetCeLouNum(shenchanbianhaolist317.TrimEnd(','), listDay[j], lingjianbianhaoList317.TrimEnd(','));
+                                                if (dtDaSha != null && dtDaSha.Rows.Count > 0)
+                                                {
+                                                    if (i == 318)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;//对应的每一天总和
+                                                    }
+                                                    else if (i == 319)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = decimal.Round(decimal.Parse((dayCount / 21172).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一天效率
+                                                    }
+                                                    else if (i == 320)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        drow2[temp] = tempquexian;//对应的每一天总和
+                                                    }
+                                                    else if (i == 321)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        jishuqishuSum += dayCount;
+                                                        if (dayCount > 0)
+                                                        {
+                                                            drow2[temp] = decimal.Round(decimal.Parse((tempquexian / jishuqishuSum).ToString()) * 100, 2).ToString() + "%";//对应的每一天总和
+                                                        }
+                                                        else
+                                                        {
+                                                            drow2[temp] = 0;//对应的每一天总和
+                                                        }
+                                                    }
+                                                    else if (i == 322)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("fanxiuzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["fanxiuzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;//对应的每一天总和
+                                                    }
+                                                }
+                                            }
+                                            else if (m == 2)
+                                            {
+                                                temp = "column" + index.ToString();
+                                                index++;
+                                                if (i == 318)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 319)
+                                                {
+                                                    drow2[temp] = "";  //报废率;//对应的每一天效率
+                                                }
+                                                else if (i == 320)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 321)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 322)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和 产能列
+                                        if (i == 318)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 319)
+                                        {
+                                            drow2[temp] = decimal.Round(decimal.Parse((zhouCount / 114478).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一周的效率;
+                                        }
+                                        else if (i == 320)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 321)
+                                        {
+                                            if (jishuqishuSum > 0)
+                                            {
+                                                drow2[temp] = decimal.Round(decimal.Parse((zhouCount / jishuqishuSum).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一周的效率;;
+                                            }
+                                            else
+                                            {
+                                                drow2[temp] = 0;  //报废率;//对应的每一周的效率;;
+                                            }
+                                        }
+                                        else if (i == 322)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        else if (i >= 323 && i <= 538)//手动挫披锋 
+                        {
+                            #region MyRegion
+                            if (lingjianbianhao.ToLower().Contains("f"))
+                            {
+                                lingjianTemp = "F" + lingjianbianhao.Substring(lingjianbianhao.Length - 3, 3);
+                            }
+                            else
+                            {
+                                lingjianTemp = lingjianbianhao;
+                            }
+                            if (i <= 349)
+                            {
+                                lingjianbianhaoList538 += "'" + lingjianTemp + "'" + ",";
+                            }
+                            gongyiliucheng = bianhao.Substring(0, 1) + "#";
+                            if (!shenchanbianhaolist538.Contains(gongyiliucheng))
+                            {
+                                shenchanbianhaolist538 += "'" + gongyiliucheng + "'" + ",";
+                            }
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)
+                                        {
+                                            if (m == 1)
+                                            {
+                                                tempCount = GetQuanJianDayCount(gongyiliucheng, listDay[j], lingjianTemp);
+                                                temp = "column" + index.ToString();
+                                                drow2[temp] = tempCount;//对应的每一天的白班或者夜班
+                                                index++;//对应所有的列循环
+                                                totalCount += tempCount;//对应一周的总和同一个生产编号 零件编号
+                                                meitianshuliang += tempCount;
+                                            }
+                                            if (m == 2)
+                                            {
+                                                temp = "column" + index.ToString();
+                                                drow2[temp] = 0;//对应的每一天的白班或者夜班
+                                                index++;//对应所有的列循环
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和
+                                        temp = "column" + index.ToString();
+                                        drow2[temp] = totalCount;
+                                        totalCount = 0;
+                                        index++;
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                        else if (i >= 539 && i <= 543)
+                        {
+                            #region MyRegion
+                            decimal jishuqishuSum = 0;//对应计数器数
+                            decimal dayCount = 0;
+                            decimal zhouCount = 0;
+                            DataTable dtDaSha = new DataTable();
+                            if (listDay != null && listDay.Count > 0)
+                            {
+                                for (int j = 0; j < listDay.Count; j++)
+                                {
+                                    temp = "column" + index.ToString();
+                                    index++;//对应所有的列循环
+                                    decimal tempquexian = 0;//对应缺陷总数
+                                    if (IsDateTime(listDay[j]))//是时间
+                                    {
+                                        for (int m = 1; m <= 2; m++)//白班和夜班
+                                        {
+                                            if (m == 1)
+                                            {
+                                                //明天todo 需要再传一个零件编号 的集合
+                                                dtDaSha = commonWorkShopRecordBLL.GetJiJiaQuanJianDayCount(shenchanbianhaolist538.TrimEnd(','), listDay[j], lingjianbianhaoList538.TrimEnd(','));
+                                                if (dtDaSha != null && dtDaSha.Rows.Count > 0)
+                                                {
+                                                    if (i == 539)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;//对应的每一天总和
+                                                    }
+                                                    else if (i == 540)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = decimal.Round(decimal.Parse((dayCount / 19216).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一天效率
+                                                    }
+                                                    else if (i == 541)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        drow2[temp] = tempquexian;//对应的每一天总和
+                                                    }
+                                                    else if (i == 542)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("yazhuquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["yazhuquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("jijiaquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["jijiaquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        if (dtDaSha.Columns.Contains("pinjianquexian"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["pinjianquexian"].ToString(), out dayCount);
+                                                        }
+                                                        tempquexian += dayCount;
+                                                        zhouCount += tempquexian;
+                                                        if (dtDaSha.Columns.Contains("shengchanzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["shengchanzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        jishuqishuSum += dayCount;
+                                                        if (dayCount > 0)
+                                                        {
+                                                            drow2[temp] = decimal.Round(decimal.Parse((tempquexian / dayCount).ToString()) * 100, 2).ToString() + "%";//对应的每一天总和
+                                                        }
+                                                        else
+                                                        {
+                                                            drow2[temp] = 0;//对应的每一天总和
+                                                        }
+                                                    }
+                                                    else if (i == 543)
+                                                    {
+                                                        if (dtDaSha.Columns.Contains("fanxiuzongshu"))
+                                                        {
+                                                            decimal.TryParse(dtDaSha.Rows[0]["fanxiuzongshu"].ToString(), out dayCount);
+                                                        }
+                                                        zhouCount += dayCount;
+                                                        drow2[temp] = dayCount;
+                                                    }
+                                                }
+                                            }
+                                            else if (m == 2)
+                                            {
+                                                temp = "column" + index.ToString();
+                                                index++;
+                                                if (i == 539)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 540)
+                                                {
+                                                    drow2[temp] = "";  //报废率;//对应的每一天效率
+                                                }
+                                                else if (i == 541)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 542)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                                else if (i == 543)
+                                                {
+                                                    drow2[temp] = "";//对应的每一天总和
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //求和 产能列
+                                        if (i == 539)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 540)
+                                        {
+                                            drow2[temp] = decimal.Round(decimal.Parse((zhouCount / 64680).ToString()) * 100, 2) + "%";  //报废率;//对应的每一周的效率;
+                                        }
+                                        else if (i == 541)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                        else if (i == 542)
+                                        {
+                                            if (jishuqishuSum > 0)
+                                            {
+                                                drow2[temp] = decimal.Round(decimal.Parse((zhouCount / jishuqishuSum).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一周的效率;;
+                                            }
+                                            else
+                                            {
+                                                drow2[temp] = 0;  //报废率;//对应的每一周的效率;;
+                                            }
+                                        }
+                                        else if (i == 543)
+                                        {
+                                            drow2[temp] = zhouCount;
+                                        }
+                                    }
+                                }
+                            }
+                            dtable.Rows.Add(drow2);
+                            #endregion
+                        }
+                    }
+                }
+            }
+            #endregion
+            //multiColHeaderDgvRiBaoBiao.DataSource = dtable;
+            cmd.HideOpaqueLayer();
+            MessageBox.Show("数据统计完成,请点击填充列表!！！", "系统提示",
+                 MessageBoxButtons.OK, MessageBoxIcon.Warning,
+                 MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+        }
+
+        private decimal GetNumJiJia(string xianhao, string lingjianbianhao, string time, string banci)
+        {
+            DataTable dt = commonWorkShopRecordBLL.GetNumJiJia(xianhao, lingjianbianhao, time, banci);
+            decimal num = 0;
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                //计算总数
+                if (dt.Columns.Contains("shengchanzongshu"))
+                {
+                    decimal.TryParse(dt.Rows[0]["shengchanzongshu"].ToString(), out num);
+                }
+            }
+            return num;
         }
 
         private decimal GetQuanJianDayCount(int xianhao, string time, string banci)
@@ -1409,6 +2601,20 @@ namespace MultiColHeaderDgvTest
             }
             return num;
         }
+        private decimal GetQuanJianDayCount(string xianhao, string time, string maopeihao)
+        {
+            DataTable dt = commonWorkShopRecordBLL.GetQuanJianDayCount(xianhao, time, maopeihao);
+            decimal num = 0;
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                //计算总数
+                if (dt.Columns.Contains("shengchanzongshu"))
+                {
+                    decimal.TryParse(dt.Rows[0]["shengchanzongshu"].ToString(), out num);
+                }
+            }
+            return num;
+        }
 
         private decimal GetCuoPiFengDayCount(int xianhao, string lingjianbianhao, string time, string banci)
         {
@@ -1425,9 +2631,38 @@ namespace MultiColHeaderDgvTest
             return num;
         }
 
+        private decimal GetCeLouDayCount(string gongyiliucheng, string lingjianbianhao, string time, string banci)
+        {
+            DataTable dt = commonWorkShopRecordBLL.GetCeLouDayCount(gongyiliucheng, lingjianbianhao, time, banci);
+            decimal num = 0;
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                //计算总数
+                if (dt.Columns.Contains("shengchanzongshu"))
+                {
+                    decimal.TryParse(dt.Rows[0]["shengchanzongshu"].ToString(), out num);
+                }
+            }
+            return num;
+        }
+
         private decimal GetDaShaDayCount(int dashaindex, string time, string banci)
         {
             DataTable dt = commonWorkShopRecordBLL.GetDaShaDayCount(dashaindex, time, banci);
+            decimal num = 0;
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                //计算总数
+                if (dt.Columns.Contains("shengchanzongshu"))
+                {
+                    decimal.TryParse(dt.Rows[0]["shengchanzongshu"].ToString(), out num);
+                }
+            }
+            return num;
+        }
+        private decimal GetQingXiDayCount(string lingjianbianhao, string time)
+        {
+            DataTable dt = commonWorkShopRecordBLL.GetQingXiDayCount(lingjianbianhao, time);
             decimal num = 0;
             if (dt != null && dt.Rows.Count > 0)
             {

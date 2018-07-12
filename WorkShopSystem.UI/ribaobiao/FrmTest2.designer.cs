@@ -30,29 +30,29 @@ namespace MultiColHeaderDgvTest
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("工艺流程（名称）");
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("型号");
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("编号");
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("生产设备栏", new System.Windows.Forms.TreeNode[] {
-            treeNode29,
-            treeNode30});
-            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("零件编号");
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("定额/班");
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("需求标准产能");
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("生产信息栏");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("压铸车间 产能日报表", new System.Windows.Forms.TreeNode[] {
-            treeNode28,
-            treeNode31,
-            treeNode32,
-            treeNode33,
-            treeNode34,
-            treeNode35});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工艺流程（名称）");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("型号");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("编号");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("生产设备栏", new System.Windows.Forms.TreeNode[] {
+            treeNode2,
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("零件编号");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("定额/班");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("需求标准产能");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("生产信息栏");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("压铸车间 产能日报表", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7,
+            treeNode8});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.btnExcel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.multiColHeaderDgvRiBaoBiao = new WorkShopSystem.UI.MultiColHeaderDgv();
             this.btnFullList = new System.Windows.Forms.Button();
+            this.multiColHeaderDgvRiBaoBiao = new WorkShopSystem.UI.MultiColHeaderDgv();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.multiColHeaderDgvRiBaoBiao)).BeginInit();
             this.SuspendLayout();
@@ -61,26 +61,26 @@ namespace MultiColHeaderDgvTest
             // 
             this.treeView2.Location = new System.Drawing.Point(844, 1);
             this.treeView2.Name = "treeView2";
-            treeNode28.Name = "gongyiliucheng";
-            treeNode28.Text = "工艺流程（名称）";
-            treeNode29.Name = "xinghao";
-            treeNode29.Text = "型号";
-            treeNode30.Name = "bianhao";
-            treeNode30.Text = "编号";
-            treeNode31.Name = "shenchanshebeilan";
-            treeNode31.Text = "生产设备栏";
-            treeNode32.Name = "lingjianbianhao";
-            treeNode32.Text = "零件编号";
-            treeNode33.Name = "dingeban";
-            treeNode33.Text = "定额/班";
-            treeNode34.Name = "xuqiubiaozhunchanneng";
-            treeNode34.Text = "需求标准产能";
-            treeNode35.Name = "shenchanxinxilan";
-            treeNode35.Text = "生产信息栏";
-            treeNode36.Name = "tongji";
-            treeNode36.Text = "压铸车间 产能日报表";
+            treeNode1.Name = "gongyiliucheng";
+            treeNode1.Text = "工艺流程（名称）";
+            treeNode2.Name = "xinghao";
+            treeNode2.Text = "型号";
+            treeNode3.Name = "bianhao";
+            treeNode3.Text = "编号";
+            treeNode4.Name = "shenchanshebeilan";
+            treeNode4.Text = "生产设备栏";
+            treeNode5.Name = "lingjianbianhao";
+            treeNode5.Text = "零件编号";
+            treeNode6.Name = "dingeban";
+            treeNode6.Text = "定额/班";
+            treeNode7.Name = "xuqiubiaozhunchanneng";
+            treeNode7.Text = "需求标准产能";
+            treeNode8.Name = "shenchanxinxilan";
+            treeNode8.Text = "生产信息栏";
+            treeNode9.Name = "tongji";
+            treeNode9.Text = "压铸车间 产能日报表";
             this.treeView2.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode36});
+            treeNode9});
             this.treeView2.Size = new System.Drawing.Size(201, 84);
             this.treeView2.TabIndex = 3;
             this.treeView2.Visible = false;
@@ -106,6 +106,16 @@ namespace MultiColHeaderDgvTest
             this.panel1.Size = new System.Drawing.Size(1039, 453);
             this.panel1.TabIndex = 9;
             // 
+            // btnFullList
+            // 
+            this.btnFullList.Location = new System.Drawing.Point(424, 29);
+            this.btnFullList.Name = "btnFullList";
+            this.btnFullList.Size = new System.Drawing.Size(75, 23);
+            this.btnFullList.TabIndex = 14;
+            this.btnFullList.Text = "填充列表";
+            this.btnFullList.UseVisualStyleBackColor = true;
+            this.btnFullList.Click += new System.EventHandler(this.btnFullList_Click);
+            // 
             // multiColHeaderDgvRiBaoBiao
             // 
             this.multiColHeaderDgvRiBaoBiao.AllowUserToAddRows = false;
@@ -119,20 +129,10 @@ namespace MultiColHeaderDgvTest
             this.multiColHeaderDgvRiBaoBiao.Name = "multiColHeaderDgvRiBaoBiao";
             this.multiColHeaderDgvRiBaoBiao.ReadOnly = true;
             this.multiColHeaderDgvRiBaoBiao.RowHeadersVisible = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.multiColHeaderDgvRiBaoBiao.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.multiColHeaderDgvRiBaoBiao.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.multiColHeaderDgvRiBaoBiao.Size = new System.Drawing.Size(1039, 453);
             this.multiColHeaderDgvRiBaoBiao.TabIndex = 4;
-            // 
-            // btnFullList
-            // 
-            this.btnFullList.Location = new System.Drawing.Point(424, 29);
-            this.btnFullList.Name = "btnFullList";
-            this.btnFullList.Size = new System.Drawing.Size(75, 23);
-            this.btnFullList.TabIndex = 14;
-            this.btnFullList.Text = "填充列表";
-            this.btnFullList.UseVisualStyleBackColor = true;
-            this.btnFullList.Click += new System.EventHandler(this.btnFullList_Click);
             // 
             // FrmTest2
             // 
@@ -144,7 +144,8 @@ namespace MultiColHeaderDgvTest
             this.Controls.Add(this.btnExcel);
             this.Controls.Add(this.treeView2);
             this.Name = "FrmTest2";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "车间日报表统计首页";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.multiColHeaderDgvRiBaoBiao)).EndInit();
             this.ResumeLayout(false);

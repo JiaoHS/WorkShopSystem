@@ -598,13 +598,33 @@ namespace WorkShopSystem.UI.cleardata
                                                 decimal.TryParse(dt.Rows[i]["jiagongqingxiquexian_shuiyin"].ToString(), out tempNum);
                                                 quanJianModel.shuiyin = tempNum;
                                             }
-                                            if (dt.Columns.Contains("jiagongqingxiquexian_zangwu"))
+                                            if (dt.Columns.Contains("jiagongqingxiquexian_lade"))
                                             {
-                                                decimal.TryParse(dt.Rows[i]["jiagongqingxiquexian_zangwu"].ToString(), out tempNum);
+                                                decimal.TryParse(dt.Rows[i]["jiagongqingxiquexian_lade"].ToString(), out tempNum);
+                                                quanJianModel.luodi = tempNum;
+                                            }
+                                            if (dt.Columns.Contains("jiagongqingxiquexian_feijiagongmiankepengshang"))
+                                            {
+                                                decimal.TryParse(dt.Rows[i]["jiagongqingxiquexian_feijiagongmiankepengshang"].ToString(), out tempNum);
+                                                quanJianModel.feijiagongmianaokeng = tempNum;
+                                            }
+                                            model.jijiaquexian = quanJianModel.cnctiaojipin + quanJianModel.falanmianyashang + quanJianModel.falanmianhuahenpengshang + quanJianModel.hmianyashang + quanJianModel.jinqikoukepeng + quanJianModel.shangzhouchengkongkepeng + quanJianModel.daowen + quanJianModel.kongjingchaocha + quanJianModel.shuiyin + quanJianModel.luodi + quanJianModel.feijiagongmianaokeng;
+                                            //以上是jijiaquexian对应的是加工清洗缺陷
+                                            if (dt.Columns.Contains("maopiquexian_zangwu"))
+                                            {
+                                                decimal.TryParse(dt.Rows[i]["maopiquexian_zangwu"].ToString(), out tempNum);
                                                 quanJianModel.zangwu = tempNum;
                                             }
-                                            model.jijiaquexian = quanJianModel.cnctiaojipin + quanJianModel.falanmianyashang + quanJianModel.falanmianhuahenpengshang + quanJianModel.hmianyashang + quanJianModel.jinqikoukepeng + quanJianModel.shangzhouchengkongkepeng + quanJianModel.daowen + quanJianModel.kongjingchaocha + quanJianModel.shuiyin + quanJianModel.zangwu;
-                                            //以上是压铸缺陷
+                                            if (dt.Columns.Contains("waiguanquexian_lamo"))
+                                            {
+                                                decimal.TryParse(dt.Rows[i]["waiguanquexian_lamo"].ToString(), out tempNum);
+                                                quanJianModel.lamo = tempNum;
+                                            }
+                                            if (dt.Columns.Contains("waiguanquexian_xiankawai"))
+                                            {
+                                                decimal.TryParse(dt.Rows[i]["waiguanquexian_xiankawai"].ToString(), out tempNum);
+                                                quanJianModel.xiankawai = tempNum;
+                                            }
                                             if (dt.Columns.Contains("maopiquexian_jiagongbuliang"))
                                             {
                                                 decimal.TryParse(dt.Rows[i]["maopiquexian_jiagongbuliang"].ToString(), out tempNum);
@@ -620,25 +640,10 @@ namespace WorkShopSystem.UI.cleardata
                                                 decimal.TryParse(dt.Rows[i]["maopiquexian_liewen"].ToString(), out tempNum);
                                                 quanJianModel.liewen = tempNum;
                                             }
-                                            if (dt.Columns.Contains("maopiquexian_bengque"))
+                                            if (dt.Columns.Contains("maopiquexian_bengqueliao"))
                                             {
-                                                decimal.TryParse(dt.Rows[i]["maopiquexian_bengque"].ToString(), out tempNum);
+                                                decimal.TryParse(dt.Rows[i]["maopiquexian_bengqueliao"].ToString(), out tempNum);
                                                 quanJianModel.bengque = tempNum;
-                                            }
-                                            if (dt.Columns.Contains("maopiquexian_feihua"))
-                                            {
-                                                decimal.TryParse(dt.Rows[i]["maopiquexian_feihua"].ToString(), out tempNum);
-                                                quanJianModel.feihua = tempNum;
-                                            }
-                                            if (dt.Columns.Contains("maopiquexian_feipeng"))
-                                            {
-                                                decimal.TryParse(dt.Rows[i]["maopiquexian_feipeng"].ToString(), out tempNum);
-                                                quanJianModel.feipeng = tempNum;
-                                            }
-                                            if (dt.Columns.Contains("maopiquexian_feijiagongaokeng"))
-                                            {
-                                                decimal.TryParse(dt.Rows[i]["maopiquexian_feijiagongaokeng"].ToString(), out tempNum);
-                                                quanJianModel.feijiagongmianaokeng = tempNum;
                                             }
                                             if (dt.Columns.Contains("maopiquexian_qipi"))
                                             {
@@ -665,27 +670,26 @@ namespace WorkShopSystem.UI.cleardata
                                                 decimal.TryParse(dt.Rows[i]["maopiquexian_yanghuafahei"].ToString(), out tempNum);
                                                 quanJianModel.yanghuafahei = tempNum;
                                             }
-                                            if (dt.Columns.Contains("waiguanquexian_lade"))
-                                            {
-                                                decimal.TryParse(dt.Rows[i]["waiguanquexian_lade"].ToString(), out tempNum);
-                                                quanJianModel.luodi = tempNum;
-                                            }
                                             if (dt.Columns.Contains("waiguanquexian_jita"))
                                             {
                                                 decimal.TryParse(dt.Rows[i]["waiguanquexian_jita"].ToString(), out tempNum);
                                                 quanJianModel.qita = tempNum;
                                             }
-                                            if (dt.Columns.Contains("waiguanquexian_lamo"))
+                                          
+                                            model.yazhuquexian = quanJianModel.zangwu + quanJianModel.lamo + quanJianModel.xiankawai + quanJianModel.jiagongbuliang + quanJianModel.shakong + quanJianModel.liewen + quanJianModel.bengque + quanJianModel.qipi + quanJianModel.zazhi + quanJianModel.nianmo + quanJianModel.maopeifamei + quanJianModel.yanghuafahei + quanJianModel.qita;
+                                            //yazhuquexian对应的是毛坯缺陷
+                                            if (dt.Columns.Contains("jitalei_louqi"))
                                             {
-                                                decimal.TryParse(dt.Rows[i]["waiguanquexian_lamo"].ToString(), out tempNum);
-                                                quanJianModel.lamo = tempNum;
+                                                decimal.TryParse(dt.Rows[i]["jitalei_louqi"].ToString(), out tempNum);
+                                                quanJianModel.qipi = tempNum;
                                             }
-                                            if (dt.Columns.Contains("waiguanquexian_xiankawai"))
+                                            if (dt.Columns.Contains("jitalei_lvxie"))
                                             {
-                                                decimal.TryParse(dt.Rows[i]["waiguanquexian_xiankawai"].ToString(), out tempNum);
-                                                quanJianModel.xiankawai = tempNum;
+                                                decimal.TryParse(dt.Rows[i]["jitalei_lvxie"].ToString(), out tempNum);
+                                                quanJianModel.lvxue = tempNum;
                                             }
-                                            model.yazhuquexian = quanJianModel.jiagongbuliang + quanJianModel.shakong + quanJianModel.liewen + quanJianModel.bengque + quanJianModel.feihua + quanJianModel.feipeng + quanJianModel.qipi + quanJianModel.zazhi + quanJianModel.nianmo + quanJianModel.maopeifamei + quanJianModel.yanghuafahei + quanJianModel.luodi + quanJianModel.qita + quanJianModel.lamo + quanJianModel.xiankawai;
+                                            model.cuopifengquexian = quanJianModel.qipi + quanJianModel.lvxue;
+                                            //cuopifengquexian以上对应的是其他类
                                             if (dt.Columns.Contains("pinjian_chouyangshu"))
                                             {
                                                 decimal.TryParse(dt.Rows[i]["pinjian_chouyangshu"].ToString(), out tempNum);

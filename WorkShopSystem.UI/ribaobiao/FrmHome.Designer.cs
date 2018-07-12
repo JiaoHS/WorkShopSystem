@@ -38,7 +38,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(245, 61);
+            this.label2.Location = new System.Drawing.Point(52, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 16;
@@ -47,7 +47,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(53, 62);
+            this.label1.Location = new System.Drawing.Point(252, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 17;
@@ -56,15 +56,16 @@
             // cbWorkShopList
             // 
             this.cbWorkShopList.FormattingEnabled = true;
-            this.cbWorkShopList.Location = new System.Drawing.Point(292, 57);
+            this.cbWorkShopList.Location = new System.Drawing.Point(99, 60);
             this.cbWorkShopList.Name = "cbWorkShopList";
             this.cbWorkShopList.Size = new System.Drawing.Size(121, 20);
             this.cbWorkShopList.TabIndex = 14;
+            this.cbWorkShopList.SelectedIndexChanged += new System.EventHandler(this.cbWorkShopList_SelectedIndexChanged);
             // 
             // cbMonthLIst
             // 
             this.cbMonthLIst.FormattingEnabled = true;
-            this.cbMonthLIst.Location = new System.Drawing.Point(100, 58);
+            this.cbMonthLIst.Location = new System.Drawing.Point(299, 60);
             this.cbMonthLIst.Name = "cbMonthLIst";
             this.cbMonthLIst.Size = new System.Drawing.Size(121, 20);
             this.cbMonthLIst.TabIndex = 15;
@@ -90,7 +91,8 @@
             this.Controls.Add(this.cbWorkShopList);
             this.Controls.Add(this.cbMonthLIst);
             this.Name = "FrmHome";
-            this.Text = "FrmHome";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "统计筛选条件";
             this.ResumeLayout(false);
             this.PerformLayout();
 

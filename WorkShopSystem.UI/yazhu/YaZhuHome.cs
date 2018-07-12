@@ -191,7 +191,7 @@ namespace WorkShopSystem.UI.yazhu
                     if (ck.Checked)//判断是否选中
                     {
                         dicTitle.Add(ck.Name, ck.Text);
-                        dtable.Columns.Add(ck.Name, typeof(System.String));
+                        dtable.Columns.Add(ck.Text, typeof(System.String));
                         header += ck.Text+"#";
                         //sb += ck.Text + ",";
                     }
@@ -266,6 +266,39 @@ namespace WorkShopSystem.UI.yazhu
             //test.Start();
             DataTable dt = BLL.GetList(strWhere.ToString());
             //ListViewItem item;
+            DataTable dtSum = BLL.GetListSum(strWhere.ToString());
+            if (dtSum != null && dtSum.Rows.Count > 0)
+            {
+                string colTemp = string.Empty;
+                double tempDou = 0;
+                for (int i = 0; i < dtSum.Rows.Count; i++)
+                {
+                    //titleList所有选择的复选框的Name
+                    int index = 0;
+                    //item = new ListViewItem();
+                    DataRow drow = dtable.NewRow();
+                    //加总数到第一行
+
+                    foreach (var itemDic in dicTitle)
+                    {
+                        if (itemDic.Key == "liuchengpiaobianhao")
+                        {
+                            tempDou = 0;
+                        }
+                        else
+                        {
+                            index = dtSum.Rows[i].Table.Columns.IndexOf(itemDic.Key);
+                            //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+                            double.TryParse(dtSum.Rows[i][dtSum.Rows[i].Table.Columns[index]].ToString(), out tempDou);
+                        }
+                        drow[itemDic.Value] = tempDou;
+                    }
+                    //item.SubItems.RemoveAt(0);
+                    //listViewJiJia.Items.Add(item);
+                    dtable.Rows.Add(drow);
+                }
+            }
+
             if (dt != null && dt.Rows.Count > 0)
             {
                 string colTemp = string.Empty;
@@ -279,7 +312,7 @@ namespace WorkShopSystem.UI.yazhu
                     {
                         index = dt.Rows[i].Table.Columns.IndexOf(itemDic.Key);
                         //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
-                        drow[itemDic.Key] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
+                        drow[itemDic.Value] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
                     }
                     //item.SubItems.RemoveAt(0);
                     //listView.Items.Add(item);
@@ -291,6 +324,34 @@ namespace WorkShopSystem.UI.yazhu
                 this.dataGridViewYaZhu.Rows[0].DefaultCellStyle.BackColor = Color.Red;
                 cmd.HideOpaqueLayer();
             }
+
+            //if (dt != null && dt.Rows.Count > 0)
+            //{
+            //    string colTemp = string.Empty;
+            //    for (int i = 0; i < dt.Rows.Count; i++)
+            //    {
+            //        //titleList所有选择的复选框的Name
+            //        int index = 0;
+            //        //item = new ListViewItem();
+            //        DataRow drow = dtable.NewRow();
+            //        //加总数到第一行
+
+            //        foreach (var itemDic in dicTitle)
+            //        {
+            //            index = dt.Rows[i].Table.Columns.IndexOf(itemDic.Key);
+            //            //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
+            //            drow[itemDic.Value] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
+            //        }
+            //        //item.SubItems.RemoveAt(0);
+            //        //listViewJiJia.Items.Add(item);
+            //        dtable.Rows.Add(drow);
+            //    }
+            //    dataGridViewYaZhu.DataSource = dtable;
+            //    dataGridViewYaZhu.Rows[0].Frozen = true;
+            //    this.dataGridViewYaZhu.Rows[0].Selected = false;
+            //    this.dataGridViewYaZhu.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+            //    cmd.HideOpaqueLayer();
+            //}
         }
 
         private string GetCheckedListBoxState2()

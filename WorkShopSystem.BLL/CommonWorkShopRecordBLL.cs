@@ -201,50 +201,75 @@ namespace WorkShopSystem.BLL
         {
             return dal.GetTimeDayList(time);
         }
-        public DataTable GetMonthList()
+        public DataTable GetMonthList(int type)
         {
-            return dal.GetMonthList();
+            return dal.GetMonthList(type);
         }
         public DataTable GetNum(string shebeibianhao, string lingjianbianhao, string time, string daynight)
         {
             return dal.GetNum(shebeibianhao, lingjianbianhao, time, daynight);
         }
 
-        public DataTable GetNumByDay(string time,string shenchanbianhaolist,string lingjianbianhaolist)
+        public DataTable GetNumByDay(string time, string shenchanbianhaolist, string lingjianbianhaolist)
         {
             return dal.GetNumByDay(time, shenchanbianhaolist, lingjianbianhaolist);
         }
 
-        public DataTable GetDaShaNum(string dashaindex,string time)
+        public DataTable GetJiJIaNumByDay(string time, string shenchanbianhaolist, string lingjianbianhaolist)
+        {
+            return dal.GetJiJIaNumByDay(time, shenchanbianhaolist, lingjianbianhaolist);
+        }
+
+        public DataTable GetDaShaNum(string dashaindex, string time)
         {
             return dal.GetDaShaNum(dashaindex, time);
         }
-
-        public DataTable GetDaShaDayCount(int dashaindex, string time,string banci)
+        public DataTable GetQingXiNum(string maopihao, string time)
+        {
+            return dal.GetQingXiNum(maopihao, time);
+        }
+        public DataTable GetDaShaDayCount(int dashaindex, string time, string banci)
         {
             return dal.GetDaShaDayCount(dashaindex, time, banci);
+        }
+        public DataTable GetQingXiDayCount(string lingjianbianhao, string time)
+        {
+            return dal.GetQingXiDayCount(lingjianbianhao, time);
         }
 
         public DataTable GetCuoPiFengDayCount(int xianhao, string lingjianbianhao, string time, string banci)
         {
             return dal.GetCuoPiFengDayCount(xianhao, lingjianbianhao, time, banci);
         }
-
-        public DataTable GetCuoPiFengNum(string shenchanbianhaolist, string time,string lingjianbianhao)
+        public DataTable GetCeLouDayCount(string gongyiliucheng, string lingjianbianhao, string time, string banci)
+        {
+            return dal.GetCeLouDayCount(gongyiliucheng, lingjianbianhao, time, banci);
+        }
+        public DataTable GetCuoPiFengNum(string shenchanbianhaolist, string time, string lingjianbianhao)
         {
             return dal.GetCuoPiFengNum(shenchanbianhaolist, time, lingjianbianhao);
         }
 
+        public DataTable GetCeLouNum(string xianhao, string time, string lingjianbianhao)
+        {
+            return dal.GetCeLouNum(xianhao, time, lingjianbianhao);
+        }
         public DataTable GetShouDongCuoPiFengDayCount(string bianhao, string time, string banci)
         {
             return dal.GetShouDongCuoPiFengDayCount(bianhao, time, banci);
         }
-
+        public DataTable GetQuanJianDayCount(string xianhao, string time, string maopeihao)
+        {
+            return dal.GetQuanJianDayCount(xianhao, time, maopeihao);
+        }
         public DataTable GetShouDongCuoPiFengNum(string bianhao, string time)
         {
             return dal.GetShouDongCuoPiFengDayCount(bianhao, time);
         }
-
+        public DataTable GetJiJiaQuanJianDayCount(string bianhao, string time, string lingjianbianhao)
+        {
+            return dal.GetJiJiaQuanJianDayCount(bianhao, time, lingjianbianhao);
+        }
         public DataTable GetQuanJianDayCount(int xianhao, string time, string banci)
         {
             return dal.GetQuanJianDayCounts(xianhao, time, banci);
@@ -253,6 +278,11 @@ namespace WorkShopSystem.BLL
         public DataTable GetQuanJianNum(string xianhao, string time)
         {
             return dal.GetQuanJianNum(xianhao, time);
+        }
+
+        public DataTable GetNumJiJia(string xianhao, string lingjianbianhao, string time, string banci)
+        {
+            return dal.GetNumJiJia(xianhao, lingjianbianhao, time, banci);
         }
         #endregion  ExtensionMethod
     }
