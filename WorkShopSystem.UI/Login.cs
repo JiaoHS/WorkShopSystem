@@ -43,7 +43,7 @@ namespace WorkShopSystem.UI
             {
                 Thread.Sleep(5000);
                 string sql = "SELECT * FROM [test].[dbo].[studentInfo]";
-                dtable = SqliteHelper.ExecuteDataTable(sql);
+                dtable = SqlHelper.ExecuteDataTable(sql);
             }, 10, "Plase Wait...", false, false);
             f.ShowDialog(this);
             res = f.Message;

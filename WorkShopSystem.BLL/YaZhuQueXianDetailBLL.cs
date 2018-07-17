@@ -1,12 +1,12 @@
 ﻿/**  版本信息模板在安装目录下，可自行修改。
-* JiJiaFanXiuDetail.cs
+* YaZhuQueXianDetail.cs
 *
 * 功 能： N/A
-* 类 名： JiJiaFanXiuDetail
+* 类 名： YaZhuQueXianDetail
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
-* V0.01  2018/6/22 11:15:19   N/A    初版
+* V0.01  2018/7/17 10:46:40   N/A    初版
 *
 * Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
 *┌──────────────────────────────────┐
@@ -22,19 +22,19 @@ using WorkShopSystem.Model;
 namespace WorkShopSystem.BLL
 {
 	/// <summary>
-	/// JiJiaFanXiuDetail
+	/// YaZhuQueXianDetail
 	/// </summary>
-	public partial class JiJiaFanXiuDetailBLL
+	public partial class YaZhuQueXianDetailBLL
 	{
-		private readonly WorkShopSystem.DAL.JiJiaFanXiuDetailDAL dal=new WorkShopSystem.DAL.JiJiaFanXiuDetailDAL();
-		public JiJiaFanXiuDetailBLL()
+		private readonly WorkShopSystem.DAL.YaZhuQueXianDetailDAL dal=new WorkShopSystem.DAL.YaZhuQueXianDetailDAL();
+		public YaZhuQueXianDetailBLL()
 		{}
 		#region  BasicMethod
 
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(WorkShopSystem.Model.JiJiaFanXiuDetail model)
+		public bool Add(WorkShopSystem.Model.YaZhuQueXianDetail model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +42,7 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(WorkShopSystem.Model.JiJiaFanXiuDetail model)
+		public bool Update(WorkShopSystem.Model.YaZhuQueXianDetail model)
 		{
 			return dal.Update(model);
 		}
@@ -59,7 +59,7 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public WorkShopSystem.Model.JiJiaFanXiuDetail GetModel()
+		public WorkShopSystem.Model.YaZhuQueXianDetail GetModel()
 		{
 			//该表无主键信息，请自定义主键/条件字段
 			return dal.GetModel();
@@ -68,10 +68,10 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public WorkShopSystem.Model.JiJiaFanXiuDetail GetModelByCache()
+		public WorkShopSystem.Model.YaZhuQueXianDetail GetModelByCache()
 		{
 			//该表无主键信息，请自定义主键/条件字段
-			string CacheKey = "JiJiaFanXiuDetailModel-" ;
+			string CacheKey = "YaZhuQueXianDetailModel-" ;
 			object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
 			if (objModel == null)
 			{
@@ -86,7 +86,7 @@ namespace WorkShopSystem.BLL
 				}
 				catch{}
 			}
-			return (WorkShopSystem.Model.JiJiaFanXiuDetail)objModel;
+			return (WorkShopSystem.Model.YaZhuQueXianDetail)objModel;
 		}
 
 		/// <summary>
@@ -97,23 +97,30 @@ namespace WorkShopSystem.BLL
 			return dal.GetList(strWhere);
 		}
 		/// <summary>
+		/// 获得前几行数据
+		/// </summary>
+		public DataTable GetList(int Top,string strWhere,string filedOrder)
+		{
+			return dal.GetList(Top,strWhere,filedOrder);
+		}
+		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<WorkShopSystem.Model.JiJiaFanXiuDetail> GetModelList(string strWhere)
+		public List<WorkShopSystem.Model.YaZhuQueXianDetail> GetModelList(string strWhere)
 		{
-            DataTable ds = dal.GetList(strWhere);
+			DataTable ds = dal.GetList(strWhere);
 			return DataTableToList(ds);
 		}
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<WorkShopSystem.Model.JiJiaFanXiuDetail> DataTableToList(DataTable dt)
+		public List<WorkShopSystem.Model.YaZhuQueXianDetail> DataTableToList(DataTable dt)
 		{
-			List<WorkShopSystem.Model.JiJiaFanXiuDetail> modelList = new List<WorkShopSystem.Model.JiJiaFanXiuDetail>();
+			List<WorkShopSystem.Model.YaZhuQueXianDetail> modelList = new List<WorkShopSystem.Model.YaZhuQueXianDetail>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				WorkShopSystem.Model.JiJiaFanXiuDetail model;
+				WorkShopSystem.Model.YaZhuQueXianDetail model;
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = dal.DataRowToModel(dt.Rows[n]);
@@ -137,10 +144,10 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
-		public int GetRecordCount(string strWhere)
-		{
-			return dal.GetRecordCount(strWhere);
-		}
+		//public int GetRecordCount(string strWhere)
+		//{
+		//	return dal.GetRecordCount(strWhere);
+		//}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
@@ -151,7 +158,7 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
-		//public DataSet GetList(int PageSize,int PageIndex,string strWhere)
+		//public DataTable GetList(int PageSize,int PageIndex,string strWhere)
 		//{
 			//return dal.GetList(PageSize,PageIndex,strWhere);
 		//}

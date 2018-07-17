@@ -14,6 +14,7 @@ namespace WorkShopSystem.Utility
     {
         public static int WorkShopType;
         public static string TimeStatic;
+        public static string year;
         //将字符串转化为MD5
         public static string ComputeStringMD5(string str)
         {

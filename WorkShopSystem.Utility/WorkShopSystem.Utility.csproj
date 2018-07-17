@@ -73,7 +73,7 @@
     <Compile Include="CommonHelper.cs" />
     <Compile Include="NPOIHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqliteHelper.cs" />
+    <Compile Include="SqlHelper.cs" />
     <Compile Include="TreeViewBL.cs" />
   </ItemGroup>
   <ItemGroup>

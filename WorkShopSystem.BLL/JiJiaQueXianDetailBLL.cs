@@ -1,12 +1,12 @@
 ﻿/**  版本信息模板在安装目录下，可自行修改。
-* YaZhuBaoFeiDetail.cs
+* JiJiaQueXianDetail.cs
 *
 * 功 能： N/A
-* 类 名： YaZhuBaoFeiDetail
+* 类 名： JiJiaQueXianDetail
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
-* V0.01  2018/6/21 9:59:52   N/A    初版
+* V0.01  2018/6/22 11:15:19   N/A    初版
 *
 * Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
 *┌──────────────────────────────────┐
@@ -22,35 +22,19 @@ using WorkShopSystem.Model;
 namespace WorkShopSystem.BLL
 {
 	/// <summary>
-	/// YaZhuBaoFeiDetail
+	/// JiJiaQueXianDetail
 	/// </summary>
-	public partial class YaZhuBaoFeiDetailBLL
-    {
-		private readonly WorkShopSystem.DAL.YaZhuBaoFeiDetailDAL dal=new WorkShopSystem.DAL.YaZhuBaoFeiDetailDAL();
-		public YaZhuBaoFeiDetailBLL()
+	public partial class JiJiaQueXianDetailBLL
+	{
+		private readonly WorkShopSystem.DAL.JiJiaQueXianDetailDAL dal=new WorkShopSystem.DAL.JiJiaQueXianDetailDAL();
+		public JiJiaQueXianDetailBLL()
 		{}
 		#region  BasicMethod
 
 		/// <summary>
-		/// 得到最大ID
-		/// </summary>
-		public int GetMaxId()
-		{
-			return dal.GetMaxId();
-		}
-
-		/// <summary>
-		/// 是否存在该记录
-		/// </summary>
-		public bool Exists(int id)
-		{
-			return dal.Exists(id);
-		}
-
-		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int  Add(WorkShopSystem.Model.YaZhuBaoFeiDetail model)
+		public bool Add(WorkShopSystem.Model.JiJiaQueXianDetail model)
 		{
 			return dal.Add(model);
 		}
@@ -58,7 +42,7 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(WorkShopSystem.Model.YaZhuBaoFeiDetail model)
+		public bool Update(WorkShopSystem.Model.JiJiaQueXianDetail model)
 		{
 			return dal.Update(model);
 		}
@@ -66,41 +50,34 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int id)
+		public bool Delete()
 		{
-			
-			return dal.Delete(id);
+			//该表无主键信息，请自定义主键/条件字段
+			return dal.Delete();
 		}
-		/// <summary>
-		/// 删除一条数据
-		/// </summary>
-		//public bool DeleteList(string idlist )
-		//{
-		//	return dal.DeleteList(Maticsoft.Common.PageValidate.SafeLongFilter(idlist,0) );
-		//}
 
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public WorkShopSystem.Model.YaZhuBaoFeiDetail GetModel(int id)
+		public WorkShopSystem.Model.JiJiaQueXianDetail GetModel()
 		{
-			
-			return dal.GetModel(id);
+			//该表无主键信息，请自定义主键/条件字段
+			return dal.GetModel();
 		}
 
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public WorkShopSystem.Model.YaZhuBaoFeiDetail GetModelByCache(int id)
+		public WorkShopSystem.Model.JiJiaQueXianDetail GetModelByCache()
 		{
-			
-			string CacheKey = "YaZhuBaoFeiDetailModel-" + id;
+			//该表无主键信息，请自定义主键/条件字段
+			string CacheKey = "JiJiaQueXianDetailModel-" ;
 			object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
 			if (objModel == null)
 			{
 				try
 				{
-					objModel = dal.GetModel(id);
+					objModel = dal.GetModel();
 					if (objModel != null)
 					{
 						int ModelCache = Maticsoft.Common.ConfigHelper.GetConfigInt("ModelCache");
@@ -109,7 +86,7 @@ namespace WorkShopSystem.BLL
 				}
 				catch{}
 			}
-			return (WorkShopSystem.Model.YaZhuBaoFeiDetail)objModel;
+			return (WorkShopSystem.Model.JiJiaQueXianDetail)objModel;
 		}
 
 		/// <summary>
@@ -122,7 +99,7 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<WorkShopSystem.Model.YaZhuBaoFeiDetail> GetModelList(string strWhere)
+		public List<WorkShopSystem.Model.JiJiaQueXianDetail> GetModelList(string strWhere)
 		{
             DataTable ds = dal.GetList(strWhere);
 			return DataTableToList(ds);
@@ -130,13 +107,13 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<WorkShopSystem.Model.YaZhuBaoFeiDetail> DataTableToList(DataTable dt)
+		public List<WorkShopSystem.Model.JiJiaQueXianDetail> DataTableToList(DataTable dt)
 		{
-			List<WorkShopSystem.Model.YaZhuBaoFeiDetail> modelList = new List<WorkShopSystem.Model.YaZhuBaoFeiDetail>();
+			List<WorkShopSystem.Model.JiJiaQueXianDetail> modelList = new List<WorkShopSystem.Model.JiJiaQueXianDetail>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				WorkShopSystem.Model.YaZhuBaoFeiDetail model;
+				WorkShopSystem.Model.JiJiaQueXianDetail model;
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = dal.DataRowToModel(dt.Rows[n]);
@@ -160,10 +137,10 @@ namespace WorkShopSystem.BLL
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
-		public int GetRecordCount(string strWhere)
-		{
-			return dal.GetRecordCount(strWhere);
-		}
+		//public int GetRecordCount(string strWhere)
+		//{
+		//	return dal.GetRecordCount(strWhere);
+		//}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>

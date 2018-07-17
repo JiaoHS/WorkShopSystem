@@ -47,14 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonWorkShopRecordDAL.cs" />
-    <Compile Include="DaShaBaoFeiDetailDAL.cs" />
-    <Compile Include="fanxiuDetailDAL.cs" />
-    <Compile Include="JiJiaFanXiuDetailDAL.cs" />
-    <Compile Include="piFengBaoFeiDetailDAL.cs" />
-    <Compile Include="PiFengHBaiFeiDetailDAL.cs" />
+    <Compile Include="FanXiuDetailDAL.cs" />
+    <Compile Include="JiJiaQueXianDetailDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuanJianDetailDAL.cs" />
-    <Compile Include="YaZhuBaoFeiDetailDAL.cs" />
+    <Compile Include="YaZhuQueXianDetailDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WorkShopSystem.Model\WorkShopSystem.Model.csproj">

@@ -21,12 +21,13 @@ namespace WorkShopSystem.Model
 	/// QuanJianDetail:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class QuanJianDetail
+	public partial class JiJiaQueXianDetail
 	{
-		public QuanJianDetail()
+		public JiJiaQueXianDetail()
 		{}
-		#region Model
-		private decimal? _cnctiaojipin=0M;
+        #region Model
+        private DateTime? _time;
+        private decimal? _cnctiaojipin=0M;
 		private decimal? _falanmianyashang=0M;
 		private decimal? _falanmianhuahenpengshang=0M;
 		private decimal? _hmianyashang=0M;
@@ -57,10 +58,17 @@ namespace WorkShopSystem.Model
 		private decimal? _lvxue=0M;
 		private int? _type=0;
 		private string _liuchengpiaobianhao;
-		/// <summary>
-		/// 
-		/// </summary>
-		public decimal? cnctiaojipin
+
+        public DateTime? time
+        {
+            set { _time = value; }
+            get { return _time; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? cnctiaojipin
 		{
 			set{ _cnctiaojipin=value;}
 			get{return _cnctiaojipin;}

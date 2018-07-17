@@ -1,45 +1,40 @@
-﻿/**  版本信息模板在安装目录下，可自行修改。
-* fanxiuDetail.cs
-*
-* 功 能： N/A
-* 类 名： fanxiuDetail
-*
-* Ver    变更日期             负责人  变更内容
-* ───────────────────────────────────
-* V0.01  2018/6/21 9:59:52   N/A    初版
-*
-* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
-*┌──────────────────────────────────┐
-*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
-*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
-*└──────────────────────────────────┘
-*/
-using System;
+﻿using System;
 namespace WorkShopSystem.Model
 {
 	/// <summary>
-	/// fanxiuDetail:实体类(属性说明自动提取数据库字段的描述信息)
+	/// FanXiuDetail:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class fanxiuDetail
+	public partial class FanXiuDetail
 	{
-		public fanxiuDetail()
+		public FanXiuDetail()
 		{}
 		#region Model
-		private decimal? _bengliao=0M;
-		private decimal? _fanpen=0M;
-		private decimal? _zhengxing=0M;
-		private string _benzhu;
-        private string _liuchengpiaohao;
-        public string liuchengpiaohao
-        {
-            set { _liuchengpiaohao = value; }
-            get { return _liuchengpiaohao; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal? bengliao
+		private DateTime? _time;
+		private decimal? _bengliao;
+		private decimal? _fanpen;
+		private decimal? _zhengxing;
+		private string _beizhu;
+		private decimal? _jinqikoukepeng;
+		private decimal? _falanmianhuashang;
+		private decimal? _pensha;
+		private decimal? _kefanxipin;
+		private decimal? _kefanfamei;
+		private decimal? _xiaoshakongkefanxiu;
+		private decimal? _louqi;
+		private string _liuchengpiaobianhao;
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? time
+		{
+			set{ _time=value;}
+			get{return _time;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? bengliao
 		{
 			set{ _bengliao=value;}
 			get{return _bengliao;}
@@ -63,10 +58,74 @@ namespace WorkShopSystem.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public string benzhu
+		public string beizhu
 		{
-			set{ _benzhu=value;}
-			get{return _benzhu;}
+			set{ _beizhu=value;}
+			get{return _beizhu;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? jinqikoukepeng
+		{
+			set{ _jinqikoukepeng=value;}
+			get{return _jinqikoukepeng;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? falanmianhuashang
+		{
+			set{ _falanmianhuashang=value;}
+			get{return _falanmianhuashang;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? pensha
+		{
+			set{ _pensha=value;}
+			get{return _pensha;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? kefanxipin
+		{
+			set{ _kefanxipin=value;}
+			get{return _kefanxipin;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? kefanfamei
+		{
+			set{ _kefanfamei=value;}
+			get{return _kefanfamei;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? xiaoshakongkefanxiu
+		{
+			set{ _xiaoshakongkefanxiu=value;}
+			get{return _xiaoshakongkefanxiu;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public decimal? louqi
+		{
+			set{ _louqi=value;}
+			get{return _louqi;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string liuchengpiaobianhao
+		{
+			set{ _liuchengpiaobianhao=value;}
+			get{return _liuchengpiaobianhao;}
 		}
 		#endregion Model
 
