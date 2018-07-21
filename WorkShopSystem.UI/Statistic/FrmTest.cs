@@ -6,8 +6,10 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using WorkShopSystem.BLL;
+using WorkShopSystem.UI.loading;
 using WorkShopSystem.Utility;
 
 namespace MultiColHeaderDgvTest
@@ -25,6 +27,7 @@ namespace MultiColHeaderDgvTest
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
+            button1.Text = "加载中...";
             //先更新表数据
             //set columns names
             dtable.Columns.Add("xiangmu", typeof(System.String));
@@ -37,17 +40,29 @@ namespace MultiColHeaderDgvTest
             dtable.Columns.Add("dasha2", typeof(System.String));
             dtable.Columns.Add("cuopifeng", typeof(System.String));
             dtable.Columns.Add("hmianquanjian", typeof(System.String));
-
+            dtable.Columns.Add("yazhuneibubaofeishu", typeof(System.String));
             dtable.Columns.Add("yazhuchejianneibubaofeilv", typeof(System.String));
+
+            dtable.Columns.Add("cuopifengyazhu", typeof(System.String));
+            dtable.Columns.Add("cuopifengdasha1", typeof(System.String));
+            dtable.Columns.Add("cuopifengdasha2", typeof(System.String));
+            dtable.Columns.Add("cuopifeng2", typeof(System.String));
+            dtable.Columns.Add("cuopifengHmian", typeof(System.String));
+            dtable.Columns.Add("cuopifengbeibubaofeishu", typeof(System.String));
+            dtable.Columns.Add("cuopifengneibubaofeilv", typeof(System.String));
+            dtable.Columns.Add("yazhuzongbeofeishu", typeof(System.String));
+            dtable.Columns.Add("yazhuzongbaofeilv", typeof(System.String));
+
             dtable.Columns.Add("cncchanneng", typeof(System.String));
-            dtable.Columns.Add("cnc", typeof(System.String));
-            dtable.Columns.Add("qingxi", typeof(System.String));
-            dtable.Columns.Add("celou", typeof(System.String));
-            dtable.Columns.Add("quanjian", typeof(System.String));
+            dtable.Columns.Add("jijiacnc", typeof(System.String));
+            dtable.Columns.Add("jijiaqingxi", typeof(System.String));
+            dtable.Columns.Add("jijiacelou", typeof(System.String));
+            dtable.Columns.Add("jijiaquanjian", typeof(System.String));
+            dtable.Columns.Add("jijiazuizhongbaofeishu", typeof(System.String));
             dtable.Columns.Add("jijiachejianzuizhongbaofeilv", typeof(System.String));
-            dtable.Columns.Add("yazhuchejian", typeof(System.String));
-            dtable.Columns.Add("cnc2", typeof(System.String));
-            dtable.Columns.Add("quanjianxian", typeof(System.String));
+            dtable.Columns.Add("yazhuquexiancnc2", typeof(System.String));
+            dtable.Columns.Add("yazhuquexianquanjianxian", typeof(System.String));
+            dtable.Columns.Add("yazhuzuizhongbaofeishu", typeof(System.String));
             dtable.Columns.Add("yazhuchejianzuizhongbaofeilv", typeof(System.String));
             //测试一行
             //DataRow drow4 = dtable.NewRow();
@@ -83,6 +98,7 @@ namespace MultiColHeaderDgvTest
                 {
                     int dtDetailSum = 0;
                     int totalNum = 0;
+                    int totalNum1 = 0;
                     decimal tempNum = 0;
                     decimal yazhuchanneng = 0;
                     decimal yazhujishuqishu = 0;
@@ -90,11 +106,11 @@ namespace MultiColHeaderDgvTest
 
                     //int fanxiuzongshu = 0;
                     decimal yazhuquexian = 0;
-                    //int pinjianquexian = 0;
+                    decimal jijiaquexian = 0;
                     //int jijiaquexianorcuopifeng = 0;
                     DataTable dtDetail = new DataTable();
                     DataRow drow = dtable.NewRow();
-                    drow["xiangmu"] = "";
+                    drow["xiangmu"] = "阀体";
                     drow["nianyue"] = dtAllCol.Rows[k]["time"].ToString();
                     //drow["yazhuchanneng"] = dtAllCol.Rows[k]["shengchanshu"].ToString();
                     //drow["yazhujishuqishu"] = dtAllCol.Rows[k]["jishuqishu"].ToString();
@@ -127,70 +143,95 @@ namespace MultiColHeaderDgvTest
                         //{
                         //    int.TryParse(dtDetail.Rows[0]["fanxiuzongshu"].ToString(), out fanxiuzongshu);
                         //}
-                        drow["yazhuchanneng"] = yazhuchanneng;
+
                         drow["yazhujishuqishu"] = yazhujishuqishu;
                     }
+                    dtDetail = commonWorkShopRecordBLL.GetNumByTime("c", dtAllCol.Rows[k]["time"].ToString());
+                    if (dtDetail != null && dtDetail.Rows.Count > 0)
+                    {
+                        if (!Convert.IsDBNull(dtDetail.Rows[0]["shengchanshu"]))
+                        {
+                            decimal.TryParse(dtDetail.Rows[0]["shengchanshu"].ToString(), out yazhuquexian);
+                        }
+                        drow["yazhuchanneng"] = yazhuchanneng;
+                    }
                     //通过日期查询报废车间的具体总数
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "0");//压铸
-                    if (dtDetail != null && dtDetail.Rows.Count > 0)
+                    for (int l = 0; l <= 4; l++)
                     {
-                        for (int i = 0; i < dtDetail.Rows.Count; i++)
+                        dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), l.ToString(), 0);//压铸
+                        if (dtDetail != null && dtDetail.Rows.Count > 0)
                         {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["tiaojipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["tiaojipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["feijiagongaokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["feijiagongaokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["liewen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["liewen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["nainmo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["nainmo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qipi"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qipi"])) + (Convert.IsDBNull(dtDetail.Rows[i]["youwufahei"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["youwufahei"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuoshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuoshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shangzhouchengjushang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shangzhouchengjushang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["chongshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["chongshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["bengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["bengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["penghuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["penghuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianhuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianhuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["xiankawai"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["xiankawai"])) + (Convert.IsDBNull(dtDetail.Rows[i]["luodipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["luodipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qita"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lamo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lamo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shangzhouchengkongduanlie"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shangzhouchengkongduanlie"])) + (Convert.IsDBNull(dtDetail.Rows[i]["jitan"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["jitan"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lengliao"]));
+                            for (int i = 0; i < dtDetail.Rows.Count; i++)
+                            {
+                                dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["gaodiya"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["gaodiya"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lamo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lamo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["nianmo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["nianmo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["kaweichaocha"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["kaweichaocha"])) + (Convert.IsDBNull(dtDetail.Rows[i]["liewen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["liewen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["guilie"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["guilie"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["youwufahei"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["youwufahei"])) + (Convert.IsDBNull(dtDetail.Rows[i]["duanzhen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["duanzhen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qipi"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qipi"])) + (Convert.IsDBNull(dtDetail.Rows[i]["jushang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["jushang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["yadianshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["yadianshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["chongshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["chongshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["bengqueliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["bengqueliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["penghuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["penghuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["Hmianhuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["Hmianhuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["xiankawai"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["xiankawai"])) + (Convert.IsDBNull(dtDetail.Rows[i]["luodipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["luodipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["gubao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["gubao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["jitan"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["jitan"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shuikouduan"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shuikouduan"])) + (Convert.IsDBNull(dtDetail.Rows[i]["aokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["aokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qita"]));
+                            }
+                        }
+                        totalNum += dtDetailSum;
+                        //压铸内部报废
+                        switch (l)
+                        {
+                            case 0:
+                                drow["yazhu"] = dtDetailSum.ToString();
+                                break;
+                            case 1:
+                                drow["dasha1"] = dtDetailSum.ToString();
+                                break;
+                            case 2:
+                                drow["dasha2"] = dtDetailSum.ToString();
+                                break;
+                            case 3:
+                                drow["cuopifeng"] = dtDetailSum.ToString();
+                                break;
+                            case 4:
+                                drow["hmianquanjian"] = dtDetailSum.ToString();
+                                break;
+                        }
+                        dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), l.ToString(), 1);//压铸
+                        if (dtDetail != null && dtDetail.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtDetail.Rows.Count; i++)
+                            {
+                                dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["cuoshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuoshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuodaohen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuodaohen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["abbdashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["abbdashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["assqiexue"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["assqiexue"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qupifengqita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qupifengqita"]));
+                            }
+                        }
+                        totalNum1 += dtDetailSum;
+                        //挫披锋内部报废
+                        switch (l)
+                        {
+                            case 0:
+                                drow["cuopifengyazhu"] = dtDetailSum.ToString();
+                                break;
+                            case 1:
+                                drow["cuopifengdasha1"] = dtDetailSum.ToString();
+                                break;
+                            case 2:
+                                drow["cuopifengdasha2"] = dtDetailSum.ToString();
+                                break;
+                            case 3:
+                                drow["cuopifeng2"] = dtDetailSum.ToString();
+                                break;
+                            case 4:
+                                drow["cuopifengHmian"] = dtDetailSum.ToString();
+                                break;
                         }
                     }
-                    totalNum += dtDetailSum;
-                    drow["yazhu"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "1");
-                    if (dtDetail != null && dtDetail.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtDetail.Rows.Count; i++)
-                        {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["gaodiyatiaoji"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["gaodiyatiaoji"])) + (Convert.IsDBNull(dtDetail.Rows[i]["feijiagongaokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["feijiagongaokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["liewen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["liewen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["nianmo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["nianmo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qipi"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qipi"])) + (Convert.IsDBNull(dtDetail.Rows[i]["youwufahei"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["youwufahei"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuoshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuoshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shangzhouchengjushang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shangzhouchengjushang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["chongshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["chongshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["bengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["bengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["penghuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["penghuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianhuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianhuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["xiankawai"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["xiankawai"])) + (Convert.IsDBNull(dtDetail.Rows[i]["luodipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["luodipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qita"]));
-                        }
-                    }
-                    totalNum += dtDetailSum;
-                    drow["dasha1"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "2");
-                    if (dtDetail != null && dtDetail.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtDetail.Rows.Count; i++)
-                        {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["gaodiyatiaoji"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["gaodiyatiaoji"])) + (Convert.IsDBNull(dtDetail.Rows[i]["feijiagongaokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["feijiagongaokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["liewen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["liewen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["nianmo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["nianmo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qipi"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qipi"])) + (Convert.IsDBNull(dtDetail.Rows[i]["youwufahei"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["youwufahei"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuoshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuoshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shangzhouchengjushang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shangzhouchengjushang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["chongshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["chongshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["bengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["bengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["penghuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["penghuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianhuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianhuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["xiankawai"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["xiankawai"])) + (Convert.IsDBNull(dtDetail.Rows[i]["luodipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["luodipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qita"]));
-                        }
-                    }
-                    totalNum += dtDetailSum;
-                    drow["dasha2"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "3");
-                    if (dtDetail != null && dtDetail.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtDetail.Rows.Count; i++)
-                        {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["feijiagongaokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["feijiagongaokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["liewen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["liewen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["nianmo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["nianmo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lamo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lamo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qipi"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qipi"])) + (Convert.IsDBNull(dtDetail.Rows[i]["youwufahei"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["youwufahei"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuoshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuoshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shangzhouchengjushang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shangzhouchengjushang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["chongshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["chongshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["bengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["bengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["penghuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["penghuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianhuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianhuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianbianxing"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianbianxing"])) + (Convert.IsDBNull(dtDetail.Rows[i]["yashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["yashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["xiankawai"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["xiankawai"])) + (Convert.IsDBNull(dtDetail.Rows[i]["luodipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["luodipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["abbdashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["abbdashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qita"]));
-                        }
-                    }
-                    totalNum += dtDetailSum;
-                    drow["cuopifeng"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "4");
-                    if (dtDetail != null && dtDetail.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtDetail.Rows.Count; i++)
-                        {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["shayan"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shayan"])) + (Convert.IsDBNull(dtDetail.Rows[i]["feijiagongmianaokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["feijiagongmianaokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["liewen"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["liewen"])) + (Convert.IsDBNull(dtDetail.Rows[i]["nianmo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["nianmo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lamo"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lamo"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qipi"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qipi"])) + (Convert.IsDBNull(dtDetail.Rows[i]["youwufahei"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["youwufahei"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuoshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuoshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["shangzhouchengjushang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["shangzhouchengjushang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["chongshang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["chongshang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["bengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["bengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["penghuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["penghuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianhuashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianhuashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["rjiaobianxing"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["rjiaobianxing"])) + (Convert.IsDBNull(dtDetail.Rows[i]["hmianbianxing"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["hmianbianxing"])) + (Convert.IsDBNull(dtDetail.Rows[i]["xiankawai"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["xiankawai"])) + (Convert.IsDBNull(dtDetail.Rows[i]["luodipin"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["luodipin"])) + (Convert.IsDBNull(dtDetail.Rows[i]["yashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["yashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["assdashang"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["assdashang"])) + (Convert.IsDBNull(dtDetail.Rows[i]["lengliao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["lengliao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["gubao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["gubao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["aokeng"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["aokeng"])) + (Convert.IsDBNull(dtDetail.Rows[i]["cuzaodugao"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["cuzaodugao"])) + (Convert.IsDBNull(dtDetail.Rows[i]["qita"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["qita"]));
-                        }
-                    }
-                    totalNum += dtDetailSum;
-                    drow["hmianquanjian"] = dtDetailSum.ToString();
+                    drow["yazhuneibubaofeishu"] = totalNum.ToString();
+                    drow["cuopifengbeibubaofeishu"] = totalNum1.ToString();
+                    drow["yazhuzongbeofeishu"] = (totalNum1 + totalNum).ToString();
+
                     if (yazhuchanneng > 0)
                     {
                         // 压铸内部报废率（ΣC压铸不合格品数+ H不合格品数totalNum）/ΣM压铸车间生产数
-                        drow["yazhuchejianneibubaofeilv"] = decimal.Round((decimal)(Math.Abs(totalNum + (yazhujishuqishu - yazhuchanneng)) / yazhuchanneng), 4);
+                        drow["yazhuchejianneibubaofeilv"] = decimal.Round(decimal.Parse((totalNum / yazhuchanneng).ToString()) * 100, 2).ToString() + "%";  //报废率;//对应的每一天效率
+                        drow["cuopifengneibubaofeilv"] = decimal.Round(decimal.Parse((totalNum1 / yazhuchanneng).ToString()) * 100, 2).ToString() + "%";
+                        drow["yazhuzongbaofeilv"] = decimal.Round(decimal.Parse((Math.Abs((totalNum1 + totalNum) + (yazhujishuqishu - yazhuchanneng)) / yazhuchanneng).ToString()) * 100, 2).ToString() + "%";
                     }
                     else
                     {
-                        drow["yazhuchejianneibubaofeilv"] = "0";
+                        drow["yazhuchejianneibubaofeilv"] = 0;
+                        drow["cuopifengneibubaofeilv"] = 0;
+                        drow["yazhuzongbaofeilv"] = 0;
                     }
-                    drow["yazhuchejian"] = totalNum.ToString();
                     #endregion
                     #region 机加车间报废
                     totalNum = 0;
@@ -224,7 +265,7 @@ namespace MultiColHeaderDgvTest
                         drow["cncchanneng"] = cncchanneng;
                     }
                     //通过日期查询报废车间的具体总数  机加车间
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "5");//机加拉线
+                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "8", 0);//机加拉线
                     if (dtDetail != null && dtDetail.Rows.Count > 0)
                     {
                         for (int i = 0; i < dtDetail.Rows.Count; i++)
@@ -233,40 +274,42 @@ namespace MultiColHeaderDgvTest
                         }
                     }
                     totalNum += dtDetailSum;
-                    drow["quanjian"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "6");//机加清洗
+                    drow["jijiaquanjian"] = dtDetailSum.ToString();
+                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "6", 0);//机加清洗
                     if (dtDetail != null && dtDetail.Rows.Count > 0)
                     {
                         for (int i = 0; i < dtDetail.Rows.Count; i++)
                         {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["type1"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type1"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type2"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type2"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type3"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type3"]));
+                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["type22"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type22"]));
                         }
                     }
                     totalNum += dtDetailSum;
-                    drow["qingxi"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "7");//机加CNC
+                    drow["jijiaqingxi"] = dtDetailSum.ToString();
+                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "5", 0);//机加CNC
                     if (dtDetail != null && dtDetail.Rows.Count > 0)
                     {
                         for (int i = 0; i < dtDetail.Rows.Count; i++)
                         {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["type1"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type1"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type2"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type2"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type3"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type3"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type4"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type4"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type5"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type5"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type6"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type6"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type7"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type7"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type8"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type8"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type9"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type9"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type10"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type10"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type11"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type11"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type12"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type12"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type13"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type13"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type14"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type14"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type15"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type15"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type16"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type16"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type17"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type17"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type18"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type18"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type19"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type19"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type20"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type20"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type21"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type21"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type22"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type22"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type23"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type23"]));
+                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["type1"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type1"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type2"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type2"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type3"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type3"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type4"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type4"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type5"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type5"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type6"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type6"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type7"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type7"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type8"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type8"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type9"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type9"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type10"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type10"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type11"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type11"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type12"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type12"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type13"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type13"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type14"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type14"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type15"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type15"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type16"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type16"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type17"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type17"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type18"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type18"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type19"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type19"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type20"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type20"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type21"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type21"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type22"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type22"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type23"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type23"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type24"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type24"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type25"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type25"]));
                         }
                     }
                     totalNum += dtDetailSum;
-                    drow["cnc"] = dtDetailSum.ToString();
-                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "8");//测漏
+                    drow["jijiacnc"] = dtDetailSum.ToString();
+                    dtDetail = commonWorkShopRecordBLL.GetDetailBaoFeiList(dtAllCol.Rows[k]["time"].ToString(), "7", 0);//测漏
                     if (dtDetail != null && dtDetail.Rows.Count > 0)
                     {
                         for (int i = 0; i < dtDetail.Rows.Count; i++)
                         {
-                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["type1"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type1"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type2"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type2"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type3"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type3"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type4"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type4"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type5"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type5"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type6"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type6"])) + (Convert.IsDBNull(dtDetail.Rows[i]["type7"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type7"]));
+                            dtDetailSum = (Convert.IsDBNull(dtDetail.Rows[i]["type22"]) ? 0 : Convert.ToInt32(dtDetail.Rows[i]["type22"]));
                         }
                     }
                     totalNum += dtDetailSum;
-                    drow["celou"] = dtDetailSum.ToString();
+                    drow["jijiacelou"] = dtDetailSum.ToString();
+                    drow["jijiazuizhongbaofeishu"] = totalNum.ToString();
                     if (cncchanneng > 0)
                     {
-                        drow["jijiachejianzuizhongbaofeilv"] = decimal.Round((decimal)(jijiaquexianorcuopifengjijia / cncchanneng), 4);  //机加车间报废率;
+                        //decimal.Round(decimal.Parse((jijiaquexianorcuopifengjijia / cncchanneng).ToString()) * 100, 2).ToString() + "%";
+                        drow["jijiachejianzuizhongbaofeilv"] = decimal.Round(decimal.Parse((jijiaquexianorcuopifengjijia / cncchanneng).ToString()) * 100, 2).ToString() + "%";  //机加车间报废率;
                     }
                     else
                     {
@@ -274,7 +317,7 @@ namespace MultiColHeaderDgvTest
                     }
                     #endregion
                     #region 压铸缺陷报废总数
-                    dtDetail = commonWorkShopRecordBLL.GetNumByTimeWorkshoptype("7", dtAllCol.Rows[k]["time"].ToString());//cnc
+                    dtDetail = commonWorkShopRecordBLL.GetNumByTimeWorkshoptype("5", dtAllCol.Rows[k]["time"].ToString());//cnc
                     if (dtDetail != null && dtDetail.Rows.Count > 0)
                     {
                         if (!Convert.IsDBNull(dtDetail.Rows[0]["yazhuquexian"]))
@@ -282,29 +325,31 @@ namespace MultiColHeaderDgvTest
                             decimal.TryParse(dtDetail.Rows[0]["yazhuquexian"].ToString(), out yazhuquexianjijia);
                         }
                     }
-                    drow["cnc2"] = yazhuquexianjijia;
-                    dtDetail = commonWorkShopRecordBLL.GetNumByTimeWorkshoptype("8", dtAllCol.Rows[k]["time"].ToString());//测漏 压铸缺陷
-                    if (dtDetail != null && dtDetail.Rows.Count > 0)
-                    {
-                        if (!Convert.IsDBNull(dtDetail.Rows[0]["jijiaquexian"]))
-                        {
-                            decimal.TryParse(dtDetail.Rows[0]["jijiaquexian"].ToString(), out yazhuquexianjijia);
-                        }
-                    }
-                    drow["yazhuchejian"] = yazhuquexianjijia;
-                    dtDetail = commonWorkShopRecordBLL.GetNumByTimeWorkshoptype("5", dtAllCol.Rows[k]["time"].ToString());//全检 压铸缺陷
+                    drow["yazhuquexiancnc2"] = yazhuquexianjijia;
+                    //dtDetail = commonWorkShopRecordBLL.GetNumByTimeWorkshoptype("8", dtAllCol.Rows[k]["time"].ToString());//测漏 压铸缺陷
+                    //if (dtDetail != null && dtDetail.Rows.Count > 0)
+                    //{
+                    //    if (!Convert.IsDBNull(dtDetail.Rows[0]["jijiaquexian"]))
+                    //    {
+                    //        decimal.TryParse(dtDetail.Rows[0]["jijiaquexian"].ToString(), out yazhuquexianjijia);
+                    //    }
+                    //}
+                    //drow["yazhuchejian"] = yazhuquexianjijia;
+                    dtDetail = commonWorkShopRecordBLL.GetNumByTimeWorkshoptype("8", dtAllCol.Rows[k]["time"].ToString());//全检 压铸缺陷
                     if (dtDetail != null && dtDetail.Rows.Count > 0)
                     {
                         if (!Convert.IsDBNull(dtDetail.Rows[0]["yazhuquexian"]))
                         {
-                            decimal.TryParse(dtDetail.Rows[0]["yazhuquexian"].ToString(), out yazhuquexianjijia);
+                            decimal.TryParse(dtDetail.Rows[0]["yazhuquexian"].ToString(), out jijiaquexian);
                         }
                     }
-                    drow["quanjianxian"] = yazhuquexianjijia;
+                    drow["yazhuquexianquanjianxian"] = jijiaquexian;
+                    drow["yazhuzuizhongbaofeishu"] = yazhuquexianjijia + jijiaquexian;
                     #endregion
                     if (cncchanneng > 0)
                     {
-                        drow["yazhuchejianzuizhongbaofeilv"] = decimal.Round((decimal)((yazhuquexian + yazhuquexianjijia) / (cncchanneng)), 4);//压铸最终报废率
+                        //decimal.Round(decimal.Parse(((yazhuquexian + yazhuquexianjijia) / (cncchanneng)).ToString()) * 100, 2).ToString() + "%";
+                        drow["yazhuchejianzuizhongbaofeilv"] = decimal.Round(decimal.Parse(((jijiaquexian + yazhuquexianjijia) / (cncchanneng)).ToString()) * 100, 2).ToString() + "%";//压铸最终报废率
                     }
                     else
                     {
@@ -315,7 +360,7 @@ namespace MultiColHeaderDgvTest
                 }
             }
             multiColHeaderDgv2.DataSource = dtable;
-
+            button1.Text = "加载完成！";
         }
 
         private void btnExcel_Click(object sender, EventArgs e)
@@ -397,7 +442,7 @@ namespace MultiColHeaderDgvTest
             {
                 string path = sfd.FileName;
 
-                string header = "项目#年月#压铸产能#压铸计数器#压铸车间报废数 压铸,打砂1,打砂2,挫披锋,外观全检#压铸车间内部报废率#CNC产能#机加缺陷报废数 CNC,清洗,测漏,全检#机加车间最终报废率#压铸车间报废总数 压铸车间,CNC,全检线#压铸车间最终报废率";
+                string header = "项目#年月#压铸车间合格品数#压铸计数器#压铸车间报废数 压铸,打砂1,打砂2,挫披锋,H面全检#压铸车间内部报废数#压铸车间内部报废率#挫披锋内部报废 压铸,打砂1,打砂2,挫披锋,H面全检外观全检#挫披锋内部报废数#挫披锋内部报废率#压铸车间总的报废数#压铸车间总的内部报废率#CNC产能#机加缺陷报废数 CNC,清洗,测漏,全检#机加车间最终报废数#机加车间最终报废率#压铸车间报废总数 CNC2,全检线#压铸车间最终报废数#压铸车间最终报废率";
                 DataSet ds = new DataSet();
                 ds.Tables.Add(dtable.Copy());
                 NPOIHelper helper = new WorkShopSystem.Utility.NPOIHelper("", "sheet", header, "车间数据统计", ds, "", path, 2);

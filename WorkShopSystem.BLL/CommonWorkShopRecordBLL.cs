@@ -181,9 +181,9 @@ namespace WorkShopSystem.BLL
         {
             return dal.GetNumByTime(workType, timeStart);
         }
-        public DataTable GetDetailBaoFeiList(string time, string type)
+        public DataTable GetDetailBaoFeiList(string time, string type,int quexiantype)
         {
-            return dal.GetDetailBaoFeiList(time, type);
+            return dal.GetDetailBaoFeiList(time, type, quexiantype);
         }
         public DataTable GetInfoByOne(string strSql)
         {

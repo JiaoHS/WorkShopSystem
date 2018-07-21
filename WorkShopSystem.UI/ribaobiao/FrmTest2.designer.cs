@@ -51,8 +51,8 @@ namespace MultiColHeaderDgvTest
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.btnExcel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnFullList = new System.Windows.Forms.Button();
             this.multiColHeaderDgvRiBaoBiao = new WorkShopSystem.UI.MultiColHeaderDgv();
+            this.btnFullList = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.multiColHeaderDgvRiBaoBiao)).BeginInit();
             this.SuspendLayout();
@@ -106,16 +106,6 @@ namespace MultiColHeaderDgvTest
             this.panel1.Size = new System.Drawing.Size(1039, 453);
             this.panel1.TabIndex = 9;
             // 
-            // btnFullList
-            // 
-            this.btnFullList.Location = new System.Drawing.Point(424, 29);
-            this.btnFullList.Name = "btnFullList";
-            this.btnFullList.Size = new System.Drawing.Size(75, 23);
-            this.btnFullList.TabIndex = 14;
-            this.btnFullList.Text = "填充列表";
-            this.btnFullList.UseVisualStyleBackColor = true;
-            this.btnFullList.Click += new System.EventHandler(this.btnFullList_Click);
-            // 
             // multiColHeaderDgvRiBaoBiao
             // 
             this.multiColHeaderDgvRiBaoBiao.AllowUserToAddRows = false;
@@ -133,6 +123,16 @@ namespace MultiColHeaderDgvTest
             this.multiColHeaderDgvRiBaoBiao.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.multiColHeaderDgvRiBaoBiao.Size = new System.Drawing.Size(1039, 453);
             this.multiColHeaderDgvRiBaoBiao.TabIndex = 4;
+            // 
+            // btnFullList
+            // 
+            this.btnFullList.Location = new System.Drawing.Point(424, 29);
+            this.btnFullList.Name = "btnFullList";
+            this.btnFullList.Size = new System.Drawing.Size(75, 23);
+            this.btnFullList.TabIndex = 14;
+            this.btnFullList.Text = "填充列表";
+            this.btnFullList.UseVisualStyleBackColor = true;
+            this.btnFullList.Click += new System.EventHandler(this.btnFullList_Click);
             // 
             // FrmTest2
             // 

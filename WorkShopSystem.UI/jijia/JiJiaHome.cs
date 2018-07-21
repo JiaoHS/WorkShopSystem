@@ -268,7 +268,7 @@ namespace WorkShopSystem.UI.yazhu
             StringBuilder strWhere = new StringBuilder();
             if (dtStart.Trim() != "" && drEnd.Trim() != "")
             {
-                strWhere.Append(string.Format(@" strftime('%Y-%m-%d',  time)<='{0}' and  strftime('%Y-%m-%d',  time) >='{1}'", drEnd, dtStart));
+                strWhere.Append(string.Format(@" convert(char(10) ,time , 120)<='{0}' and  convert(char(10) ,time , 120) >='{1}'", drEnd, dtStart));
             }
 
             if (muHaoList != null && muHaoList != "")
@@ -343,9 +343,17 @@ namespace WorkShopSystem.UI.yazhu
                         else
                         {
                             index = dtSum.Rows[i].Table.Columns.IndexOf(itemDic.Key);
-                            //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
-                            double.TryParse(dtSum.Rows[i][dtSum.Rows[i].Table.Columns[index]].ToString(), out tempDou);
-                        }                       
+
+                            if (index == -1)
+                            {
+                                tempDou = 0;
+                            }
+                            else
+                            {
+                                double.TryParse(dtSum.Rows[i][dtSum.Rows[i].Table.Columns[index]].ToString(), out tempDou);
+                            }
+                            //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());                          
+                        }
                         drow[itemDic.Value] = tempDou;
                     }
                     //item.SubItems.RemoveAt(0);

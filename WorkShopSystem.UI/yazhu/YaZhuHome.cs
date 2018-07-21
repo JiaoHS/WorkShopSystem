@@ -76,7 +76,7 @@ namespace WorkShopSystem.UI.yazhu
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 strTemp = dt.Rows[i]["liuchengpiaobianhao"].ToString();
-                                if (strTemp.ToLower().IndexOf("p") >= 0|| strTemp.ToLower().IndexOf("f") >= 0)
+                                if (strTemp.ToLower().IndexOf("p") >= 0 || strTemp.ToLower().IndexOf("f") >= 0)
                                 {
                                     checkedListBox3.Items.Add(strTemp);
                                 }
@@ -192,7 +192,7 @@ namespace WorkShopSystem.UI.yazhu
                     {
                         dicTitle.Add(ck.Name, ck.Text);
                         dtable.Columns.Add(ck.Text, typeof(System.String));
-                        header += ck.Text+"#";
+                        header += ck.Text + "#";
                         //sb += ck.Text + ",";
                     }
                 }
@@ -222,7 +222,7 @@ namespace WorkShopSystem.UI.yazhu
             StringBuilder strWhere = new StringBuilder();
             if (dtStart.Trim() != "" && drEnd.Trim() != "")
             {
-                strWhere.Append(string.Format(@" strftime('%Y-%m-%d',  time)<='{0}' and  strftime('%Y-%m-%d',  time) >='{1}'", drEnd, dtStart));
+                strWhere.Append(string.Format(@" convert(char(10) ,time , 120)<='{0}' and convert(char(10) ,time , 120) >='{1}'", drEnd, dtStart));
             }
 
             if (muHaoList != null && muHaoList != "")
@@ -289,7 +289,14 @@ namespace WorkShopSystem.UI.yazhu
                         {
                             index = dtSum.Rows[i].Table.Columns.IndexOf(itemDic.Key);
                             //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
-                            double.TryParse(dtSum.Rows[i][dtSum.Rows[i].Table.Columns[index]].ToString(), out tempDou);
+                            if (index == -1)
+                            {
+                                tempDou = 0;
+                            }
+                            else
+                            {
+                                double.TryParse(dtSum.Rows[i][dtSum.Rows[i].Table.Columns[index]].ToString(), out tempDou);
+                            }
                         }
                         drow[itemDic.Value] = tempDou;
                     }

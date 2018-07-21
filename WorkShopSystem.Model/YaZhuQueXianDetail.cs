@@ -53,7 +53,7 @@ namespace WorkShopSystem.Model
 		private decimal? _cuoshang;
 		private decimal? _cuodaohen;
 		private decimal? _abbdashang;
-		private string _assqiexue;
+		private decimal _assqiexue;
 		private decimal? _qupifengqita;
 		private decimal? _type;
 		private string _liuchengpiaobianhao;
@@ -278,7 +278,7 @@ namespace WorkShopSystem.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public string assqiexue
+		public decimal assqiexue
 		{
 			set{ _assqiexue=value;}
 			get{return _assqiexue;}

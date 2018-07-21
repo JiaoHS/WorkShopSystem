@@ -21,7 +21,7 @@ namespace WorkShopSystem.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ClearDataForm());
+            Application.Run(new MainForm());
         }
     }
 }
