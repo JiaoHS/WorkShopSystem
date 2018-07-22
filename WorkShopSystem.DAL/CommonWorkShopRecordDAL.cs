@@ -325,8 +325,7 @@ namespace WorkShopSystem.DAL
         public DataTable GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select time,yazhujihao,maopeihao,muhao,liuchengpiaobianhao,banci,jihuashengchanshu,shengchanzongshu,jishuqishu,baofeizongshu,baofeilv,fanxiuzongshu,fanxiulv,xianhao,gongxu,workshoptype,gonghao,isdel,yazhuquexian,cuopifengquexian,pinjianquexian,jijiaquexian ");
-            strSql.Append(" FROM CommonWorkShopRecord ");
+            strSql.Append("select cmr.time,cmr.yazhujihao,cmr.maopeihao,cmr.muhao,cmr.liuchengpiaobianhao,cmr.banci,cmr.jihuashengchanshu,cmr.shengchanzongshu,cmr.jishuqishu,cmr.baofeizongshu,cmr.baofeilv,cmr.fanxiuzongshu,cmr.fanxiulv,cmr.xianhao,cmr.gongxu,cmr.workshoptype,cmr.gonghao,cmr.isdel,cmr.yazhuquexian,cmr.cuopifengquexian,cmr.pinjianquexian,cmr.jijiaquexian,gaodiya,lamo,nianmo,kaweichaocha,liewen,guilie,lengliao,youwufahei,duanzhen,qipi,jushang,yadianshang,chongshang,bengqueliao,penghuashang,Hmianhuashang,xiankawai,luodipin,gubao,jitan,shuikouduan,aokeng,qita,cuoshang,cuodaohen,abbdashang,assqiexue,qupifengqita,bengliao,fanpen,zhengxing,beizhu  FROM CommonWorkShopRecord cmr inner join YaZhuQueXianDetail yazhu on cmr.liuchengpiaobianhao=yazhu.liuchengpiaobianhao inner join FanXiuDetail fanxiu on cmr.liuchengpiaobianhao=fanxiu.liuchengpiaobianhao");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -798,8 +797,27 @@ namespace WorkShopSystem.DAL
         public DataTable GetListSum(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select sum(jihuashengchanshu) jihuashengchanshu,sum(shengchanzongshu) shengchanzongshu,sum(jishuqishu) jishuqishu,sum(baofeizongshu) baofeizongshu,sum(fanxiuzongshu) fanxiuzongsh,sum(yazhuquexian) yazhuquexian,sum(cuopifengquexian) cuopifengquexian,sum(pinjianquexian) pinjianquexian,sum(jijiaquexian) jijiaquexian");
-            strSql.Append(" FROM CommonWorkShopRecord ");
+            strSql.Append("select sum(jihuashengchanshu) jihuashengchanshu,sum(shengchanzongshu) shengchanzongshu,sum(jishuqishu) jishuqishu,sum(baofeizongshu) baofeizongshu,sum(fanxiuzongshu) fanxiuzongsh,sum(yazhuquexian) yazhuquexian,sum(cuopifengquexian) cuopifengquexian,sum(pinjianquexian) pinjianquexian,sum(jijiaquexian) jijiaquexian,SUM(yazhu.gaodiya) gaodiya,sum(yazhu.lamo) lamo,sum(yazhu.nianmo) nianmo,SUM(yazhu.kaweichaocha) kaweichaocha,sum(yazhu.liewen) liewen,sum(yazhu.guilie) guilie,SUM(yazhu.lengliao) lengliao,sum(yazhu.youwufahei) youwufahei,sum(yazhu.duanzhen) duanzhen,SUM(yazhu.qipi) qipi,sum(yazhu.jushang) jushang,sum(yazhu.yadianshang) yadianshang,SUM(yazhu.chongshang) chongshang,sum(yazhu.bengqueliao) bengqueliao,sum(yazhu.penghuashang) penghuashang,SUM(yazhu.Hmianhuashang) Hmianhuashang,sum(yazhu.xiankawai) xiankawai,sum(yazhu.luodipin) luodipin,SUM(yazhu.gubao) gubao,sum(yazhu.jitan) jitan,sum(yazhu.shuikouduan) shuikouduan,SUM(yazhu.aokeng) aokeng,sum(yazhu.qita) qita,sum(yazhu.cuoshang) cuoshang,SUM(yazhu.cuodaohen) cuodaohen,sum(yazhu.abbdashang) abbdashang,sum(yazhu.assqiexue) assqiexue,SUM(yazhu.qupifengqita) qupifengqita,SUM(bengliao) as bengliao,SUM(fanpen) as fanpen,SUM(zhengxing) as zhengxing FROM CommonWorkShopRecord cmr inner join YaZhuQueXianDetail yazhu on cmr.liuchengpiaobianhao=yazhu.liuchengpiaobianhao inner join FanXiuDetail fanxiu on cmr.liuchengpiaobianhao=fanxiu.liuchengpiaobianhao");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            return SqlHelper.ExecuteDataTable(strSql.ToString());
+        }
+        public DataTable GetListJiJia(string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select cmr.time,cmr.yazhujihao,cmr.maopeihao,cmr.muhao,cmr.liuchengpiaobianhao,cmr.banci,cmr.jihuashengchanshu,cmr.shengchanzongshu,cmr.jishuqishu,cmr.baofeizongshu,cmr.baofeilv,cmr.fanxiuzongshu,cmr.fanxiulv,cmr.xianhao,cmr.gongxu,cmr.workshoptype,cmr.gonghao,cmr.isdel,cmr.yazhuquexian,cmr.cuopifengquexian,cmr.pinjianquexian,cmr.gonghao,cmr.jijiaquexian,cnctiaojipin,falanmianyashang,falanmianhuahenpengshang,hmianyashang,jijia.jinqikoukepeng,shangzhouchengkongkepeng,daowen,kongjingchaocha,shuiyin,zangwu,jiagongbuliang,shakong,liewen,bengque,feihua,feipeng,qipi,zazhi,nianmo,maopeifamei,yanghuafahei,luodi,qita,lamo,xiankawai,feijiagongmianaokeng,lvxue,fanxiu.jinqikoukepeng as jinqikoukepengX,falanmianhuashang as falanmianhuashangX,pensha as penshaX,kefanxipin as kefanxipinX,kefanfamei as kefanfameiX,xiaoshakongkefanxiu as xiaoshakongkefanxiuX,beizhu as beizhuX FROM CommonWorkShopRecord cmr inner join JiJiaQueXianDetail jijia on cmr.liuchengpiaobianhao=jijia.liuchengpiaobianhao inner join FanXiuDetail fanxiu on cmr.liuchengpiaobianhao=fanxiu.liuchengpiaobianhao");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            return SqlHelper.ExecuteDataTable(strSql.ToString());
+        }
+        public DataTable GetListSumJiJia(string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select sum(jihuashengchanshu) jihuashengchanshu,sum(shengchanzongshu) shengchanzongshu,sum(jishuqishu) jishuqishu,sum(baofeizongshu) baofeizongshu,sum(fanxiuzongshu) fanxiuzongsh,sum(yazhuquexian) yazhuquexian,sum(cuopifengquexian) cuopifengquexian,sum(pinjianquexian) pinjianquexian,sum(jijiaquexian) jijiaquexian,SUM(cnctiaojipin) cnctiaojipin,sum(falanmianyashang) falanmianyashang,sum(falanmianhuahenpengshang) falanmianhuahenpengshang,SUM(hmianyashang) hmianyashang,sum(jijia.jinqikoukepeng) jinqikoukepeng,sum(shangzhouchengkongkepeng) shangzhouchengkongkepeng,SUM(daowen) daowen,sum(kongjingchaocha) kongjingchaocha,sum(shuiyin) shuiyin,SUM(zangwu) zangwu,sum(jiagongbuliang) jiagongbuliang,sum(shakong) shakong,SUM(liewen) liewen,sum(bengque) bengque,sum(feihua) feihua,SUM(feipeng) feipeng,sum(qipi) qipi,sum(zazhi) zazhi,SUM(nianmo) nianmo,sum(maopeifamei) maopeifamei,sum(yanghuafahei) yanghuafahei,SUM(luodi) luodi,sum(qita) qita,sum(lamo) lamo,SUM(xiankawai) xiankawai,sum(feijiagongmianaokeng) feijiagongmianaokeng,sum(lvxue) lvxue,sum(fanxiu.jinqikoukepeng) jinqikoukepengX,sum(falanmianhuashang) falanmianhuashangX,sum(pensha) penshaX,sum(kefanxipin) kefanxipinX,sum(kefanfamei) kefanfameiX,sum(xiaoshakongkefanxiu) xiaoshakongkefanxiuX FROM CommonWorkShopRecord cmr inner join JiJiaQueXianDetail jijia on cmr.liuchengpiaobianhao=jijia.liuchengpiaobianhao inner join FanXiuDetail fanxiu on cmr.liuchengpiaobianhao=fanxiu.liuchengpiaobianhao");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);

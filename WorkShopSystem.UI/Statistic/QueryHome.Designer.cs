@@ -62,6 +62,8 @@
             this.tbMuHao = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnClean = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbGongHao = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewQueryHome)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -385,6 +387,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.tbGongHao);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tbMaoPiHao);
             this.groupBox1.Controls.Add(this.tbMuHao);
             this.groupBox1.Controls.Add(this.label1);
@@ -395,7 +399,7 @@
             this.groupBox1.Controls.Add(this.tbJiTaiHao);
             this.groupBox1.Location = new System.Drawing.Point(31, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(791, 39);
+            this.groupBox1.Size = new System.Drawing.Size(950, 39);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
@@ -409,6 +413,22 @@
             this.btnClean.Text = "一键清空";
             this.btnClean.UseVisualStyleBackColor = true;
             this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(788, 17);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "工号：";
+            // 
+            // tbGongHao
+            // 
+            this.tbGongHao.Location = new System.Drawing.Point(835, 12);
+            this.tbGongHao.Name = "tbGongHao";
+            this.tbGongHao.Size = new System.Drawing.Size(100, 21);
+            this.tbGongHao.TabIndex = 8;
             // 
             // QueryHome
             // 
@@ -469,5 +489,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cuopifengquexian;
         private System.Windows.Forms.DataGridViewTextBoxColumn pinjianquexian;
         private System.Windows.Forms.DataGridViewTextBoxColumn jijiaquexian;
+        private System.Windows.Forms.TextBox tbGongHao;
+        private System.Windows.Forms.Label label5;
     }
 }

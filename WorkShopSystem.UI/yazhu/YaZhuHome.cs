@@ -183,6 +183,60 @@ namespace WorkShopSystem.UI.yazhu
             //listView.Clear();
             List<string> titleList = new List<string>();
             Dictionary<string, string> dicTitle = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleYaZhu = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleQuPiFeng = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleFanXiu = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitlePinJian = new Dictionary<string, string>();
+            foreach (Control cl in gbyazhu.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleYaZhu.Add(ck.Name, ck.Text);
+                        //dtable.Columns.Add(ck.Text, typeof(System.String));
+                        //header += ck.Text + "#";
+                        //sb += ck.Text + ",";
+                    }
+                }
+            }
+            foreach (Control cl in gbqupifeng.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleQuPiFeng.Add(ck.Name, ck.Text);
+                        //dtable.Columns.Add(ck.Text, typeof(System.String));
+                        //header += ck.Text + "#";
+                        //sb += ck.Text + ",";
+                    }
+                }
+            }
+            foreach (Control cl in gbFanXiu.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleFanXiu.Add(ck.Name, ck.Text);
+                    }
+                }
+            }
+            foreach (Control cl in gbPinJian.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitlePinJian.Add(ck.Name, ck.Text);
+                    }
+                }
+            }
             foreach (Control cl in groupBox1.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
             {
                 if (cl is CheckBox)//看看是不是checkbox
@@ -193,7 +247,46 @@ namespace WorkShopSystem.UI.yazhu
                         dicTitle.Add(ck.Name, ck.Text);
                         dtable.Columns.Add(ck.Text, typeof(System.String));
                         header += ck.Text + "#";
-                        //sb += ck.Text + ",";
+                        if (ck.Text=="压铸缺陷")
+                        {
+                            foreach (var item in dicTitleYaZhu)
+                            {
+                                dicTitle.Add(item.Key, item.Value);
+                                dtable.Columns.Add(item.Value, typeof(System.String));
+                                header += item.Value + "#";
+                            }
+                        }
+                        if (ck.Text == "挫披锋缺陷")
+                        {
+                            foreach (var item in dicTitleQuPiFeng)
+                            {
+                                dicTitle.Add(item.Key, item.Value);
+                                dtable.Columns.Add(item.Value, typeof(System.String));
+                                header += item.Value + "#";
+                            }
+                        }
+                        if (ck.Text == "返修总数")
+                        {
+                            foreach (var item in dicTitleFanXiu)
+                            {
+                                dicTitle.Add(item.Key, item.Value);
+                                dtable.Columns.Add(item.Value, typeof(System.String));
+                                header += item.Value + "#";
+                            }
+                        }
+                    }
+                }
+                if (cl is Label)
+                {
+                    Label ck = cl as Label;
+                    if (ck.Text == "品检")
+                    {
+                        foreach (var item in dicTitlePinJian)
+                        {
+                            dicTitle.Add(item.Key, item.Value);
+                            dtable.Columns.Add(item.Value, typeof(System.String));
+                            header += item.Value + "#";
+                        }
                     }
                 }
             }
@@ -222,17 +315,17 @@ namespace WorkShopSystem.UI.yazhu
             StringBuilder strWhere = new StringBuilder();
             if (dtStart.Trim() != "" && drEnd.Trim() != "")
             {
-                strWhere.Append(string.Format(@" convert(char(10) ,time , 120)<='{0}' and convert(char(10) ,time , 120) >='{1}'", drEnd, dtStart));
+                strWhere.Append(string.Format(@" convert(char(10) ,cmr.time , 120)<='{0}' and convert(char(10) ,cmr.time , 120) >='{1}'", drEnd, dtStart));
             }
 
             if (muHaoList != null && muHaoList != "")
             {
-                strWhere.Append(string.Format(@" and muhao in ({0})", muHaoList));
+                strWhere.Append(string.Format(@" and cmr.muhao in ({0})", muHaoList));
             }
 
             if (maoPiHaoList != null && maoPiHaoList != "")
             {
-                strWhere.Append(string.Format(@" and maopeihao in ({0})", maoPiHaoList));
+                strWhere.Append(string.Format(@" and cmr.maopeihao in ({0})", maoPiHaoList));
             }
 
             if (liuChengPiaoList == "")
@@ -241,17 +334,17 @@ namespace WorkShopSystem.UI.yazhu
             }
             else
             {
-                strWhere.Append(string.Format(@" and liuchengpiaobianhao in ({0})", liuChengPiaoList));
+                strWhere.Append(string.Format(@" and cmr.liuchengpiaobianhao in ({0})", liuChengPiaoList));
             }
 
             int liuCheng = cbLiuCheng.SelectedIndex;
             if (liuCheng > 0)
             {
-                strWhere.Append(string.Format(@" and workshoptype = {0}", liuCheng));
+                strWhere.Append(string.Format(@" and cmr.workshoptype = {0}", liuCheng));
             }
             else
             {
-                strWhere.Append(string.Format(@" and workshoptype in(0,1,2,3,4)"));
+                strWhere.Append(string.Format(@" and cmr.workshoptype in(0,1,2,3,4)"));
                 //strWhere.Append(string.Format(@" and workshoptype in(5,6,7,8)"));
             }
 
@@ -259,14 +352,14 @@ namespace WorkShopSystem.UI.yazhu
             if (banCi > 0)
             {
                 string banCiText = cbBanCi.SelectedItem.ToString();
-                strWhere.Append(string.Format(@" and banci = '{0}'", banCiText));
+                strWhere.Append(string.Format(@" and cmr.banci = '{0}'", banCiText));
             }
 
             //System.Threading.Thread test = new System.Threading.Thread(new System.Threading.ThreadStart(Loading(strWhere)));
             //test.Start();
             DataTable dt = BLL.GetList(strWhere.ToString());
             //ListViewItem item;
-            DataTable dtSum = BLL.GetListSum(strWhere.ToString());
+            DataTable dtSum = BLL.GetListSum(strWhere.ToString());//第一行求和
             if (dtSum != null && dtSum.Rows.Count > 0)
             {
                 string colTemp = string.Empty;
@@ -328,7 +421,7 @@ namespace WorkShopSystem.UI.yazhu
                 dataGridViewYaZhu.DataSource = dtable;
                 dataGridViewYaZhu.Rows[0].Frozen = true;
                 this.dataGridViewYaZhu.Rows[0].Selected = false;
-                this.dataGridViewYaZhu.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+                this.dataGridViewYaZhu.Rows[0].DefaultCellStyle.BackColor = Color.Gray;
                 cmd.HideOpaqueLayer();
             }
 
@@ -794,6 +887,75 @@ namespace WorkShopSystem.UI.yazhu
                 {
                     checkedListBox3.SetItemChecked(i, true);
                 }
+            }
+        }
+
+        private void yazhuquexian_CheckedChanged(object sender, EventArgs e)
+        {
+            if (yazhuquexian.Checked)
+            {
+                dbQueXianDetail.Visible = false;
+                gbyazhu.Visible = true;
+                gbqupifeng.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+            }
+            else
+            {
+                dbQueXianDetail.Visible = true;
+                gbyazhu.Visible = false;
+                gbqupifeng.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+            }
+        }
+
+        private void cuopifengquexian_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cuopifengquexian.Checked)
+            {
+                dbQueXianDetail.Visible = false;
+                gbyazhu.Visible = false;
+                gbqupifeng.Visible = true;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+            }
+            else
+            {
+                dbQueXianDetail.Visible = true;
+                gbyazhu.Visible = false;
+                gbqupifeng.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+            }
+        }
+
+        private void lbQiTaLei_Click(object sender, EventArgs e)
+        {
+            dbQueXianDetail.Visible = false;
+            gbyazhu.Visible = false;
+            gbqupifeng.Visible = false;
+            gbPinJian.Visible = true;
+            gbFanXiu.Visible = false;
+        }
+
+        private void fanxiuzongshu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (fanxiuzongshu.Checked)
+            {
+                gbFanXiu.Visible = true;
+                dbQueXianDetail.Visible = false;
+                gbyazhu.Visible = false;
+                gbqupifeng.Visible = false;
+                gbPinJian.Visible = false;
+            }
+            else
+            {
+                gbPinJian.Visible = false;
+                gbFanXiu.Visible = false;
+                dbQueXianDetail.Visible = true;
+                gbyazhu.Visible = false;
+                gbqupifeng.Visible = false;
             }
         }
     }

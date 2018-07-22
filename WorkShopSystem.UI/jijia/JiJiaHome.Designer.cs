@@ -53,7 +53,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.yazhujihao = new System.Windows.Forms.CheckBox();
-            this.pinjianquexian = new System.Windows.Forms.CheckBox();
             this.jijiaquexian = new System.Windows.Forms.CheckBox();
             this.yazhuquexian = new System.Windows.Forms.CheckBox();
             this.shengchanzongshu = new System.Windows.Forms.CheckBox();
@@ -80,12 +79,61 @@
             this.btnLoadData = new System.Windows.Forms.Button();
             this.cbPiaoType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.gbJiJiaQueXian = new System.Windows.Forms.GroupBox();
+            this.gbJIaGongQueXian = new System.Windows.Forms.GroupBox();
+            this.feijiagongmianaokeng = new System.Windows.Forms.CheckBox();
+            this.kongjingchaocha = new System.Windows.Forms.CheckBox();
+            this.daowen = new System.Windows.Forms.CheckBox();
+            this.luodi = new System.Windows.Forms.CheckBox();
+            this.hmianyashang = new System.Windows.Forms.CheckBox();
+            this.shangzhouchengkongkepeng = new System.Windows.Forms.CheckBox();
+            this.shuiyin = new System.Windows.Forms.CheckBox();
+            this.falanmianhuahenpengshang = new System.Windows.Forms.CheckBox();
+            this.jinqikoukepeng = new System.Windows.Forms.CheckBox();
+            this.falanmianyashang = new System.Windows.Forms.CheckBox();
+            this.cnctiaojipin = new System.Windows.Forms.CheckBox();
+            this.gbMaoPeiQueXian = new System.Windows.Forms.GroupBox();
+            this.maopeifamei = new System.Windows.Forms.CheckBox();
+            this.qipi = new System.Windows.Forms.CheckBox();
+            this.bengque = new System.Windows.Forms.CheckBox();
+            this.nianmo = new System.Windows.Forms.CheckBox();
+            this.jiagongbuliang = new System.Windows.Forms.CheckBox();
+            this.liewen = new System.Windows.Forms.CheckBox();
+            this.zazhi = new System.Windows.Forms.CheckBox();
+            this.xiankawai = new System.Windows.Forms.CheckBox();
+            this.shakong = new System.Windows.Forms.CheckBox();
+            this.lamo = new System.Windows.Forms.CheckBox();
+            this.zangwu = new System.Windows.Forms.CheckBox();
+            this.yanghuafahei = new System.Windows.Forms.CheckBox();
+            this.qita = new System.Windows.Forms.CheckBox();
+            this.gbFanXiu = new System.Windows.Forms.GroupBox();
+            this.jinqikoukepengX = new System.Windows.Forms.CheckBox();
+            this.falanmianhuashangX = new System.Windows.Forms.CheckBox();
+            this.kefanfameiX = new System.Windows.Forms.CheckBox();
+            this.penshaX = new System.Windows.Forms.CheckBox();
+            this.xiaoshakongkefanxiuX = new System.Windows.Forms.CheckBox();
+            this.kefanxipinX = new System.Windows.Forms.CheckBox();
+            this.beizhuX = new System.Windows.Forms.CheckBox();
+            this.gbPinJian = new System.Windows.Forms.GroupBox();
+            this.pinjianquexian = new System.Windows.Forms.CheckBox();
+            this.gonghao = new System.Windows.Forms.CheckBox();
+            this.lbPinJian = new System.Windows.Forms.Label();
+            this.lbQiTaLei = new System.Windows.Forms.Label();
+            this.gbQiTaLei = new System.Windows.Forms.GroupBox();
+            this.feihua = new System.Windows.Forms.CheckBox();
+            this.lvxue = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJiJia)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
+            this.gbJIaGongQueXian.SuspendLayout();
+            this.gbMaoPeiQueXian.SuspendLayout();
+            this.gbFanXiu.SuspendLayout();
+            this.gbPinJian.SuspendLayout();
+            this.gbQiTaLei.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbTitle
@@ -190,17 +238,18 @@
             // fanxiuzongshu
             // 
             this.fanxiuzongshu.AutoSize = true;
-            this.fanxiuzongshu.Location = new System.Drawing.Point(646, 10);
+            this.fanxiuzongshu.Location = new System.Drawing.Point(887, 9);
             this.fanxiuzongshu.Name = "fanxiuzongshu";
             this.fanxiuzongshu.Size = new System.Drawing.Size(72, 16);
             this.fanxiuzongshu.TabIndex = 1;
             this.fanxiuzongshu.Text = "返修总数";
             this.fanxiuzongshu.UseVisualStyleBackColor = true;
+            this.fanxiuzongshu.CheckedChanged += new System.EventHandler(this.fanxiuzongshu_CheckedChanged);
             // 
             // fanxiulv
             // 
             this.fanxiulv.AutoSize = true;
-            this.fanxiulv.Location = new System.Drawing.Point(717, 10);
+            this.fanxiulv.Location = new System.Drawing.Point(958, 9);
             this.fanxiulv.Name = "fanxiulv";
             this.fanxiulv.Size = new System.Drawing.Size(60, 16);
             this.fanxiulv.TabIndex = 1;
@@ -262,9 +311,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.dataGridViewJiJia);
-            this.panel1.Location = new System.Drawing.Point(0, 174);
+            this.panel1.Location = new System.Drawing.Point(0, 216);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1221, 366);
+            this.panel1.Size = new System.Drawing.Size(1221, 324);
             this.panel1.TabIndex = 7;
             // 
             // dataGridViewJiJia
@@ -278,7 +327,7 @@
             this.dataGridViewJiJia.Name = "dataGridViewJiJia";
             this.dataGridViewJiJia.ReadOnly = true;
             this.dataGridViewJiJia.RowTemplate.Height = 23;
-            this.dataGridViewJiJia.Size = new System.Drawing.Size(1221, 366);
+            this.dataGridViewJiJia.Size = new System.Drawing.Size(1221, 324);
             this.dataGridViewJiJia.TabIndex = 1;
             // 
             // btnExcel
@@ -299,6 +348,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lbQiTaLei);
+            this.groupBox1.Controls.Add(this.lbPinJian);
             this.groupBox1.Controls.Add(this.listView1);
             this.groupBox1.Controls.Add(this.jishuqishu);
             this.groupBox1.Controls.Add(this.yazhujihao);
@@ -309,7 +360,6 @@
             this.groupBox1.Controls.Add(this.banci);
             this.groupBox1.Controls.Add(this.jihuashengchanshu);
             this.groupBox1.Controls.Add(this.baofeizongshu);
-            this.groupBox1.Controls.Add(this.pinjianquexian);
             this.groupBox1.Controls.Add(this.jijiaquexian);
             this.groupBox1.Controls.Add(this.yazhuquexian);
             this.groupBox1.Controls.Add(this.shengchanzongshu);
@@ -318,7 +368,7 @@
             this.groupBox1.Controls.Add(this.fanxiuzongshu);
             this.groupBox1.Location = new System.Drawing.Point(80, 127);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1129, 30);
+            this.groupBox1.Size = new System.Drawing.Size(1121, 30);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             // 
@@ -329,7 +379,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Location = new System.Drawing.Point(-77, 50);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1215, 363);
+            this.listView1.Size = new System.Drawing.Size(1207, 363);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -343,40 +393,32 @@
             this.yazhujihao.Text = "压铸机号";
             this.yazhujihao.UseVisualStyleBackColor = true;
             // 
-            // pinjianquexian
-            // 
-            this.pinjianquexian.AutoSize = true;
-            this.pinjianquexian.Location = new System.Drawing.Point(994, 10);
-            this.pinjianquexian.Name = "pinjianquexian";
-            this.pinjianquexian.Size = new System.Drawing.Size(72, 16);
-            this.pinjianquexian.TabIndex = 1;
-            this.pinjianquexian.Text = "品检缺陷";
-            this.pinjianquexian.UseVisualStyleBackColor = true;
-            // 
             // jijiaquexian
             // 
             this.jijiaquexian.AutoSize = true;
-            this.jijiaquexian.Location = new System.Drawing.Point(912, 10);
+            this.jijiaquexian.Location = new System.Drawing.Point(790, 10);
             this.jijiaquexian.Name = "jijiaquexian";
-            this.jijiaquexian.Size = new System.Drawing.Size(72, 16);
+            this.jijiaquexian.Size = new System.Drawing.Size(96, 16);
             this.jijiaquexian.TabIndex = 1;
-            this.jijiaquexian.Text = "机加缺陷";
+            this.jijiaquexian.Text = "加工清洗缺陷";
             this.jijiaquexian.UseVisualStyleBackColor = true;
+            this.jijiaquexian.CheckedChanged += new System.EventHandler(this.jijiaquexian_CheckedChanged);
             // 
             // yazhuquexian
             // 
             this.yazhuquexian.AutoSize = true;
-            this.yazhuquexian.Location = new System.Drawing.Point(843, 11);
+            this.yazhuquexian.Location = new System.Drawing.Point(717, 11);
             this.yazhuquexian.Name = "yazhuquexian";
             this.yazhuquexian.Size = new System.Drawing.Size(72, 16);
             this.yazhuquexian.TabIndex = 1;
-            this.yazhuquexian.Text = "压铸缺陷";
+            this.yazhuquexian.Text = "毛坯缺陷";
             this.yazhuquexian.UseVisualStyleBackColor = true;
+            this.yazhuquexian.CheckedChanged += new System.EventHandler(this.yazhuquexian_CheckedChanged);
             // 
             // shengchanzongshu
             // 
             this.shengchanzongshu.AutoSize = true;
-            this.shengchanzongshu.Location = new System.Drawing.Point(775, 11);
+            this.shengchanzongshu.Location = new System.Drawing.Point(648, 11);
             this.shengchanzongshu.Name = "shengchanzongshu";
             this.shengchanzongshu.Size = new System.Drawing.Size(72, 16);
             this.shengchanzongshu.TabIndex = 1;
@@ -564,6 +606,7 @@
             // 
             // btnLoadData
             // 
+            this.btnLoadData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadData.Location = new System.Drawing.Point(1101, 25);
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(75, 23);
@@ -595,11 +638,485 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "流程票类型：";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 177);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(89, 12);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "可选缺陷表头：";
+            // 
+            // gbJiJiaQueXian
+            // 
+            this.gbJiJiaQueXian.Location = new System.Drawing.Point(107, 173);
+            this.gbJiJiaQueXian.Name = "gbJiJiaQueXian";
+            this.gbJiJiaQueXian.Size = new System.Drawing.Size(469, 25);
+            this.gbJiJiaQueXian.TabIndex = 21;
+            this.gbJiJiaQueXian.TabStop = false;
+            // 
+            // gbJIaGongQueXian
+            // 
+            this.gbJIaGongQueXian.Controls.Add(this.feijiagongmianaokeng);
+            this.gbJIaGongQueXian.Controls.Add(this.kongjingchaocha);
+            this.gbJIaGongQueXian.Controls.Add(this.daowen);
+            this.gbJIaGongQueXian.Controls.Add(this.luodi);
+            this.gbJIaGongQueXian.Controls.Add(this.hmianyashang);
+            this.gbJIaGongQueXian.Controls.Add(this.shangzhouchengkongkepeng);
+            this.gbJIaGongQueXian.Controls.Add(this.shuiyin);
+            this.gbJIaGongQueXian.Controls.Add(this.falanmianhuahenpengshang);
+            this.gbJIaGongQueXian.Controls.Add(this.jinqikoukepeng);
+            this.gbJIaGongQueXian.Controls.Add(this.falanmianyashang);
+            this.gbJIaGongQueXian.Controls.Add(this.cnctiaojipin);
+            this.gbJIaGongQueXian.Location = new System.Drawing.Point(107, 169);
+            this.gbJIaGongQueXian.Name = "gbJIaGongQueXian";
+            this.gbJIaGongQueXian.Size = new System.Drawing.Size(868, 41);
+            this.gbJIaGongQueXian.TabIndex = 21;
+            this.gbJIaGongQueXian.TabStop = false;
+            this.gbJIaGongQueXian.Visible = false;
+            // 
+            // feijiagongmianaokeng
+            // 
+            this.feijiagongmianaokeng.AutoSize = true;
+            this.feijiagongmianaokeng.Location = new System.Drawing.Point(744, 11);
+            this.feijiagongmianaokeng.Name = "feijiagongmianaokeng";
+            this.feijiagongmianaokeng.Size = new System.Drawing.Size(108, 16);
+            this.feijiagongmianaokeng.TabIndex = 2;
+            this.feijiagongmianaokeng.Text = "非加工面磕凹坑";
+            this.feijiagongmianaokeng.UseVisualStyleBackColor = true;
+            // 
+            // kongjingchaocha
+            // 
+            this.kongjingchaocha.AutoSize = true;
+            this.kongjingchaocha.Location = new System.Drawing.Point(576, 11);
+            this.kongjingchaocha.Name = "kongjingchaocha";
+            this.kongjingchaocha.Size = new System.Drawing.Size(72, 16);
+            this.kongjingchaocha.TabIndex = 2;
+            this.kongjingchaocha.Text = "孔径超差";
+            this.kongjingchaocha.UseVisualStyleBackColor = true;
+            // 
+            // daowen
+            // 
+            this.daowen.AutoSize = true;
+            this.daowen.Location = new System.Drawing.Point(528, 11);
+            this.daowen.Name = "daowen";
+            this.daowen.Size = new System.Drawing.Size(48, 16);
+            this.daowen.TabIndex = 2;
+            this.daowen.Text = "刀纹";
+            this.daowen.UseVisualStyleBackColor = true;
+            // 
+            // luodi
+            // 
+            this.luodi.AutoSize = true;
+            this.luodi.Location = new System.Drawing.Point(696, 11);
+            this.luodi.Name = "luodi";
+            this.luodi.Size = new System.Drawing.Size(48, 16);
+            this.luodi.TabIndex = 2;
+            this.luodi.Text = "落地";
+            this.luodi.UseVisualStyleBackColor = true;
+            // 
+            // hmianyashang
+            // 
+            this.hmianyashang.AutoSize = true;
+            this.hmianyashang.Location = new System.Drawing.Point(282, 11);
+            this.hmianyashang.Name = "hmianyashang";
+            this.hmianyashang.Size = new System.Drawing.Size(66, 16);
+            this.hmianyashang.TabIndex = 2;
+            this.hmianyashang.Text = "H面压伤";
+            this.hmianyashang.UseVisualStyleBackColor = true;
+            // 
+            // shangzhouchengkongkepeng
+            // 
+            this.shangzhouchengkongkepeng.AutoSize = true;
+            this.shangzhouchengkongkepeng.Location = new System.Drawing.Point(432, 11);
+            this.shangzhouchengkongkepeng.Name = "shangzhouchengkongkepeng";
+            this.shangzhouchengkongkepeng.Size = new System.Drawing.Size(96, 16);
+            this.shangzhouchengkongkepeng.TabIndex = 2;
+            this.shangzhouchengkongkepeng.Text = "上轴承孔磕碰";
+            this.shangzhouchengkongkepeng.UseVisualStyleBackColor = true;
+            // 
+            // shuiyin
+            // 
+            this.shuiyin.AutoSize = true;
+            this.shuiyin.Location = new System.Drawing.Point(648, 11);
+            this.shuiyin.Name = "shuiyin";
+            this.shuiyin.Size = new System.Drawing.Size(48, 16);
+            this.shuiyin.TabIndex = 2;
+            this.shuiyin.Text = "水印";
+            this.shuiyin.UseVisualStyleBackColor = true;
+            // 
+            // falanmianhuahenpengshang
+            // 
+            this.falanmianhuahenpengshang.AutoSize = true;
+            this.falanmianhuahenpengshang.Location = new System.Drawing.Point(168, 11);
+            this.falanmianhuahenpengshang.Name = "falanmianhuahenpengshang";
+            this.falanmianhuahenpengshang.Size = new System.Drawing.Size(114, 16);
+            this.falanmianhuahenpengshang.TabIndex = 2;
+            this.falanmianhuahenpengshang.Text = "法兰面划痕/碰伤";
+            this.falanmianhuahenpengshang.UseVisualStyleBackColor = true;
+            // 
+            // jinqikoukepeng
+            // 
+            this.jinqikoukepeng.AutoSize = true;
+            this.jinqikoukepeng.Location = new System.Drawing.Point(348, 11);
+            this.jinqikoukepeng.Name = "jinqikoukepeng";
+            this.jinqikoukepeng.Size = new System.Drawing.Size(84, 16);
+            this.jinqikoukepeng.TabIndex = 2;
+            this.jinqikoukepeng.Text = "进气口磕碰";
+            this.jinqikoukepeng.UseVisualStyleBackColor = true;
+            // 
+            // falanmianyashang
+            // 
+            this.falanmianyashang.AutoSize = true;
+            this.falanmianyashang.Location = new System.Drawing.Point(84, 11);
+            this.falanmianyashang.Name = "falanmianyashang";
+            this.falanmianyashang.Size = new System.Drawing.Size(84, 16);
+            this.falanmianyashang.TabIndex = 2;
+            this.falanmianyashang.Text = "法兰面压伤";
+            this.falanmianyashang.UseVisualStyleBackColor = true;
+            // 
+            // cnctiaojipin
+            // 
+            this.cnctiaojipin.AutoSize = true;
+            this.cnctiaojipin.Location = new System.Drawing.Point(6, 11);
+            this.cnctiaojipin.Name = "cnctiaojipin";
+            this.cnctiaojipin.Size = new System.Drawing.Size(78, 16);
+            this.cnctiaojipin.TabIndex = 2;
+            this.cnctiaojipin.Text = "CNC调机品";
+            this.cnctiaojipin.UseVisualStyleBackColor = true;
+            // 
+            // gbMaoPeiQueXian
+            // 
+            this.gbMaoPeiQueXian.Controls.Add(this.maopeifamei);
+            this.gbMaoPeiQueXian.Controls.Add(this.qipi);
+            this.gbMaoPeiQueXian.Controls.Add(this.qita);
+            this.gbMaoPeiQueXian.Controls.Add(this.bengque);
+            this.gbMaoPeiQueXian.Controls.Add(this.nianmo);
+            this.gbMaoPeiQueXian.Controls.Add(this.jiagongbuliang);
+            this.gbMaoPeiQueXian.Controls.Add(this.yanghuafahei);
+            this.gbMaoPeiQueXian.Controls.Add(this.liewen);
+            this.gbMaoPeiQueXian.Controls.Add(this.zazhi);
+            this.gbMaoPeiQueXian.Controls.Add(this.xiankawai);
+            this.gbMaoPeiQueXian.Controls.Add(this.shakong);
+            this.gbMaoPeiQueXian.Controls.Add(this.lamo);
+            this.gbMaoPeiQueXian.Controls.Add(this.zangwu);
+            this.gbMaoPeiQueXian.Location = new System.Drawing.Point(107, 169);
+            this.gbMaoPeiQueXian.Name = "gbMaoPeiQueXian";
+            this.gbMaoPeiQueXian.Size = new System.Drawing.Size(923, 41);
+            this.gbMaoPeiQueXian.TabIndex = 21;
+            this.gbMaoPeiQueXian.TabStop = false;
+            this.gbMaoPeiQueXian.Visible = false;
+            // 
+            // maopeifamei
+            // 
+            this.maopeifamei.AutoSize = true;
+            this.maopeifamei.Location = new System.Drawing.Point(692, 11);
+            this.maopeifamei.Name = "maopeifamei";
+            this.maopeifamei.Size = new System.Drawing.Size(72, 16);
+            this.maopeifamei.TabIndex = 2;
+            this.maopeifamei.Text = "毛坯发霉";
+            this.maopeifamei.UseVisualStyleBackColor = true;
+            // 
+            // qipi
+            // 
+            this.qipi.AutoSize = true;
+            this.qipi.Location = new System.Drawing.Point(497, 11);
+            this.qipi.Name = "qipi";
+            this.qipi.Size = new System.Drawing.Size(48, 16);
+            this.qipi.TabIndex = 2;
+            this.qipi.Text = "起皮";
+            this.qipi.UseVisualStyleBackColor = true;
+            // 
+            // bengque
+            // 
+            this.bengque.AutoSize = true;
+            this.bengque.Location = new System.Drawing.Point(432, 11);
+            this.bengque.Name = "bengque";
+            this.bengque.Size = new System.Drawing.Size(48, 16);
+            this.bengque.TabIndex = 2;
+            this.bengque.Text = "崩缺";
+            this.bengque.UseVisualStyleBackColor = true;
+            // 
+            // nianmo
+            // 
+            this.nianmo.AutoSize = true;
+            this.nianmo.Location = new System.Drawing.Point(627, 11);
+            this.nianmo.Name = "nianmo";
+            this.nianmo.Size = new System.Drawing.Size(48, 16);
+            this.nianmo.TabIndex = 2;
+            this.nianmo.Text = "粘模";
+            this.nianmo.UseVisualStyleBackColor = true;
+            // 
+            // jiagongbuliang
+            // 
+            this.jiagongbuliang.AutoSize = true;
+            this.jiagongbuliang.Location = new System.Drawing.Point(213, 11);
+            this.jiagongbuliang.Name = "jiagongbuliang";
+            this.jiagongbuliang.Size = new System.Drawing.Size(72, 16);
+            this.jiagongbuliang.TabIndex = 2;
+            this.jiagongbuliang.Text = "加工不良";
+            this.jiagongbuliang.UseVisualStyleBackColor = true;
+            // 
+            // liewen
+            // 
+            this.liewen.AutoSize = true;
+            this.liewen.Location = new System.Drawing.Point(367, 11);
+            this.liewen.Name = "liewen";
+            this.liewen.Size = new System.Drawing.Size(48, 16);
+            this.liewen.TabIndex = 2;
+            this.liewen.Text = "裂纹";
+            this.liewen.UseVisualStyleBackColor = true;
+            // 
+            // zazhi
+            // 
+            this.zazhi.AutoSize = true;
+            this.zazhi.Location = new System.Drawing.Point(562, 11);
+            this.zazhi.Name = "zazhi";
+            this.zazhi.Size = new System.Drawing.Size(48, 16);
+            this.zazhi.TabIndex = 2;
+            this.zazhi.Text = "杂质";
+            this.zazhi.UseVisualStyleBackColor = true;
+            // 
+            // xiankawai
+            // 
+            this.xiankawai.AutoSize = true;
+            this.xiankawai.Location = new System.Drawing.Point(136, 11);
+            this.xiankawai.Name = "xiankawai";
+            this.xiankawai.Size = new System.Drawing.Size(60, 16);
+            this.xiankawai.TabIndex = 2;
+            this.xiankawai.Text = "线卡歪";
+            this.xiankawai.UseVisualStyleBackColor = true;
+            // 
+            // shakong
+            // 
+            this.shakong.AutoSize = true;
+            this.shakong.Location = new System.Drawing.Point(302, 11);
+            this.shakong.Name = "shakong";
+            this.shakong.Size = new System.Drawing.Size(48, 16);
+            this.shakong.TabIndex = 2;
+            this.shakong.Text = "砂孔";
+            this.shakong.UseVisualStyleBackColor = true;
+            // 
+            // lamo
+            // 
+            this.lamo.AutoSize = true;
+            this.lamo.Location = new System.Drawing.Point(71, 11);
+            this.lamo.Name = "lamo";
+            this.lamo.Size = new System.Drawing.Size(48, 16);
+            this.lamo.TabIndex = 2;
+            this.lamo.Text = "拉模";
+            this.lamo.UseVisualStyleBackColor = true;
+            // 
+            // zangwu
+            // 
+            this.zangwu.AutoSize = true;
+            this.zangwu.Location = new System.Drawing.Point(6, 11);
+            this.zangwu.Name = "zangwu";
+            this.zangwu.Size = new System.Drawing.Size(48, 16);
+            this.zangwu.TabIndex = 2;
+            this.zangwu.Text = "脏污";
+            this.zangwu.UseVisualStyleBackColor = true;
+            // 
+            // yanghuafahei
+            // 
+            this.yanghuafahei.AutoSize = true;
+            this.yanghuafahei.Location = new System.Drawing.Point(781, 11);
+            this.yanghuafahei.Name = "yanghuafahei";
+            this.yanghuafahei.Size = new System.Drawing.Size(72, 16);
+            this.yanghuafahei.TabIndex = 2;
+            this.yanghuafahei.Text = "毛坯发黑";
+            this.yanghuafahei.UseVisualStyleBackColor = true;
+            // 
+            // qita
+            // 
+            this.qita.AutoSize = true;
+            this.qita.Location = new System.Drawing.Point(870, 11);
+            this.qita.Name = "qita";
+            this.qita.Size = new System.Drawing.Size(48, 16);
+            this.qita.TabIndex = 2;
+            this.qita.Text = "其它";
+            this.qita.UseVisualStyleBackColor = true;
+            // 
+            // gbFanXiu
+            // 
+            this.gbFanXiu.Controls.Add(this.kefanxipinX);
+            this.gbFanXiu.Controls.Add(this.jinqikoukepengX);
+            this.gbFanXiu.Controls.Add(this.falanmianhuashangX);
+            this.gbFanXiu.Controls.Add(this.kefanfameiX);
+            this.gbFanXiu.Controls.Add(this.penshaX);
+            this.gbFanXiu.Controls.Add(this.beizhuX);
+            this.gbFanXiu.Controls.Add(this.xiaoshakongkefanxiuX);
+            this.gbFanXiu.Location = new System.Drawing.Point(107, 167);
+            this.gbFanXiu.Name = "gbFanXiu";
+            this.gbFanXiu.Size = new System.Drawing.Size(606, 37);
+            this.gbFanXiu.TabIndex = 2;
+            this.gbFanXiu.TabStop = false;
+            this.gbFanXiu.Visible = false;
+            // 
+            // jinqikoukepengX
+            // 
+            this.jinqikoukepengX.AutoSize = true;
+            this.jinqikoukepengX.Location = new System.Drawing.Point(13, 14);
+            this.jinqikoukepengX.Name = "jinqikoukepengX";
+            this.jinqikoukepengX.Size = new System.Drawing.Size(90, 16);
+            this.jinqikoukepengX.TabIndex = 2;
+            this.jinqikoukepengX.Text = "进气口磕碰X";
+            this.jinqikoukepengX.UseVisualStyleBackColor = true;
+            // 
+            // falanmianhuashangX
+            // 
+            this.falanmianhuashangX.AutoSize = true;
+            this.falanmianhuashangX.Location = new System.Drawing.Point(103, 14);
+            this.falanmianhuashangX.Name = "falanmianhuashangX";
+            this.falanmianhuashangX.Size = new System.Drawing.Size(84, 16);
+            this.falanmianhuashangX.TabIndex = 2;
+            this.falanmianhuashangX.Text = "法兰面划伤";
+            this.falanmianhuashangX.UseVisualStyleBackColor = true;
+            // 
+            // kefanfameiX
+            // 
+            this.kefanfameiX.AutoSize = true;
+            this.kefanfameiX.Location = new System.Drawing.Point(321, 14);
+            this.kefanfameiX.Name = "kefanfameiX";
+            this.kefanfameiX.Size = new System.Drawing.Size(72, 16);
+            this.kefanfameiX.TabIndex = 2;
+            this.kefanfameiX.Text = "可返发霉";
+            this.kefanfameiX.UseVisualStyleBackColor = true;
+            // 
+            // penshaX
+            // 
+            this.penshaX.AutoSize = true;
+            this.penshaX.Location = new System.Drawing.Point(191, 14);
+            this.penshaX.Name = "penshaX";
+            this.penshaX.Size = new System.Drawing.Size(48, 16);
+            this.penshaX.TabIndex = 2;
+            this.penshaX.Text = "喷砂";
+            this.penshaX.UseVisualStyleBackColor = true;
+            // 
+            // xiaoshakongkefanxiuX
+            // 
+            this.xiaoshakongkefanxiuX.AutoSize = true;
+            this.xiaoshakongkefanxiuX.Location = new System.Drawing.Point(398, 14);
+            this.xiaoshakongkefanxiuX.Name = "xiaoshakongkefanxiuX";
+            this.xiaoshakongkefanxiuX.Size = new System.Drawing.Size(96, 16);
+            this.xiaoshakongkefanxiuX.TabIndex = 2;
+            this.xiaoshakongkefanxiuX.Text = "小砂孔可返修";
+            this.xiaoshakongkefanxiuX.UseVisualStyleBackColor = true;
+            // 
+            // kefanxipinX
+            // 
+            this.kefanxipinX.AutoSize = true;
+            this.kefanxipinX.Location = new System.Drawing.Point(244, 14);
+            this.kefanxipinX.Name = "kefanxipinX";
+            this.kefanxipinX.Size = new System.Drawing.Size(72, 16);
+            this.kefanxipinX.TabIndex = 2;
+            this.kefanxipinX.Text = "可返洗品";
+            this.kefanxipinX.UseVisualStyleBackColor = true;
+            // 
+            // beizhuX
+            // 
+            this.beizhuX.AutoSize = true;
+            this.beizhuX.Location = new System.Drawing.Point(499, 14);
+            this.beizhuX.Name = "beizhuX";
+            this.beizhuX.Size = new System.Drawing.Size(48, 16);
+            this.beizhuX.TabIndex = 2;
+            this.beizhuX.Text = "备注";
+            this.beizhuX.UseVisualStyleBackColor = true;
+            // 
+            // gbPinJian
+            // 
+            this.gbPinJian.Controls.Add(this.gonghao);
+            this.gbPinJian.Controls.Add(this.pinjianquexian);
+            this.gbPinJian.Location = new System.Drawing.Point(140, 163);
+            this.gbPinJian.Name = "gbPinJian";
+            this.gbPinJian.Size = new System.Drawing.Size(185, 42);
+            this.gbPinJian.TabIndex = 2;
+            this.gbPinJian.TabStop = false;
+            this.gbPinJian.Visible = false;
+            // 
+            // pinjianquexian
+            // 
+            this.pinjianquexian.AutoSize = true;
+            this.pinjianquexian.Location = new System.Drawing.Point(16, 15);
+            this.pinjianquexian.Name = "pinjianquexian";
+            this.pinjianquexian.Size = new System.Drawing.Size(60, 16);
+            this.pinjianquexian.TabIndex = 2;
+            this.pinjianquexian.Text = "抽样数";
+            this.pinjianquexian.UseVisualStyleBackColor = true;
+            // 
+            // gonghao
+            // 
+            this.gonghao.AutoSize = true;
+            this.gonghao.Location = new System.Drawing.Point(105, 15);
+            this.gonghao.Name = "gonghao";
+            this.gonghao.Size = new System.Drawing.Size(48, 16);
+            this.gonghao.TabIndex = 2;
+            this.gonghao.Text = "工号";
+            this.gonghao.UseVisualStyleBackColor = true;
+            // 
+            // lbPinJian
+            // 
+            this.lbPinJian.AutoSize = true;
+            this.lbPinJian.Location = new System.Drawing.Point(1020, 11);
+            this.lbPinJian.Name = "lbPinJian";
+            this.lbPinJian.Size = new System.Drawing.Size(29, 12);
+            this.lbPinJian.TabIndex = 2;
+            this.lbPinJian.Text = "品检";
+            this.lbPinJian.Click += new System.EventHandler(this.lbPinJian_Click);
+            // 
+            // lbQiTaLei
+            // 
+            this.lbQiTaLei.AutoSize = true;
+            this.lbQiTaLei.Location = new System.Drawing.Point(1055, 11);
+            this.lbQiTaLei.Name = "lbQiTaLei";
+            this.lbQiTaLei.Size = new System.Drawing.Size(41, 12);
+            this.lbQiTaLei.TabIndex = 3;
+            this.lbQiTaLei.Text = "其他类";
+            this.lbQiTaLei.Click += new System.EventHandler(this.lbQiTaLei_Click);
+            // 
+            // gbQiTaLei
+            // 
+            this.gbQiTaLei.Controls.Add(this.feihua);
+            this.gbQiTaLei.Controls.Add(this.lvxue);
+            this.gbQiTaLei.Location = new System.Drawing.Point(107, 163);
+            this.gbQiTaLei.Name = "gbQiTaLei";
+            this.gbQiTaLei.Size = new System.Drawing.Size(163, 47);
+            this.gbQiTaLei.TabIndex = 2;
+            this.gbQiTaLei.TabStop = false;
+            this.gbQiTaLei.Visible = false;
+            // 
+            // feihua
+            // 
+            this.feihua.AutoSize = true;
+            this.feihua.Location = new System.Drawing.Point(16, 20);
+            this.feihua.Name = "feihua";
+            this.feihua.Size = new System.Drawing.Size(48, 16);
+            this.feihua.TabIndex = 2;
+            this.feihua.Text = "漏气";
+            this.feihua.UseVisualStyleBackColor = true;
+            // 
+            // lvxue
+            // 
+            this.lvxue.AutoSize = true;
+            this.lvxue.Location = new System.Drawing.Point(88, 20);
+            this.lvxue.Name = "lvxue";
+            this.lvxue.Size = new System.Drawing.Size(48, 16);
+            this.lvxue.TabIndex = 2;
+            this.lvxue.Text = "铝屑";
+            this.lvxue.UseVisualStyleBackColor = true;
+            // 
             // JiJiaHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1221, 540);
+            this.Controls.Add(this.gbQiTaLei);
+            this.Controls.Add(this.gbPinJian);
+            this.Controls.Add(this.gbFanXiu);
+            this.Controls.Add(this.gbMaoPeiQueXian);
+            this.Controls.Add(this.gbJIaGongQueXian);
+            this.Controls.Add(this.gbJiJiaQueXian);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbPiaoType);
             this.Controls.Add(this.btnLoadData);
@@ -636,6 +1153,16 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip2.ResumeLayout(false);
             this.contextMenuStrip3.ResumeLayout(false);
+            this.gbJIaGongQueXian.ResumeLayout(false);
+            this.gbJIaGongQueXian.PerformLayout();
+            this.gbMaoPeiQueXian.ResumeLayout(false);
+            this.gbMaoPeiQueXian.PerformLayout();
+            this.gbFanXiu.ResumeLayout(false);
+            this.gbFanXiu.PerformLayout();
+            this.gbPinJian.ResumeLayout(false);
+            this.gbPinJian.PerformLayout();
+            this.gbQiTaLei.ResumeLayout(false);
+            this.gbQiTaLei.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -691,8 +1218,51 @@
         private System.Windows.Forms.CheckBox yazhuquexian;
         private System.Windows.Forms.CheckBox shengchanzongshu;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.CheckBox pinjianquexian;
         private System.Windows.Forms.CheckBox jijiaquexian;
         private System.Windows.Forms.DataGridView dataGridViewJiJia;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox gbJiJiaQueXian;
+        private System.Windows.Forms.GroupBox gbJIaGongQueXian;
+        private System.Windows.Forms.CheckBox feijiagongmianaokeng;
+        private System.Windows.Forms.CheckBox kongjingchaocha;
+        private System.Windows.Forms.CheckBox daowen;
+        private System.Windows.Forms.CheckBox luodi;
+        private System.Windows.Forms.CheckBox hmianyashang;
+        private System.Windows.Forms.CheckBox shangzhouchengkongkepeng;
+        private System.Windows.Forms.CheckBox shuiyin;
+        private System.Windows.Forms.CheckBox falanmianhuahenpengshang;
+        private System.Windows.Forms.CheckBox jinqikoukepeng;
+        private System.Windows.Forms.CheckBox falanmianyashang;
+        private System.Windows.Forms.CheckBox cnctiaojipin;
+        private System.Windows.Forms.GroupBox gbMaoPeiQueXian;
+        private System.Windows.Forms.CheckBox maopeifamei;
+        private System.Windows.Forms.CheckBox qipi;
+        private System.Windows.Forms.CheckBox qita;
+        private System.Windows.Forms.CheckBox bengque;
+        private System.Windows.Forms.CheckBox nianmo;
+        private System.Windows.Forms.CheckBox jiagongbuliang;
+        private System.Windows.Forms.CheckBox yanghuafahei;
+        private System.Windows.Forms.CheckBox liewen;
+        private System.Windows.Forms.CheckBox zazhi;
+        private System.Windows.Forms.CheckBox xiankawai;
+        private System.Windows.Forms.CheckBox shakong;
+        private System.Windows.Forms.CheckBox lamo;
+        private System.Windows.Forms.CheckBox zangwu;
+        private System.Windows.Forms.GroupBox gbFanXiu;
+        private System.Windows.Forms.CheckBox kefanxipinX;
+        private System.Windows.Forms.CheckBox jinqikoukepengX;
+        private System.Windows.Forms.CheckBox falanmianhuashangX;
+        private System.Windows.Forms.CheckBox kefanfameiX;
+        private System.Windows.Forms.CheckBox penshaX;
+        private System.Windows.Forms.CheckBox beizhuX;
+        private System.Windows.Forms.CheckBox xiaoshakongkefanxiuX;
+        private System.Windows.Forms.GroupBox gbPinJian;
+        private System.Windows.Forms.CheckBox gonghao;
+        private System.Windows.Forms.CheckBox pinjianquexian;
+        private System.Windows.Forms.Label lbPinJian;
+        private System.Windows.Forms.Label lbQiTaLei;
+        private System.Windows.Forms.GroupBox gbQiTaLei;
+        private System.Windows.Forms.CheckBox feihua;
+        private System.Windows.Forms.CheckBox lvxue;
     }
 }

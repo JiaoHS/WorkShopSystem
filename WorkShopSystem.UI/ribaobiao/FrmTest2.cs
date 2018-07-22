@@ -1544,7 +1544,7 @@ namespace MultiColHeaderDgvTest
                                     xinghao = Convert.ToString(dt.Rows[i]["dingebaiban"]);
                                 }
                                 drow2["dingeban"] = xinghao;
-                                    //dt.Rows[i]["dingebaiban"].ToString();
+                                //dt.Rows[i]["dingebaiban"].ToString();
                             }
 
                             if (dt.Columns.Contains("lingjianbianhao"))
@@ -1565,12 +1565,12 @@ namespace MultiColHeaderDgvTest
                             drow2["xuqiubiaozhunchanneng"] = xuqiubiaozhunchanneng;
                             if (dt.Columns.Contains("shengchanxinxilan"))
                             {
-                                if (!Convert.IsDBNull(dt.Rows[i]["shenchanxinxilan"]) && dt.Rows[i]["shenchanxinxilan"].ToString().Trim() != "")
+                                if (!Convert.IsDBNull(dt.Rows[i]["shengchanxinxilan"]) && dt.Rows[i]["shengchanxinxilan"].ToString().Trim() != "")
                                 {
-                                    xuqiubiaozhunchanneng = Convert.ToString(dt.Rows[i]["shenchanxinxilan"]);
+                                    xuqiubiaozhunchanneng = Convert.ToString(dt.Rows[i]["shengchanxinxilan"]);
                                 }
                                 drow2["shenchanxinxilan"] = xuqiubiaozhunchanneng;
-                                    //dt.Rows[i]["shengchanxinxilan"].ToString();
+                                //dt.Rows[i]["shengchanxinxilan"].ToString();
                             }
                             if (dt.Columns.Contains("shengchanshebeilan_bianhao"))
                             {
@@ -1661,18 +1661,35 @@ namespace MultiColHeaderDgvTest
                                 gongyiliuchengmingchenTemp = (i < 9 ? "'" + gongyiliuchengmingchen.Split('-')[1].Substring(0, 1) + "-" + xinghaoTemp + "#" + "'" : "'" + gongyiliuchengmingchen.Split('-')[1].Substring(0, 2) + "-" + xinghaoTemp + "#" + "'");
                             }
                             shenchanbianhaolist += gongyiliuchengmingchenTemp + ",";
-                            for (int l = 0; l < lingjianbianhao.Split('/').Length - 1; l++)
+                            if (lingjianbianhao.Contains("/"))
                             {
-                                lingjianTemp += "'" + lingjianbianhao.Split('/')[l] + "'" + ",";
-                                if (dicTemp.ContainsKey("'" + lingjianbianhao.Split('/')[l] + "'"))
+                                for (int l = 0; l < lingjianbianhao.Split('/').Length - 1; l++)
+                                {
+                                    lingjianTemp += "'" + lingjianbianhao.Split('/')[l] + "'" + ",";
+                                    if (dicTemp.ContainsKey("'" + lingjianbianhao.Split('/')[l] + "'"))
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        dicTemp.Add("'" + lingjianbianhao.Split('/')[l] + "'", 0);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                lingjianTemp = "'" + lingjianbianhao + "'";
+
+                                if (dicTemp.ContainsKey("'" + lingjianbianhao + "'"))
                                 {
                                     continue;
                                 }
                                 else
                                 {
-                                    dicTemp.Add("'" + lingjianbianhao.Split('/')[l] + "'", 0);
+                                    dicTemp.Add("'" + lingjianbianhao + "'", 0);
                                 }
                             }
+
 
                             if (listDay != null && listDay.Count > 0)
                             {

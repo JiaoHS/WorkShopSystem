@@ -229,6 +229,73 @@ namespace WorkShopSystem.UI.yazhu
             //listViewJiJia.Clear();
             List<string> titleList = new List<string>();
             Dictionary<string, string> dicTitle = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleJiaGong = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleMaoPei = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleFanXiu = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitlePinJian = new Dictionary<string, string>();
+            Dictionary<string, string> dicTitleQiTaLei = new Dictionary<string, string>();
+            foreach (Control cl in gbJIaGongQueXian.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleJiaGong.Add(ck.Name, ck.Text);
+                        //dtable.Columns.Add(ck.Text, typeof(System.String));
+                        //header += ck.Text + "#";
+                        //sb += ck.Text + ",";
+                    }
+                }
+            }
+            foreach (Control cl in gbMaoPeiQueXian.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleMaoPei.Add(ck.Name, ck.Text);
+                        //dtable.Columns.Add(ck.Text, typeof(System.String));
+                        //header += ck.Text + "#";
+                        //sb += ck.Text + ",";
+                    }
+                }
+            }
+
+            foreach (Control cl in gbFanXiu.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleFanXiu.Add(ck.Name, ck.Text);
+                    }
+                }
+            }
+            foreach (Control cl in gbPinJian.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitlePinJian.Add(ck.Name, ck.Text);
+                    }
+                }
+            }
+            foreach (Control cl in gbQiTaLei.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
+            {
+                if (cl is CheckBox)//看看是不是checkbox
+                {
+                    CheckBox ck = cl as CheckBox;//将找到的control转化成checkbox
+                    if (ck.Checked)//判断是否选中
+                    {
+                        dicTitleQiTaLei.Add(ck.Name, ck.Text);
+                    }
+                }
+            }
             foreach (Control cl in groupBox1.Controls)//，与上面的区别在这里哦——循环groupBox1上的控件
             {
                 if (cl is CheckBox)//看看是不是checkbox
@@ -240,6 +307,55 @@ namespace WorkShopSystem.UI.yazhu
                         dtable.Columns.Add(ck.Text, typeof(System.String));
                         header += ck.Text + "#";
                         //sb += ck.Text + ",";
+                    }
+                    if (ck.Text == "毛坯缺陷")
+                    {
+                        foreach (var item in dicTitleMaoPei)
+                        {
+                            dicTitle.Add(item.Key, item.Value);
+                            dtable.Columns.Add(item.Value, typeof(System.String));
+                            header += item.Value + "#";
+                        }
+                    }
+                    if (ck.Text == "加工清洗缺陷")
+                    {
+                        foreach (var item in dicTitleJiaGong)
+                        {
+                            dicTitle.Add(item.Key, item.Value);
+                            dtable.Columns.Add(item.Value, typeof(System.String));
+                            header += item.Value + "#";
+                        }
+                    }
+                    if (ck.Text == "返修总数")
+                    {
+                        foreach (var item in dicTitleFanXiu)
+                        {
+                            dicTitle.Add(item.Key, item.Value);
+                            dtable.Columns.Add(item.Value, typeof(System.String));
+                            header += item.Value + "#";
+                        }
+                    }
+                }
+                if (cl is Label)
+                {
+                    Label ck = cl as Label;
+                    if (ck.Text == "品检")
+                    {
+                        foreach (var item in dicTitlePinJian)
+                        {
+                            dicTitle.Add(item.Key, item.Value);
+                            dtable.Columns.Add(item.Value, typeof(System.String));
+                            header += item.Value + "#";
+                        }
+                    }
+                    if (ck.Text == "其他类")
+                    {
+                        foreach (var item in dicTitleQiTaLei)
+                        {
+                            dicTitle.Add(item.Key, item.Value);
+                            dtable.Columns.Add(item.Value, typeof(System.String));
+                            header += item.Value + "#";
+                        }
                     }
                 }
             }
@@ -268,17 +384,17 @@ namespace WorkShopSystem.UI.yazhu
             StringBuilder strWhere = new StringBuilder();
             if (dtStart.Trim() != "" && drEnd.Trim() != "")
             {
-                strWhere.Append(string.Format(@" convert(char(10) ,time , 120)<='{0}' and  convert(char(10) ,time , 120) >='{1}'", drEnd, dtStart));
+                strWhere.Append(string.Format(@" convert(char(10) ,cmr.time , 120)<='{0}' and  convert(char(10) ,cmr.time , 120) >='{1}'", drEnd, dtStart));
             }
 
             if (muHaoList != null && muHaoList != "")
             {
-                strWhere.Append(string.Format(@" and muhao in ({0})", muHaoList));
+                strWhere.Append(string.Format(@" and cmr.muhao in ({0})", muHaoList));
             }
 
             if (maoPiHaoList != null && maoPiHaoList != "")
             {
-                strWhere.Append(string.Format(@" and maopeihao in ({0})", maoPiHaoList));
+                strWhere.Append(string.Format(@" and cmr.maopeihao in ({0})", maoPiHaoList));
             }
 
             if (liuChengPiaoList == "")
@@ -287,26 +403,26 @@ namespace WorkShopSystem.UI.yazhu
             }
             else
             {
-                strWhere.Append(string.Format(@" and liuchengpiaobianhao in ({0})", liuChengPiaoList));
+                strWhere.Append(string.Format(@" and cmr.liuchengpiaobianhao in ({0})", liuChengPiaoList));
             }
 
             string liuCheng = cbLiuCheng.Text;
             switch (liuCheng)
             {
                 case "全部":
-                    strWhere.Append(string.Format(@" and workshoptype in(5,6,7,8)"));
+                    strWhere.Append(string.Format(@" and cmr.workshoptype in(5,6,7,8)"));
                     break;
                 case "全检":
-                    strWhere.Append(string.Format(@" and workshoptype =5"));
+                    strWhere.Append(string.Format(@" and cmr.workshoptype =5"));
                     break;
                 case "清洗":
-                    strWhere.Append(string.Format(@" and workshoptype =6"));
+                    strWhere.Append(string.Format(@" and cmr.workshoptype =6"));
                     break;
                 case "CNC":
-                    strWhere.Append(string.Format(@" and workshoptype =7"));
+                    strWhere.Append(string.Format(@" and cmr.workshoptype =7"));
                     break;
                 case "测漏":
-                    strWhere.Append(string.Format(@" and workshoptype =8"));
+                    strWhere.Append(string.Format(@" and cmr.workshoptype =8"));
                     break;
                 default:
                     break;
@@ -315,13 +431,13 @@ namespace WorkShopSystem.UI.yazhu
             if (banCi > 0)
             {
                 string banCiText = cbBanCi.SelectedItem.ToString();
-                strWhere.Append(string.Format(@" and banci = '{0}'", banCiText));
+                strWhere.Append(string.Format(@" and cmr.banci = '{0}'", banCiText));
             }
 
             //System.Threading.Thread test = new System.Threading.Thread(new System.Threading.ThreadStart(Loading(strWhere)));
             //test.Start();
-            DataTable dt = BLL.GetList(strWhere.ToString());
-            DataTable dtSum = BLL.GetListSum(strWhere.ToString());
+            DataTable dt = BLL.GetListJiJia(strWhere.ToString());
+            DataTable dtSum = BLL.GetListSumJiJia(strWhere.ToString());
             if (dtSum != null && dtSum.Rows.Count > 0)
             {
                 string colTemp = string.Empty;
@@ -379,14 +495,12 @@ namespace WorkShopSystem.UI.yazhu
                         //item.SubItems.Add(dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString());
                         drow[itemDic.Value] = dt.Rows[i][dt.Rows[i].Table.Columns[index]].ToString();
                     }
-                    //item.SubItems.RemoveAt(0);
-                    //listViewJiJia.Items.Add(item);
                     dtable.Rows.Add(drow);
                 }
                 dataGridViewJiJia.DataSource = dtable;
                 dataGridViewJiJia.Rows[0].Frozen = true;
                 this.dataGridViewJiJia.Rows[0].Selected = false;
-                this.dataGridViewJiJia.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+                this.dataGridViewJiJia.Rows[0].DefaultCellStyle.BackColor = Color.Gray;
                 cmd.HideOpaqueLayer();
             }
         }
@@ -830,6 +944,92 @@ namespace WorkShopSystem.UI.yazhu
             //根据时间筛选出的数据
             int type = cbPiaoType.SelectedIndex;
             LoadCheckedListBox3Content(type);
+        }
+
+        private void yazhuquexian_CheckedChanged(object sender, EventArgs e)
+        {
+            if (yazhuquexian.Checked)
+            {
+                gbJIaGongQueXian.Visible = false;
+                gbMaoPeiQueXian.Visible = true;
+                gbJiJiaQueXian.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+                gbQiTaLei.Visible = false;
+            }
+            else
+            {
+                gbJiJiaQueXian.Visible = true;
+                gbJIaGongQueXian.Visible = false;
+                gbMaoPeiQueXian.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+                gbQiTaLei.Visible = false;
+            }
+        }
+
+        private void jijiaquexian_CheckedChanged(object sender, EventArgs e)
+        {
+            if (jijiaquexian.Checked)
+            {
+                gbMaoPeiQueXian.Visible = false;
+                gbJIaGongQueXian.Visible = true;
+                gbJiJiaQueXian.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+                gbQiTaLei.Visible = false;
+            }
+            else
+            {
+                gbJiJiaQueXian.Visible = true;
+                gbJIaGongQueXian.Visible = false;
+                gbJiJiaQueXian.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+                gbQiTaLei.Visible = false;
+            }
+        }
+
+        private void fanxiuzongshu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (fanxiuzongshu.Checked)
+            {
+                gbFanXiu.Visible = true;
+                gbMaoPeiQueXian.Visible = false;
+                gbJIaGongQueXian.Visible = false;
+                gbJiJiaQueXian.Visible = false;
+                gbPinJian.Visible = false;
+                gbQiTaLei.Visible = false;
+            }
+            else
+            {
+                gbJiJiaQueXian.Visible = true;
+                gbJIaGongQueXian.Visible = false;
+                gbJiJiaQueXian.Visible = false;
+                gbFanXiu.Visible = false;
+                gbPinJian.Visible = false;
+                gbQiTaLei.Visible = false;
+            }
+        }
+
+        private void lbPinJian_Click(object sender, EventArgs e)
+        {
+            gbFanXiu.Visible = false;
+            gbMaoPeiQueXian.Visible = false;
+            gbJIaGongQueXian.Visible = false;
+            gbJiJiaQueXian.Visible = false;
+            gbPinJian.Visible = true;
+            gbQiTaLei.Visible = false;
+        }
+
+        private void lbQiTaLei_Click(object sender, EventArgs e)
+        {
+            gbFanXiu.Visible = false;
+            gbMaoPeiQueXian.Visible = false;
+            gbJIaGongQueXian.Visible = false;
+            gbJiJiaQueXian.Visible = false;
+            gbPinJian.Visible = false;
+            gbQiTaLei.Visible = true;
         }
     }
     //public delegate void NPDelegate();

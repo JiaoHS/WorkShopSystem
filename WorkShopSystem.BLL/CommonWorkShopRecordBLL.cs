@@ -291,6 +291,14 @@ namespace WorkShopSystem.BLL
         {
             return dal.GetListSum(strWhere);
         }
+        public DataTable GetListJiJia(string strWhere)
+        {
+            return dal.GetListJiJia(strWhere);
+        }
+        public DataTable GetListSumJiJia(string strWhere)
+        {
+            return dal.GetListSumJiJia(strWhere);
+        }
         #endregion  ExtensionMethod
     }
 }
