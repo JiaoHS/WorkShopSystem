@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkShopSystem.UI", "WorkShopSystem.UI\WorkShopSystem.UI.csproj", "{175D9080-540D-4065-8B7D-A6B715864CF3}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkShopSystem.Utility", "WorkShopSystem.Utility\WorkShopSystem.Utility.csproj", "{CAE82F39-8A09-46AB-B0C9-280393E7BB83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkShopSystem.BLL", "WorkShopSystem.BLL\WorkShopSystem.BLL.csproj", "{16E6C9D4-2631-4AE4-8155-F1DFB1D4BC85}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WorkShop", "WorkShop\WorkShop.vdproj", "{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,12 @@ Global
 		{16E6C9D4-2631-4AE4-8155-F1DFB1D4BC85}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{16E6C9D4-2631-4AE4-8155-F1DFB1D4BC85}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{16E6C9D4-2631-4AE4-8155-F1DFB1D4BC85}.Release|x86.ActiveCfg = Release|Any CPU
+		{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}.Debug|Any CPU.ActiveCfg = Debug
+		{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}.Debug|x86.ActiveCfg = Debug
+		{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}.Release|Any CPU.ActiveCfg = Release
+		{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}.Release|Mixed Platforms.ActiveCfg = Release
+		{16EC9216-E67B-4ECA-AD5A-99E4D3B26587}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

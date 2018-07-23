@@ -25,12 +25,26 @@ namespace MultiColHeaderDgvTest
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
-
-
-            time = CommonHelper.TimeStatic;
-            workshoptype = CommonHelper.WorkShopType;
-            LoadData();
+            this.cbCheJianList.Items.Add("压铸车间");
+            this.cbCheJianList.Items.Add("机加车间");
+            this.cbCheJianList.SelectedIndex = 0;
+            //time = CommonHelper.TimeStatic;
+            //workshoptype = CommonHelper.WorkShopType;
+            //this.cbWorkShopList.Items.Add("压铸车间");
+            //this.cbWorkShopList.Items.Add("机加车间");
+            //this.cbWorkShopList.SelectedIndex = 0;
+            GetMonthList(0);
         }
+        public void ChuSHiHua()
+        {
+            //this.cbWorkShopList.Items.Add("压铸车间");
+            //this.cbWorkShopList.Items.Add("机加车间");
+            //this.cbWorkShopList.SelectedIndex = 0;
+
+            GetMonthList(0);
+        }
+
+
         string headTitle = "工艺流程#生产设备栏 型号,编号#零件编号#定额/班#需求标准产能#生产信息栏#";
         public delegate void AuthenticationDelegate(bool value);
         OpaqueCommand cmd = new OpaqueCommand();
@@ -3186,10 +3200,69 @@ namespace MultiColHeaderDgvTest
 
             return value;
         }
+        public void GetMonthList(int type)
+        {
+            DataTable dt = new DataTable();
+            if (type == 0)
+            {
+                dt = commonWorkShopRecordBLL.GetMonthList(0);
+            }
+            if (type == 1)
+            {
+                dt = commonWorkShopRecordBLL.GetMonthList(1);
+            }
+            DateTime dtime = new DateTime();
+            List<string> listTime = new List<string>();
+            this.cbMonthLIst.Items.Clear();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    DateTime.TryParse(dt.Rows[i]["time"].ToString(), out dtime);
 
+                    this.cbMonthLIst.Items.Add(dtime.ToString("yyyy-MM"));
+                }
+                this.cbMonthLIst.SelectedIndex = 0;
+            }
+        }
+        private void cbWorkShopList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetMonthList(1);
+        }
         private void btnFullList_Click(object sender, EventArgs e)
         {
             multiColHeaderDgvRiBaoBiao.DataSource = dtable;
+        }
+
+        private void btnLoadD_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void cbMonthLIst_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void cbWorkShopList_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    GetMonthList(1);
+        //}
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbCheJianList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = cbCheJianList.SelectedIndex;
+            GetMonthList(index);
         }
     }
 }
