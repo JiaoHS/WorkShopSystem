@@ -458,7 +458,7 @@ namespace WorkShopSystem.UI
 
         private void tsbRiBaoBiao_Click(object sender, EventArgs e)
         {
-            FrmTest2 frmHome = new FrmTest2();
+            FrmHome frmHome = new FrmHome();
             frmHome.ShowDialog();
         }
     }
