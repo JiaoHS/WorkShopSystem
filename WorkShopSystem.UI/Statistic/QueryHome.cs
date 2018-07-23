@@ -35,8 +35,6 @@ namespace WorkShopSystem.UI.Statistic
             string liuChengPiaoList = tbLIuChengPIaoHao.Text.Trim();
             //机台号
             string yaZhuJiTaiHao = tbJiTaiHao.Text.Trim();
-            //工号
-            string gonghao = tbGongHao.Text.Trim();
             strWhere.Append(string.Format(@"isdel=0 ", muHaoList));
             if (!string.IsNullOrEmpty(muHaoList.Trim()))
             {
@@ -53,11 +51,6 @@ namespace WorkShopSystem.UI.Statistic
             if (!string.IsNullOrEmpty(yaZhuJiTaiHao))
             {
                 strWhere.Append(string.Format(@" and yazhujihao='{0}'", yaZhuJiTaiHao));
-            }
-
-            if(!string.IsNullOrEmpty(gonghao))
-            {
-                strWhere.Append(string.Format(@" and gonghao='{0}'", gonghao));
             }
 
             DataTable dt = BLL.GetInfoByOne(strWhere.ToString());

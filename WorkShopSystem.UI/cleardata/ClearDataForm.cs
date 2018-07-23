@@ -738,7 +738,7 @@ namespace WorkShopSystem.UI.cleardata
                                             if (dt.Columns.Contains("jitalei_louqi"))
                                             {
                                                 decimal.TryParse(dt.Rows[i]["jitalei_louqi"].ToString(), out tempNum);
-                                                quanJianModel.feihua = tempNum;
+                                                quanJianModel.qipi = tempNum;
                                             }
                                             if (dt.Columns.Contains("jitalei_lvxie"))
                                             {

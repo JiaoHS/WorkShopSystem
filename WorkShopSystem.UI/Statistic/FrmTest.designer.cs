@@ -76,7 +76,7 @@ namespace MultiColHeaderDgvTest
             System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("机加车间最终报废率");
             System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("CNC2");
             System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("全检线");
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("压铸缺陷报废数", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("压铸缺陷报废总数", new System.Windows.Forms.TreeNode[] {
             treeNode31,
             treeNode32});
             System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("压铸车间最终报废数");
@@ -190,7 +190,7 @@ namespace MultiColHeaderDgvTest
             treeNode32.Name = "yazhuquexianquanjianxian";
             treeNode32.Text = "全检线";
             treeNode33.Name = "yazhubaofeishu";
-            treeNode33.Text = "压铸缺陷报废数";
+            treeNode33.Text = "压铸缺陷报废总数";
             treeNode34.Name = "yazhuzuizhongbaofeishu";
             treeNode34.Text = "压铸车间最终报废数";
             treeNode35.Name = "yazhuchejianzuizhongbaofeilv";
